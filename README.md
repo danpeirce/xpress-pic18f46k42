@@ -7,6 +7,12 @@ It was my first attempt at using the Code Configurator tool. Example code for ma
 
 All this first example does is echo back code received on the USART Rx line. In this case no interrupts have been used.
 
+## Board Features
+
+This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumarates as 
+a mutifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
+is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
+
 ## More info on the DM182026
 
 * [https://www.microchip.com/DevelopmentTools/ProductDetails/DM182026](https://www.microchip.com/DevelopmentTools/ProductDetails/DM182026)
