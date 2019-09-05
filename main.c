@@ -9,7 +9,9 @@
 
   Summary:
     This is the main file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
-
+*/
+//	File has been modified from Code Configurator generated file by Dan Peirce B.Sc. Sept 4, 2019
+/**
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
