@@ -44,6 +44,7 @@
 */
 
 #include "mcc_generated_files/mcc.h"
+#include <stdio.h>
 
 /*
                          Main application
@@ -63,10 +64,18 @@ void main(void)
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
 
+    printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
+    printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
+    printf("\t\tECHO TEST\n\r");
+    printf("\t\t---- ----\n\n\r");
+    
+    printf("\tKPU APSC1299\n\n\r");
+    
     while (1)
     {
         char rxData;
             // Logic to echo received data
+        
             if(UART2_is_rx_ready())
             {
                 rxData = UART2_Read();
