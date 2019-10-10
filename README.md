@@ -13,6 +13,18 @@ This board has a USB microB connector. It has a PIC MCU on board configured to a
 a mutifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
 is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
 
+## Tags
+
+* echo 
+    * Anything received on the boards USB was echoed back
+* echo.and.printf
+    * As above but adds initial message using printf() 
+	* the printf is dicrected to UART2 which is connected to the USB
+* echo.copy.uart1
+    * as above but everything echoed back to USB is also echoed to UART1 TX
+	* This is a very simple change. Just starting to explore the use of two UARTs
+
+
 ## More info on the DM182026
 
 * [https://www.microchip.com/DevelopmentTools/ProductDetails/DM182026](https://www.microchip.com/DevelopmentTools/ProductDetails/DM182026)
@@ -23,6 +35,8 @@ send a pulse to them periodically. The USART in the target MCU was not interacti
 the USB to serial functions. 
 
 ### Probing the DM182026 for Serial Signal
+
+**This section is now historical only.**
 
 * The serial signal from the USB multifunction MCU was verified as transmitting a serial signal by 
   testing with PuTTY on a computer and probing with a Digital Storage Oscilloscope.

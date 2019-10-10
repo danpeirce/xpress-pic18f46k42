@@ -79,9 +79,13 @@ void main(void)
             if(UART2_is_rx_ready())
             {
                 rxData = UART2_Read();
-                if(UART2_is_tx_ready())
+                if(UART2_is_tx_ready()) // for USB echo
                 {
                     UART2_Write(rxData);
+                }
+                if(UART1_is_tx_ready()) // out RC6
+                {
+                    UART1_Write(rxData);
                 }
             }
         

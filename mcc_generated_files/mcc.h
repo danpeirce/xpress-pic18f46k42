@@ -53,6 +53,7 @@
 #include <stdbool.h>
 #include "interrupt_manager.h"
 #include "uart2.h"
+#include "uart1.h"
 
 
 
