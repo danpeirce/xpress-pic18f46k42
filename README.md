@@ -23,7 +23,9 @@ is also less expensive than the USB to serial board we have used in the past wit
 * echo.copy.uart1
     * as above but everything echoed back to USB is also echoed to UART1 TX
 	* This is a very simple change. Just starting to explore the use of two UARTs
-
+* echo.copy.uart1.newline
+    * as above but newline character added to carage returns
+	* new section below on PuTTY issues (limitations on USB to serial bridge of Xpress board)
 
 ## More info on the DM182026
 
@@ -58,8 +60,10 @@ The initial goal was just to get the UART of the target PIC to talk to the UART 
 One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the 
 terminal. There is an issue though if one trys pasting into the PuTTY terminal (using a right mouse click). In that case
 only the first character is sent. This is an issue of the USB to serial bridge on the Xpress board and not the PIC code!
-This was varified by using a USB to serial bridge on a different board fed into RB7. In this case the code worked as expected
-and all pasted characters appeared in the PuTTY terminal.
+This was varified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected
+and all pasted characters appeared in the PuTTY terminal and were correctly sent out uart1 TX.
+
+![uart1-uart2.jpg](images/uart1-uart2.jpg)
 
 Others have commented on the limitation of the USART to USB bridge on the Xpress board:
 
