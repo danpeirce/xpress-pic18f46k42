@@ -82,10 +82,12 @@ void main(void)
                 if(UART2_is_tx_ready()) // for USB echo
                 {
                     UART2_Write(rxData);
+                    if(rxData == '\r') UART2_Write('\n'); // add newline to return
                 }
                 if(UART1_is_tx_ready()) // out RC6
                 {
                     UART1_Write(rxData);
+                    if(rxData == '\r') UART1_Write('\n'); // add newline to return
                 }
             }
         
