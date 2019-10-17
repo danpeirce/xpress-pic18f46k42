@@ -20,7 +20,7 @@ Used channel 1 as normal trigger source. Channel 1 stays high when character rec
 
 ### Pins Used
 
-!(){images/pins.png} 
+!()[images/pins.png] 
 
 ## Board Features
 
