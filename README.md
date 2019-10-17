@@ -7,6 +7,21 @@ It was my first attempt at using the Code Configurator tool. Example code for ma
 
 All this first example does is echo back code received on the USART Rx line. In this case no interrupts have been used.
 
+## Testing Branch
+
+In this branch looked at timing in main while loop.
+
+* channel 1 is test2_PORT
+* channel 2 is test1_PORT
+
+Used channel 1 as normal trigger source. Channel 1 stays high when character received on UART2 until it is ready for another character.
+
+![](images/test1-test2.jpg)
+
+### Pins Used
+
+!(){images/pins.png} 
+
 ## Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumarates as 
