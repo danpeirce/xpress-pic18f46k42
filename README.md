@@ -7,20 +7,6 @@ It was my first attempt at using the Code Configurator tool. Example code for ma
 
 All this first example does is echo back code received on the USART Rx line. In this case no interrupts have been used.
 
-## Testing Branch
-
-In this branch looked at timing in main while loop.
-
-* channel 1 is test2_PORT
-* channel 2 is test1_PORT
-
-Used channel 1 as normal trigger source. Channel 1 stays high when character received on UART2 until it is ready for another character.
-
-![](images/test1-test2.jpg)
-
-### Pins Used
-
-![](images/pins.png)
 
 ## Board Features
 
@@ -41,6 +27,24 @@ is also less expensive than the USB to serial board we have used in the past wit
 * echo.copy.uart1.newline
     * as above but newline character added to carage returns
 	* new section below on PuTTY issues (limitations on USB to serial bridge of Xpress board)
+* timingtest1
+    * as above but added digital outputs for timing tests
+    * Section added below with more detail
+	
+### timingtest1 tag
+
+In this branch looked at timing in main while loop.
+
+* channel 1 is test2_PORT
+* channel 2 is test1_PORT
+
+Used channel 1 as normal trigger source. Channel 1 stays high when character received on UART2 until it is ready for another character.
+
+![](images/test1-test2.jpg)
+	
+* Pins Used
+
+![](images/pins.png)
 
 ## More info on the DM182026
 
