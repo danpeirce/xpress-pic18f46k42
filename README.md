@@ -42,6 +42,11 @@ Used channel 1 as normal trigger source. Channel 1 stays high when character rec
 
 ![](images/test1-test2.jpg)
 	
+* channel 1 is test2_PORT  (RD1)
+* channel 2 is RX on UART2 (RB7)
+	
+![](images/test2-RX-uart2.jpg)
+	
 * Pins Used
 
 ![](images/pins.png)
