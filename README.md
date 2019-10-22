@@ -31,9 +31,11 @@ is also less expensive than the USB to serial board we have used in the past wit
     * as above but added digital outputs for timing tests
     * Section added below with more detail
 * clock48MHz
-    * as above but changed internal clock to 48 MHz
+    * as above but changed internal clock to 48 MHz / 4
 	* changed uart1 baud rate to 115200.
 	* section added below with more detail
+* clock48MHz.div1
+    * fixed clock by dividing by 1 rather than 4.
 	
 ### timingtest1 tag
 
@@ -72,6 +74,15 @@ UART1 is now at 115200 baud.
 * channel 2 is TX on UART1 (RC6)
 	
 ![](images/test2-TX-uart1-48MHz.jpg)
+
+### clock48MHz.div1
+
+UART1 is now at 115200 baud.
+
+* channel 1 is test2_PORT  (RD1)
+* channel 2 is TX on UART1 (RC6)
+	
+![](images/test2-TX-uart1-48MHzD1.jpg)
 
 ## More info on the DM182026
 
