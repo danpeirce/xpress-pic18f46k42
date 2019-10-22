@@ -11,7 +11,7 @@ All this first example does is echo back code received on the USART Rx line. In 
 ## Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumarates as 
-a mutifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
+a multifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
 is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
 
 ## Tags
@@ -20,16 +20,20 @@ is also less expensive than the USB to serial board we have used in the past wit
     * Anything received on the boards USB was echoed back
 * echo.and.printf
     * As above but adds initial message using printf() 
-	* the printf is dicrected to UART2 which is connected to the USB
+	* the printf is directed to UART2 which is connected to the USB
 * echo.copy.uart1
     * as above but everything echoed back to USB is also echoed to UART1 TX
 	* This is a very simple change. Just starting to explore the use of two UARTs
 * echo.copy.uart1.newline
-    * as above but newline character added to carage returns
+    * as above but newline character added to carriage returns
 	* new section below on PuTTY issues (limitations on USB to serial bridge of Xpress board)
 * timingtest1
     * as above but added digital outputs for timing tests
     * Section added below with more detail
+* clock48MHz
+    * as above but changed internal clock to 48 MHz
+	* changed uart1 baud rate to 115200.
+	* section added below with more detail
 	
 ### timingtest1 tag
 
@@ -41,6 +45,8 @@ In this branch looked at timing in main while loop.
 Used channel 1 as normal trigger source. Channel 1 stays high when character received on UART2 until it is ready for another character.
 
 ![](images/test1-test2.jpg)
+
+A text '1' was typed into the PuTTY terminal.
 	
 * channel 1 is test2_PORT  (RD1)
 * channel 2 is RX on UART2 (RB7)
@@ -50,6 +56,22 @@ Used channel 1 as normal trigger source. Channel 1 stays high when character rec
 * Pins Used
 
 ![](images/pins.png)
+
+### clock48MHz
+
+A text '1' was typed into the PuTTY terminal.
+	
+* channel 1 is test2_PORT  (RD1)
+* channel 2 is RX on UART2 (RB7)
+	
+![](images/test2-RX-uart2-48MHz.jpg)
+
+UART1 is now at 115200 baud.
+
+* channel 1 is test2_PORT  (RD1)
+* channel 2 is TX on UART1 (RC6)
+	
+![](images/test2-TX-uart1-48MHz.jpg)
 
 ## More info on the DM182026
 
@@ -82,9 +104,9 @@ The initial goal was just to get the UART of the target PIC to talk to the UART 
 ## Working with PuTTY and issues
 
 One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the 
-terminal. There is an issue though if one trys pasting into the PuTTY terminal (using a right mouse click). In that case
+terminal. There is an issue though if one attempts pasting into the PuTTY terminal (using a right mouse click). In that case
 only the first character is sent. This is an issue of the USB to serial bridge on the Xpress board and not the PIC code!
-This was varified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected
+This was verified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected
 and all pasted characters appeared in the PuTTY terminal and were correctly sent out uart1 TX.
 
 ![uart1-uart2.jpg](images/uart1-uart2.jpg)
