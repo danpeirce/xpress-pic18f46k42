@@ -130,4 +130,4 @@ Others have commented on the limitation of the USART to USB bridge on the Xpress
 
 Initial testing of expansion board for 3PI.
 
-![](test-expansion-b.jpg)
+![](images/test-expansion-b.jpg)
