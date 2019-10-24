@@ -36,6 +36,9 @@ is also less expensive than the USB to serial board we have used in the past wit
 	* section added below with more detail
 * clock48MHz.div1
     * fixed clock by dividing by 1 rather than 4.
+* bat.voltage.test
+    * Connected PIC18F46K42 to 3Pi expansion and tested read voltage command.
+	* Section added below with more detail
 	
 ### timingtest1 tag
 
@@ -83,6 +86,14 @@ UART1 is now at 115200 baud.
 * channel 2 is TX on UART1 (RC6)
 	
 ![](images/test2-TX-uart1-48MHzD1.jpg)
+
+### bat.voltage.test tag
+
+Used UART1 of PIC18F46K42 to communicate with the 3Pi robot. Used UART2 to communicate with PuTTY via USB.
+
+![](images/bat-voltage-test.jpg)
+
+![](images/bat-voltage.png)
 
 ## More info on the DM182026
 

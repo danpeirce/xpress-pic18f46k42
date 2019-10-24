@@ -46,6 +46,8 @@
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
 
+void readbatteryvoltage(void);
+
 /*
                          Main application
  */
@@ -64,12 +66,13 @@ void main(void)
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
 
-    printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
-    printf("\t\t---- ----\n\n\r");
-    
     printf("\tKPU APSC1299\n\n\r");
+    printf("\t\t  Menu\n\r");		//Enable redirect STDIO to USART before using printf statements
+    printf("\t\t--------\r\n");        // I see putch() is defined in uart2.c
+    printf("\t\t1. Display mV reading\r\n");
+    printf("\t\t--------\r\n\n");
+    
+    
     
     while (1)
     {
@@ -85,16 +88,32 @@ void main(void)
                 UART2_Write(rxData);
                 if(rxData == '\r') UART2_Write('\n'); // add newline to return
             }
-            if(UART1_is_tx_ready()) // out RC6
-            {
-                UART1_Write(rxData);
-                if(rxData == '\r') UART1_Write('\n'); // add newline to return
-            }
+            // if(UART1_is_tx_ready()) // out RC6
+            if (rxData == '1') readbatteryvoltage();
+            if (rxData == 'c') UART1_Write(0xB7);
+            if (rxData == '?') UART1_Write('?');
+            if (rxData == ' ') UART1_Write(' ');
             test2_PORT = 0;
         }
         test1_PORT = 0; 
     }
 }
+
+void readbatteryvoltage(void)
+{
+    unsigned char lbyte, ubyte;
+    
+    printf("\r\n\tBattery Voltage = ");
+    
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB1);
+    while (!UART1_is_rx_ready()) continue;
+    lbyte = UART1_Read();
+    while (!UART1_is_rx_ready()) continue;
+    ubyte = UART1_Read();
+    printf("%d mV\r\n", ubyte*256 + lbyte);
+}
+
 /**
  End of File
 */
