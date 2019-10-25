@@ -46,7 +46,8 @@
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
 
-void readbatteryvoltage(void);
+unsigned int readbatteryvoltage(void);
+void sendbatteryvoltage(void);
 void send_hyphen(void);
 void send_APSC1299(void);
 
@@ -69,9 +70,10 @@ void main(void)
     //INTERRUPT_GlobalInterruptDisable();
 
     printf("\tKPU APSC1299\n\n\r");
-    printf("\t\t  Menu\n\r");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t--------\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\t1. Display mV reading\r\n");
+    printf("\t\t  Menu\n\r");
+    printf("\t\t--------\r\n");        
+    printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
+    printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
     printf("\t\tc. Clear LCD\r\n");
     printf("\t\t-. Send hyphen to LCD\r\n");
     printf("\t\t~. LCD message APSC1299\r\n");
@@ -98,6 +100,8 @@ void main(void)
             // if(UART1_is_tx_ready()) // out RC6
             if (rxData == '1') readbatteryvoltage();   // read battery voltage 
                                                        //  and send to PuTTY
+            else if (rxData == '2') sendbatteryvoltage();   // send battery voltage to LCD
+                                                       //  and send to PuTTY
             else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
             else if (rxData == '-') send_hyphen();     // send hyphen to LCD
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
@@ -109,7 +113,7 @@ void main(void)
     }
 }
 
-void readbatteryvoltage(void)
+unsigned int readbatteryvoltage(void)
 {
     unsigned char lbyte, ubyte;
     
@@ -122,6 +126,31 @@ void readbatteryvoltage(void)
     while (!UART1_is_rx_ready()) continue;
     ubyte = UART1_Read();
     printf("%d mV\r\n", ubyte*256 + lbyte);
+    return (unsigned int)(ubyte*256 + lbyte);
+}
+
+// sends battery voltage to LCD
+void sendbatteryvoltage(void)
+{
+    unsigned int voltage;
+    char bat_volt[12];
+    unsigned char msg_length, i=0;
+    
+    voltage = readbatteryvoltage();
+    msg_length = sprintf(bat_volt, "%u mV", voltage);
+        while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB8);   // print LCD command to slave
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(msg_length);     // send eight characters
+    while (i<msg_length)
+    {
+        if(UART1_is_tx_ready())
+        {
+            UART1_Write(bat_volt[i]);
+            i++;
+        }
+    }
+    
 }
 
 // just to test that printing to the LCD is working
