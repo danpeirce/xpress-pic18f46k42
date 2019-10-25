@@ -47,6 +47,8 @@
 #include <stdio.h>
 
 void readbatteryvoltage(void);
+void send_hyphen(void);
+void send_APSC1299(void);
 
 /*
                          Main application
@@ -70,6 +72,11 @@ void main(void)
     printf("\t\t  Menu\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t--------\r\n");        // I see putch() is defined in uart2.c
     printf("\t\t1. Display mV reading\r\n");
+    printf("\t\tc. Clear LCD\r\n");
+    printf("\t\t-. Send hyphen to LCD\r\n");
+    printf("\t\t~. LCD message APSC1299\r\n");
+    printf("\t\t?. LCD display error and hex 3F\r\n");
+    printf("\t\t' '. LCD display error and hex 20\r\n");
     printf("\t\t--------\r\n\n");
     
     
@@ -89,10 +96,13 @@ void main(void)
                 if(rxData == '\r') UART2_Write('\n'); // add newline to return
             }
             // if(UART1_is_tx_ready()) // out RC6
-            if (rxData == '1') readbatteryvoltage();
-            if (rxData == 'c') UART1_Write(0xB7);
-            if (rxData == '?') UART1_Write('?');
-            if (rxData == ' ') UART1_Write(' ');
+            if (rxData == '1') readbatteryvoltage();   // read battery voltage 
+                                                       //  and send to PuTTY
+            else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
+            else if (rxData == '-') send_hyphen();     // send hyphen to LCD
+            else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
+            else if (rxData == '?') UART1_Write('?');       // 3Pi will display error
+            else if (rxData == ' ') UART1_Write(' ');       // 3Pi will display error
             test2_PORT = 0;
         }
         test1_PORT = 0; 
@@ -112,6 +122,36 @@ void readbatteryvoltage(void)
     while (!UART1_is_rx_ready()) continue;
     ubyte = UART1_Read();
     printf("%d mV\r\n", ubyte*256 + lbyte);
+}
+
+// just to test that printing to the LCD is working
+void send_hyphen(void)
+{
+    // see https://www.pololu.com/docs/0J21/10.a 
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB8);   // print LCD command to slave
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(1);     // send one character
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write('-');   // send a hyphen
+}
+
+void send_APSC1299(void)
+{
+    unsigned char i=0, msg_length=8; // to send 8 characters
+    unsigned char msg[] = "APSC1299";
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB8);   // print LCD command to slave
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(msg_length);     // send eight characters
+    while (i<msg_length)
+    {
+        if(UART1_is_tx_ready())
+        {
+            UART1_Write(msg[i]);
+            i++;
+        }
+    }
 }
 
 /**
