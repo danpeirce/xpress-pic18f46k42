@@ -42,7 +42,9 @@ is also less expensive than the USB to serial board we have used in the past wit
 * sig.3p
     * Added send signation command
 	* also created LCD_print() function
-	
+	* block below was coppied from a PuTTY session in which the Signature feature
+	  was tested.
+	  
 ~~~~
         KPU APSC1299
 
