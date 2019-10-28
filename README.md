@@ -39,6 +39,31 @@ is also less expensive than the USB to serial board we have used in the past wit
 * bat.voltage.test
     * Connected PIC18F46K42 to 3Pi expansion and tested read voltage command.
 	* Section added below with more detail
+* sig.3p
+    * Added send signation command
+	* also created LCD_print() function
+	
+~~~~
+        KPU APSC1299
+
+                  Menu
+                --------
+                @. Pololu Signature?
+                1. Display mV reading
+                2. Display mV reading in LCD
+                c. Clear LCD
+                -. Send hyphen to LCD
+                ~. LCD message APSC1299
+                ?. LCD display error and hex 3F
+                ' '. LCD display error and hex 20
+                --------
+
+-
+c
+@
+        The Signature from 3Pi is: 3pi1.1
+c
+~~~~
 	
 ### timingtest1 tag
 
