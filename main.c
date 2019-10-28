@@ -208,20 +208,9 @@ void send_hyphen(void)
 
 void send_APSC1299(void)
 {
-    unsigned char i=0, msg_length=8; // to send 8 characters
-    unsigned char msg[] = "APSC1299";
-    while(!UART1_is_tx_ready()) continue;
-    UART1_Write(0xB8);   // print LCD command to slave
-    while(!UART1_is_tx_ready()) continue;
-    UART1_Write(msg_length);     // send eight characters
-    while (i<msg_length)
-    {
-        if(UART1_is_tx_ready())
-        {
-            UART1_Write(msg[i]);
-            i++;
-        }
-    }
+    char  msg_length=8; // to send 8 characters
+    char msg[] = "APSC1299";
+    LCD_print(msg, msg_length); 
 }
 
 /**
