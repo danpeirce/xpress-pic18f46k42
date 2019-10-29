@@ -144,6 +144,19 @@ the USB to serial functions.
 
 * The serial signal from PuTTY would be seen on RB7 of the target PIC if the pin were configured as an input. One would most 
   certainly want to configure RB6 as the PIC TX pin and RB7 as the PIC RX pin.
+
+## Mounting PIC XPRESS board on 3Pi Expansion board
+
+### Mount 1
+
+The first XPRESS board mount was forward on the 3Pi expansion board. This appeared to have a negative effect on the ballance and stability of
+the robot. For that reason I will attempt mounting the XPRESS board back over the wheels.
+
+![](images/xpress-mount1.jpg)
+
+### Mount 2
+
+* this has not been attempted yet
   
 ## Code Configurator settings
 
