@@ -40,7 +40,7 @@ is also less expensive than the USB to serial board we have used in the past wit
     * Connected PIC18F46K42 to 3Pi expansion and tested read voltage command.
 	* Section added below with more detail
 * sig.3p
-    * Added send signation command
+    * Added send Signature command
 	* also created LCD_print() function
 	* block below was coppied from a PuTTY session in which the Signature feature
 	  was tested.
