@@ -52,6 +52,8 @@ void send_hyphen(void);
 void send_APSC1299(void);
 void display_signature(void);
 void LCD_print(char *str, char length);
+void LCD_line2(void);
+void sendchar(char a_char);
 
 /*
                          Main application
@@ -80,6 +82,7 @@ void main(void)
     printf("\t\tc. Clear LCD\r\n");
     printf("\t\t-. Send hyphen to LCD\r\n");
     printf("\t\t~. LCD message APSC1299\r\n");
+    printf("\t\treturn. LCD go to start of line two\r\n");
     printf("\t\t?. LCD display error and hex 3F\r\n");
     printf("\t\t' '. LCD display error and hex 20\r\n");
     printf("\t\t--------\r\n\n");
@@ -109,8 +112,9 @@ void main(void)
             else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
             else if (rxData == '-') send_hyphen();     // send hyphen to LCD
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
-            else if (rxData == '?') UART1_Write('?');       // 3Pi will display error
-            else if (rxData == ' ') UART1_Write(' ');       // 3Pi will display error
+            else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
+            else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
+
             test2_PORT = 0;
         }
         test1_PORT = 0; 
@@ -157,6 +161,16 @@ void sendbatteryvoltage(void)
     
 }
 
+void sendchar(char a_char)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB8);   // print LCD command to slave
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(1);     // send one character
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(a_char);     // send one character
+}
+
 void LCD_print(char *str, char length)
 {
     char i=0;
@@ -173,6 +187,16 @@ void LCD_print(char *str, char length)
             i++;
         }
     }
+}
+
+void LCD_line2(void)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB9);   // goto LCD position
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0x00);   // column 0
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0x01);   // row 1
 }
 
 void display_signature(void)
