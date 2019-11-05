@@ -66,6 +66,11 @@ c
         The Signature from 3Pi is: 3pi1.1
 c
 ~~~~
+
+* LCDtype tag
+
+    * Typing Characters not in menu will result in sending character to LCD
+    * Enter key (return character) will move cursor to beginning of second line of display (character zero row one).
 	
 ### timingtest1 tag
 
@@ -122,10 +127,7 @@ Used UART1 of PIC18F46K42 to communicate with the 3Pi robot. Used UART2 to commu
 
 ![](images/bat-voltage.png)
 
-### LCDtype tag
 
-* Typing Characters not in menu will result in sending character to LCD
-* Enter key (return character) will move cursor to beginning of second line of display (character zero row one).
 
 ## More info on the DM182026
 
