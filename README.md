@@ -17,7 +17,7 @@ a virtual com port.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
 
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Baord
+## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
 
 ![](images/uart-forward-2-1.jpg)
 
