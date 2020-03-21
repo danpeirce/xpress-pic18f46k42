@@ -5,7 +5,10 @@ Initial testing of Microchip XPRESS board with the PIC18F46K42 target MCU.
 The example Microchip Code Configurator was used to generate most of the code in the initial commit of this project.
 It was my first attempt at using the Code Configurator tool. Example code for main was found in UART.h.
 
-All this first example does is echo back code received on the USART Rx line. In this case no interrupts have been used.
+So far no interrupts have been used.
+
+A branch has been added to the project for basic testing of the XPRESS board. See 
+[https://github.com/danpeirce/xpress-pic18f46k43/tree/test-Xpress](https://github.com/danpeirce/xpress-pic18f46k43/tree/test-Xpress).
 
 
 ## Board Features
