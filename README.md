@@ -166,7 +166,13 @@ the robot. For that reason I will attempt mounting the XPRESS board back over th
 
 ### Mount 2
 
-* this has not been attempted yet
+For better stability the XPRESS board was moved over the wheels.
+
+![](images/expansion-mounted-2-s.jpg)
+  
+Wiring under the XPRESS board.
+
+![](images/expansion-wire-s.jpg)
   
 ## Code Configurator settings
 
