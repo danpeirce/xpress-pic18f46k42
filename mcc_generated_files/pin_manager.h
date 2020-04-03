@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for .
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.80.0
         Device            :  PIC18F46K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.05 and above
-        MPLAB 	          :  MPLAB X 5.20	
+        Compiler          :  XC8 2.10 and above
+        MPLAB 	          :  MPLAB X 5.30	
 */
 
 /*
@@ -176,90 +176,6 @@ void PIN_MANAGER_Initialize (void);
     PIN_MANAGER_IOC();
  */
 void PIN_MANAGER_IOC(void);
-
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Interrupt on Change Handler for the IOCBF7 pin functionality
- * @Example
-    IOCBF7_ISR();
- */
-void IOCBF7_ISR(void);
-
-/**
-  @Summary
-    Interrupt Handler Setter for IOCBF7 pin interrupt-on-change functionality
-
-  @Description
-    Allows selecting an interrupt handler for IOCBF7 at application runtime
-    
-  @Preconditions
-    Pin Manager intializer called
-
-  @Returns
-    None.
-
-  @Param
-    InterruptHandler function pointer.
-
-  @Example
-    PIN_MANAGER_Initialize();
-    IOCBF7_SetInterruptHandler(MyInterruptHandler);
-
-*/
-void IOCBF7_SetInterruptHandler(void (* InterruptHandler)(void));
-
-/**
-  @Summary
-    Dynamic Interrupt Handler for IOCBF7 pin
-
-  @Description
-    This is a dynamic interrupt handler to be used together with the IOCBF7_SetInterruptHandler() method.
-    This handler is called every time the IOCBF7 ISR is executed and allows any function to be registered at runtime.
-    
-  @Preconditions
-    Pin Manager intializer called
-
-  @Returns
-    None.
-
-  @Param
-    None.
-
-  @Example
-    PIN_MANAGER_Initialize();
-    IOCBF7_SetInterruptHandler(IOCBF7_InterruptHandler);
-
-*/
-extern void (*IOCBF7_InterruptHandler)(void);
-
-/**
-  @Summary
-    Default Interrupt Handler for IOCBF7 pin
-
-  @Description
-    This is a predefined interrupt handler to be used together with the IOCBF7_SetInterruptHandler() method.
-    This handler is called every time the IOCBF7 ISR is executed. 
-    
-  @Preconditions
-    Pin Manager intializer called
-
-  @Returns
-    None.
-
-  @Param
-    None.
-
-  @Example
-    PIN_MANAGER_Initialize();
-    IOCBF7_SetInterruptHandler(IOCBF7_DefaultInterruptHandler);
-
-*/
-void IOCBF7_DefaultInterruptHandler(void);
 
 
 

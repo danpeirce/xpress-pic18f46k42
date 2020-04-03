@@ -87,7 +87,7 @@ void main(void)
     printf("\t\t' '. LCD display error and hex 20\r\n");
     printf("\t\t--------\r\n\n");
     
-    
+    sendbatteryvoltage(); // sends battery voltage to both LCD and USB
     
     while (1)
     {

@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for UART1.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.80.0
         Device            :  PIC18F46K42
         Driver Version    :  2.4.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.05 and above
-        MPLAB             :  MPLAB X 5.20
+        Compiler          :  XC8 2.10 and above
+        MPLAB             :  MPLAB X 5.30
 */
 
 /*
@@ -96,8 +96,8 @@ void UART1_Initialize(void)
     // TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
     U1CON2 = 0x00;
 
-    // BRGL 103; 
-    U1BRGL = 0x67;
+    // BRGL 25; 
+    U1BRGL = 0x19;
 
     // BRGH 0; 
     U1BRGH = 0x00;
