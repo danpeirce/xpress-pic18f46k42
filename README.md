@@ -20,6 +20,14 @@ This board has a USB microB connector. It has a PIC MCU on board configured to a
 a multifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
 is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
 
+### Pins Used
+
+![](images/pins.png)
+
+* UART1 is at 115200 baud. Tx1 is on RC6.
+* UART2 is connected to the XPRESS boards USB interface PIC. 
+    * Communication between UART2 and the interface IC is at 9600 baud.
+
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
 ### Mount 1
