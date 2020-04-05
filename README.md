@@ -28,6 +28,17 @@ is also less expensive than the USB to serial board we have used in the past wit
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
 
+## Pololu 3Pi robot
+
+The robot is running the serial slave program from Pololu. This will allow the 3Pi robot to be 
+controlled from a XPRESS board.
+
+* [10.a. Serial slave program](https://www.pololu.com/docs/0J21/all#10.a)
+
+More information on the Pololu 3Pi robot
+
+* [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
+
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
 ### Mount 1
