@@ -55,6 +55,8 @@ void LCD_print(char *str, char length);
 void LCD_line2(void);
 void sendchar(char a_char);
 
+bool usb_power = 0;
+
 /*
                          Main application
  */
@@ -72,22 +74,31 @@ void main(void)
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
-
-    printf("\tKPU APSC1299\n\n\r");
-    printf("\t\t  Menu\n\r");
-    printf("\t\t--------\r\n");  
-    printf("\t\t@. Pololu Signature?\r\n"); 
-    printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
-    printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
-    printf("\t\tc. Clear LCD\r\n");
-    printf("\t\t-. Send hyphen to LCD\r\n");
-    printf("\t\t~. LCD message APSC1299\r\n");
-    printf("\t\treturn. LCD go to start of line two\r\n");
-    printf("\t\t?. LCD display error and hex 3F\r\n");
-    printf("\t\t' '. LCD display error and hex 20\r\n");
-    printf("\t\t--------\r\n\n");
+    usb_power = RB7_GetValue();
+    // the delay caused by these printf statements ensures 3Pi has time to
+    // be ready for LCD commands
+    {
+        printf("\tKPU APSC1299\n\n\r");
+        printf("\t\t  Menu\n\r");
+        printf("\t\t--------\r\n");  
+        printf("\t\t@. Pololu Signature?\r\n"); 
+        printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
+        printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
+        printf("\t\tc. Clear LCD\r\n");
+        printf("\t\t-. Send hyphen to LCD\r\n");
+        printf("\t\t~. LCD message APSC1299\r\n");
+        printf("\t\treturn. LCD go to start of line two\r\n");
+        printf("\t\t?. LCD display error and hex 3F\r\n");
+        printf("\t\t' '. LCD display error and hex 20\r\n");
+        printf("\t\t--------\r\n\n");
+    }
     
     sendbatteryvoltage(); // sends battery voltage to both LCD and USB
+    if (!usb_power)
+    {
+        LCD_line2();
+        LCD_print("no COM", 6);
+    }
     
     while (1)
     {
