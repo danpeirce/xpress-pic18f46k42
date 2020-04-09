@@ -55,7 +55,6 @@ void LCD_print(char *str, char length);
 void LCD_line2(void);
 void sendchar(char a_char);
 
-bool usb_power = 0;
 
 /*
                          Main application
@@ -74,7 +73,7 @@ void main(void)
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
-    usb_power = RB7_GetValue();
+   
     // the delay caused by these printf statements ensures 3Pi has time to
     // be ready for LCD commands
     {
@@ -92,13 +91,11 @@ void main(void)
         printf("\t\t' '. LCD display error and hex 20\r\n");
         printf("\t\t--------\r\n\n");
     }
-    
+
     sendbatteryvoltage(); // sends battery voltage to both LCD and USB
-    if (!usb_power)
-    {
-        LCD_line2();
-        LCD_print("no COM", 6);
-    }
+    LCD_line2();
+    if (roam_PORT) LCD_print("Roam", 4);
+    else LCD_print("No Roam", 7);
     
     while (1)
     {

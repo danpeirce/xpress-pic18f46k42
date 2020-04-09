@@ -12,11 +12,11 @@ A branch has been added to the project for basic testing of the XPRESS board. Se
 
 ## Tags
 
-The tags section has been moved to a new file **tags-readme-april2020.md**
+The tags section has been moved to a new file **tags-readme-April2020.md**
 
 ## Board Features
 
-This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumarates as 
+This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
 a multifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
 is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
 
@@ -27,6 +27,9 @@ is also less expensive than the USB to serial board we have used in the past wit
 * UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
+* roam input used to determine if robot should
+    1. Stay in place (perhaps for programming)
+	2. Roam (perhaps following a line)
 
 ## Pololu 3Pi robot
 
@@ -43,8 +46,8 @@ More information on the Pololu 3Pi robot
 
 ### Mount 1
 
-The first XPRESS board mount was forward on the 3Pi expansion board. This appeared to have a negative effect on the ballance and stability of
-the robot. For a scond mount possition was tested.
+The first XPRESS board mount was forward on the 3Pi expansion board. This appeared to have a negative effect on the balance and stability of
+the robot. For a second mount position was tested.
 
 ![](images/xpress-mount1.jpg)
 
@@ -57,6 +60,16 @@ For better stability the XPRESS board was moved over the wheels.
 Wiring under the XPRESS board.
 
 ![](images/expansion-wire-s.jpg)
+
+## Roam and No Roam Shunt Jumper
+
+The image below shows the jumper in the no roam possition.
+  
+![](images/no_roam_s.jpg)
+
+## Pull up on RX2/RB7
+
+A 10 Kohm pull up resistor was added to RX2 for better reliability when USB cable is not attached.  
   
 ## Code Configurator settings
 
