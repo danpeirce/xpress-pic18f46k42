@@ -67,6 +67,12 @@ The image below shows the jumper in the no roam possition.
   
 ![](images/no_roam_s.jpg)
 
+## Autocalibrates when in Roam mode
+
+Will autocalibrate the sensors if in Roam mode. 
+For meaningful results the robot should be sitting over a black tape line. The robot will spin to the left and right sweeping 
+the sensors over the line so that normalized readings can be calculated.
+
 ## Pull up on RX2/RB7
 
 A 10 Kohm pull up resistor was added to RX2 for better reliability when USB cable is not attached.  

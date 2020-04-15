@@ -54,6 +54,7 @@ void display_signature(void);
 void LCD_print(char *str, char length);
 void LCD_line2(void);
 void sendchar(char a_char);
+void calibrate(void);
 
 
 /*
@@ -96,6 +97,8 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
+    
+    if (roam_PORT) calibrate();
     
     while (1)
     {
@@ -245,6 +248,19 @@ void send_APSC1299(void)
     LCD_print(msg, msg_length); 
 }
 
+void calibrate(void)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xBA);   // autocalibration command to slave
+    while(!UART1_is_rx_ready()) continue;
+    while(UART1_Read() != 'c')
+    {
+        while(!UART1_is_rx_ready()) continue;
+    }
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB7);   // clear LCD
+    LCD_print("Cal Done", 8); // LCD msg
+}
 /**
  End of File
 */
