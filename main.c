@@ -55,6 +55,7 @@ void LCD_print(char *str, char length);
 void LCD_line2(void);
 void sendchar(char a_char);
 void calibrate(void);
+void go_pd(void);
 
 
 /*
@@ -98,7 +99,11 @@ void main(void)
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
     
-    if (roam_PORT) calibrate();
+    if (roam_PORT) 
+    {
+        calibrate();
+        go_pd();
+    }
     
     while (1)
     {
@@ -261,6 +266,24 @@ void calibrate(void)
     UART1_Write(0xB7);   // clear LCD
     LCD_print("Cal Done", 8); // LCD msg
 }
+
+void go_pd()
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xBB);   // start PD control
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(50);   // set speed to 100
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(1);   // set a = 1
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(20);   // set b = 20
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(3);   // set c = 3
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xBA);   // set d = 2
+    while(1); // just keep line following forever
+}
+
 /**
  End of File
 */

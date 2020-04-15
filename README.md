@@ -73,6 +73,12 @@ Will autocalibrate the sensors if in Roam mode.
 For meaningful results the robot should be sitting over a black tape line. The robot will spin to the left and right sweeping 
 the sensors over the line so that normalized readings can be calculated.
 
+## Proportional Derivative Control in Roam mode
+
+Another function has been added to allow the MCU on the main board of the 3Pi robot to run proportional derivative code 
+when the robot is in Roam mode. The robot follows sharp turns and curves but knows nothing of gaps and other APSC1299 
+special obstacles. This could possibly work fine for demos. 
+
 ## Pull up on RX2/RB7
 
 A 10 Kohm pull up resistor was added to RX2 for better reliability when USB cable is not attached.  
