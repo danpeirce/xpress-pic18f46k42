@@ -47,6 +47,7 @@
 #include <stdio.h>
 
 unsigned int readbatteryvoltage(void);
+void readsensors(void);
 void sendbatteryvoltage(void);
 void send_hyphen(void);
 void send_APSC1299(void);
@@ -98,11 +99,19 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
-    
+     
     if (roam_PORT) 
     {
         calibrate();
-        go_pd();
+        // go_pd();    // comment out so sensor readings easily displayed
+                       // while tethered with USB cable
+        while(1)
+        {
+            //test2_PORT = 1;
+            readsensors();
+            //test2_PORT = 0;
+            __delay_ms(1000);
+        }
     }
     
     while (1)
@@ -151,6 +160,30 @@ unsigned int readbatteryvoltage(void)
     ubyte = UART1_Read();
     printf("%d mV\r\n", ubyte*256 + lbyte);
     return (unsigned int)(ubyte*256 + lbyte);
+}
+
+void readsensors(void)
+{
+    unsigned char lbyte[5], ubyte[5], i;
+    
+    printf("\r\n\tSensor Readings =  ");
+    
+    while(!UART1_is_tx_ready()) continue;
+    test2_PORT = 1;
+    UART1_Write(0x87);
+    for (i=0;i<5;i++)
+    {
+        while (!UART1_is_rx_ready()) continue;
+        lbyte[i] = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        ubyte[i] = UART1_Read();
+    }
+    test2_PORT = 0;
+    for (i=0;i<5;i++)
+    {
+        printf("%d, ", ubyte[i]*256 + lbyte[i]);
+    }
+    printf("\r\n\r\n");
 }
 
 // sends battery voltage to LCD

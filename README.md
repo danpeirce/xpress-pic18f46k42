@@ -73,7 +73,23 @@ Will autocalibrate the sensors if in Roam mode.
 For meaningful results the robot should be sitting over a black tape line. The robot will spin to the left and right sweeping 
 the sensors over the line so that normalized readings can be calculated.
 
+## Read Sensors
+
+Code was added to read the sensors and send the calibrated numbers to PuTTY.
+**test2_PORT** was used to provide timing to a DSO so that the time required to read all 5 sensors and load that data into the
+PIC18F46K42 could be measured. The time was **2.46 mS**.
+
+The test points are shown in this image:
+
+![](images/time-test-point.jpg)
+
+The timing signal from test2_PORT on the Digital Storage Oscilloscope:
+
+![](images/time-read-sensors.jpg)
+
 ## Proportional Derivative Control in Roam mode
+
+The code for this is not reached in the test-read-sensors branch!
 
 Another function has been added to allow the MCU on the main board of the 3Pi robot to run proportional derivative code 
 when the robot is in Roam mode. The robot follows sharp turns and curves but knows nothing of gaps and other APSC1299 
