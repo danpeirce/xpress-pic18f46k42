@@ -95,6 +95,32 @@ Another function has been added to allow the MCU on the main board of the 3Pi ro
 when the robot is in Roam mode. The robot follows sharp turns and curves but knows nothing of gaps and other APSC1299 
 special obstacles. This could possibly work fine for demos. 
 
+
+### Can Read Sensors in PDI Mode
+
+The code below is from the slave program. The important point of this is the slave will send sensor values while 
+in PDI mode. It sends the most recent read values rather than read them again.
+
+~~~~c
+// Reads the line sensors and sends their values.  This function can
+// do either calibrated or uncalibrated readings.  When doing calibrated readings,
+// it only performs a new reading if we are not in PID mode.  Otherwise, it sends
+// the most recent result immediately.
+void send_sensor_values(char calibrated)
+{
+    if(calibrated)
+    {
+        if(!pid_enabled)
+            read_line_sensors_calibrated(sensors, IR_EMITTERS_ON);
+    }
+    else
+        read_line_sensors(sensors, IR_EMITTERS_ON);
+    serial_send_blocking((char *)sensors, 10);
+}
+~~~~
+
+
+
 ## Pull up on RX2/RB7
 
 A 10 Kohm pull up resistor was added to RX2 for better reliability when USB cable is not attached.  
