@@ -96,10 +96,10 @@ when the robot is in Roam mode. The robot follows sharp turns and curves but kno
 special obstacles. This could possibly work fine for demos. 
 
 
-### Can Read Sensors in PDI Mode
+### Can Read Sensors in PID Mode
 
 The code below is from the slave program. The important point of this is the slave will send sensor values while 
-in PDI mode. It sends the most recent read values rather than read them again.
+in PID mode. It sends the most recent read values rather than read them again.
 
 ~~~~c
 // Reads the line sensors and sends their values.  This function can
