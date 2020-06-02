@@ -75,7 +75,22 @@ the sensors over the line so that normalized readings can be calculated.
 
 ## Read Sensors
 
-Code was added to read the sensors and send the calibrated numbers to PuTTY.
+Code was added to read the sensors while the **slave** is executing proportional derivative control. 
+
+* see **Proportional Derivative Control in Roam mode** section down below.
+
+Unlike the **test-read-sensors** branch the sensor values are not sent to PuTTY.
+
+Currently in the main branch far left and far right sensor are checked to see if they are greater than 500. If either are greater than
+500 it is assumed a line was seen on the far left or far right and this causes the robot to exit proportional derivative control. It just
+stops and does nothing in that case. 
+
+Note that this is simply a test to ensure that the slave can successfully both run proportional derivative control and report sensor 
+readings back to the PIC on the Xpress board.
+
+
+In this branch the test2_PORT signals are ignored! The following was used only in the **test-read-sensors** branch:
+
 **test2_PORT** was used to provide timing to a DSO so that the time required to read all 5 sensors and load that data into the
 PIC18F46K42 could be measured. The time was **2.46 mS**.
 
@@ -88,8 +103,6 @@ The timing signal from test2_PORT on the Digital Storage Oscilloscope:
 ![](images/time-read-sensors.jpg)
 
 ## Proportional Derivative Control in Roam mode
-
-The code for this is not reached in the test-read-sensors branch!
 
 Another function has been added to allow the MCU on the main board of the 3Pi robot to run proportional derivative code 
 when the robot is in Roam mode. The robot follows sharp turns and curves but knows nothing of gaps and other APSC1299 

@@ -47,7 +47,7 @@
 #include <stdio.h>
 
 unsigned int readbatteryvoltage(void);
-void readsensors(void);
+unsigned int* readsensors(void);
 void sendbatteryvoltage(void);
 void send_hyphen(void);
 void send_APSC1299(void);
@@ -57,6 +57,7 @@ void LCD_line2(void);
 void sendchar(char a_char);
 void calibrate(void);
 void go_pd(void);
+void stop_pd(void);
 
 
 /*
@@ -102,15 +103,22 @@ void main(void)
      
     if (roam_PORT) 
     {
+        unsigned int * sensorvalues;
         calibrate();
-        // go_pd();    // comment out so sensor readings easily displayed
+        go_pd();    // comment out so sensor readings easily displayed
                        // while tethered with USB cable
         while(1)
         {
+            
             //test2_PORT = 1;
-            readsensors();
+            sensorvalues = readsensors();
             //test2_PORT = 0;
-            __delay_ms(1000);
+            __delay_ms(6);
+            if ((*sensorvalues > 500) || (*(sensorvalues+4)>500))
+            {
+                stop_pd();
+                while(1);
+            }
         }
     }
     
@@ -162,9 +170,10 @@ unsigned int readbatteryvoltage(void)
     return (unsigned int)(ubyte*256 + lbyte);
 }
 
-void readsensors(void)
+unsigned int* readsensors(void)
 {
     unsigned char lbyte[5], ubyte[5], i;
+    static unsigned int values[5];
     
     printf("\r\n\tSensor Readings =  ");
     
@@ -177,13 +186,11 @@ void readsensors(void)
         lbyte[i] = UART1_Read();
         while (!UART1_is_rx_ready()) continue;
         ubyte[i] = UART1_Read();
+        values[i] = ubyte[i]*256 + lbyte[i];
     }
     test2_PORT = 0;
-    for (i=0;i<5;i++)
-    {
-        printf("%d, ", ubyte[i]*256 + lbyte[i]);
-    }
-    printf("\r\n\r\n");
+
+    return values;
 }
 
 // sends battery voltage to LCD
@@ -300,7 +307,7 @@ void calibrate(void)
     LCD_print("Cal Done", 8); // LCD msg
 }
 
-void go_pd()
+void go_pd(void)
 {
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xBB);   // start PD control
@@ -314,9 +321,14 @@ void go_pd()
     UART1_Write(3);   // set c = 3
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xBA);   // set d = 2
-    while(1); // just keep line following forever
 }
 
+
+void stop_pd(void)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xBC);   // stop PD control
+}
 /**
  End of File
 */
