@@ -4,6 +4,12 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <logicalFolder name="MCC Generated Files"
+                     displayName="MCC Generated Files"
+                     projectFiles="true">
+        <itemPath>mcc_generated_files/ccp1.h</itemPath>
+        <itemPath>mcc_generated_files/tmr1.h</itemPath>
+      </logicalFolder>
       <itemPath>mcc_generated_files/device_config.h</itemPath>
       <itemPath>mcc_generated_files/mcc.h</itemPath>
       <itemPath>mcc_generated_files/pin_manager.h</itemPath>
@@ -17,6 +23,12 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="MCC Generated Files"
+                     displayName="MCC Generated Files"
+                     projectFiles="true">
+        <itemPath>mcc_generated_files/tmr1.c</itemPath>
+        <itemPath>mcc_generated_files/ccp1.c</itemPath>
+      </logicalFolder>
       <itemPath>mcc_generated_files/device_config.c</itemPath>
       <itemPath>mcc_generated_files/mcc.c</itemPath>
       <itemPath>mcc_generated_files/pin_manager.c</itemPath>

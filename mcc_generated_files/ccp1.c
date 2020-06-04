@@ -1,24 +1,24 @@
 /**
-  @Generated PIC10 / PIC12 / PIC16 / PIC18 MCUs Header File
+  CCP1 Generated Driver File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    mcc.h
+  @File Name
+    ccp1.c
 
-  @Summary:
-    This is the mcc.h file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary
+    This is the generated driver implementation file for the CCP1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description
+    This source file provides implementations for driver APIs for CCP1.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.80.0
         Device            :  PIC18F46K42
-        Driver Version    :  2.00
+        Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above or later
-        MPLAB             :  MPLAB X 5.30
+        Compiler          :  XC8 2.10 and above
+         MPLAB 	          :  MPLAB X 5.30
 */
 
 /*
@@ -44,62 +44,61 @@
     SOFTWARE.
 */
 
-#ifndef MCC_H
-#define	MCC_H
+/**
+  Section: Included Files
+*/
+
 #include <xc.h>
-#include "device_config.h"
-#include "pin_manager.h"
-#include <stdint.h>
-#include <stdbool.h>
-#include <conio.h>
-#include "tmr1.h"
 #include "ccp1.h"
-#include "uart2.h"
-#include "uart1.h"
-
-
 
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
- */
-void SYSTEM_Initialize(void);
+  Section: Compare Module APIs:
+*/
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
-void OSCILLATOR_Initialize(void);
+void CCP1_Initialize(void)
+{
+    // Set the CCP1 to the options selected in the User Interface
+	
+	// MODE Setoutput; EN enabled; FMT right_aligned; 
+	CCP1CON = 0x88;    
+	
+	// RH 0; 
+	CCPR1H = 0x00;    
+	
+	// RL 0; 
+	CCPR1L = 0x00;    
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the PMD module to the default states configured in the
- *                  MCC GUI
- * @Example
-    PMD_Initialize(void);
- */
-void PMD_Initialize(void);
+	// Selecting Timer 1
+	CCPTMRS0bits.C1TSEL = 0x1;
+    
+}
+
+void CCP1_SetCompareCount(uint16_t compareCount)
+{
+    CCP1_PERIOD_REG_T module;
+    
+    // Write the 16-bit compare value
+    module.ccpr1_16Bit = compareCount;
+    
+    CCPR1L = module.ccpr1l;
+    CCPR1H = module.ccpr1h;
+}
+
+bool CCP1_OutputStatusGet(void)
+{
+    // Returns the output status
+    return(CCP1CONbits.OUT);
+}
 
 
-#endif	/* MCC_H */
+bool CCP1_IsCompareComplete(void)
+{
+    // Check if compare is complete by reading "CCPIF" flag.
+    bool status = PIR4bits.CCP1IF;
+    if(status)
+        PIR4bits.CCP1IF = 0;
+    return (status);
+}
 /**
  End of File
 */
