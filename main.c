@@ -58,6 +58,7 @@ void sendchar(char a_char);
 void calibrate(void);
 void go_pd(void);
 void stop_pd(void);
+void print_sensors(void);
 
 
 /*
@@ -88,6 +89,7 @@ void main(void)
         printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
         printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
         printf("\t\tc. Clear LCD\r\n");
+        printf("\t\ts. Print Sensor Values\r\n");
         printf("\t\t-. Send hyphen to LCD\r\n");
         printf("\t\t~. LCD message APSC1299\r\n");
         printf("\t\treturn. LCD go to start of line two\r\n");
@@ -100,19 +102,20 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
-     
+    TMR1_StartTimer();
+    //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
+    //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
         calibrate();
+
         go_pd();    // comment out so sensor readings easily displayed
                        // while tethered with USB cable
         while(1)
         {
             
-            //test2_PORT = 1;
             sensorvalues = readsensors();
-            //test2_PORT = 0;
             __delay_ms(6);
             if ((*sensorvalues > 500) || (*(sensorvalues+4)>500))
             {
@@ -127,6 +130,7 @@ void main(void)
         char rxData;
             // Logic to echo received data
         test1_PORT = 1;
+        //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
@@ -143,6 +147,7 @@ void main(void)
                                                        //  and send to PuTTY
             else if (rxData == '@') display_signature();
             else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
+            else if (rxData == 's') print_sensors();     // print values loop
             else if (rxData == '-') send_hyphen();     // send hyphen to LCD
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
@@ -152,6 +157,23 @@ void main(void)
         }
         test1_PORT = 0; 
     }
+}
+
+void print_sensors(void)
+{
+    unsigned int * sensorvalues;
+    calibrate();
+    while(1)
+    {
+        sensorvalues = readsensors();
+        __delay_ms(50);
+        printf("\rsensor values = %5u, ", *sensorvalues);
+        printf("%5u, ", *(sensorvalues+1));
+        printf("%5u, ", *(sensorvalues+2));
+        printf("%5u, ", *(sensorvalues+3));
+        printf("%5u, ", *(sensorvalues+4));
+    }
+    
 }
 
 unsigned int readbatteryvoltage(void)
@@ -175,7 +197,7 @@ unsigned int* readsensors(void)
     unsigned char lbyte[5], ubyte[5], i;
     static unsigned int values[5];
     
-    printf("\r\n\tSensor Readings =  ");
+    // printf("\r\n\tSensor Readings =  ");
     
     while(!UART1_is_tx_ready()) continue;
     test2_PORT = 1;
