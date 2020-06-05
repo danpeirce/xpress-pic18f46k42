@@ -166,12 +166,13 @@ void print_sensors(void)
     while(1)
     {
         sensorvalues = readsensors();
-        __delay_ms(50);
-        printf("\rsensor values = %5u, ", *sensorvalues);
-        printf("%5u, ", *(sensorvalues+1));
-        printf("%5u, ", *(sensorvalues+2));
-        printf("%5u, ", *(sensorvalues+3));
-        printf("%5u, ", *(sensorvalues+4));
+        __delay_ms(80);
+        printf("\rsensor values = %4u, ", *sensorvalues);
+        printf("%4u, ", *(sensorvalues+1));
+        printf("%4u, ", *(sensorvalues+2));
+        printf("%4u, ", *(sensorvalues+3));
+        printf("%4u", *(sensorvalues+4));
+        printf(" | Timer Value = %5u",TMR1_ReadTimer());
     }
     
 }

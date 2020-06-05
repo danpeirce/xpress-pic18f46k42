@@ -119,9 +119,16 @@ NiMH cells on the robot. A 9 volt external AC-DC adaptor provides power to the b
 
 ![](images/charging-sm.jpg)
 
-Showing the 75 ohm resistor (located under the expansion board.
+Showing the 75 ohm 2 watt resistor (located under the expansion board.
 
 ![](images/charging-75ohm-sm.jpg)
+
+**Will update photos. Had to move one jumper to top side of board as it caused rubbing on right wheel. Also bend tab on barrow connector
+so it is flush on board before soldering.**
+  
+** Added Print Sensor Values to menu
+
+Can now print sensor values in PuTTY when in No Roam mode. Can move robot over track by hand.  
   
 ## Code Configurator settings
 
