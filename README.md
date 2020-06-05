@@ -126,7 +126,7 @@ Showing the 75 ohm 2 watt resistor (located under the expansion board.
 **Will update photos. Had to move one jumper to top side of board as it caused rubbing on right wheel. Also bend tab on barrow connector
 so it is flush on board before soldering.**
   
-** Added Print Sensor Values to menu
+## Added Print Sensor Values to menu
 
 Can now print sensor values in PuTTY when in No Roam mode. Can move robot over track by hand.  
   
