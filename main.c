@@ -103,21 +103,28 @@ void main(void)
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
     TMR1_StartTimer();
+    TMR2_StartTimer();
+    TMR3_StartTimer();
     //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
     //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
+        unsigned int time1;
         calibrate();
-
+        time1 = TMR3_ReadTimer()+57;
         go_pd();    // comment out so sensor readings easily displayed
                        // while tethered with USB cable
         while(1)
         {
-            
+            if (TMR3_ReadTimer()>time1)
+            {
+                stop_pd();
+                while(1);
+            }
             sensorvalues = readsensors();
             __delay_ms(6);
-            if ((*sensorvalues > 500) || (*(sensorvalues+4)>500))
+            if ((*sensorvalues > 500) && (*(sensorvalues+4)>500))
             {
                 stop_pd();
                 while(1);
@@ -172,7 +179,7 @@ void print_sensors(void)
         printf("%4u, ", *(sensorvalues+2));
         printf("%4u, ", *(sensorvalues+3));
         printf("%4u", *(sensorvalues+4));
-        printf(" | Timer Value = %5u",TMR1_ReadTimer());
+        printf(" | Timer Value = %5u",TMR3_ReadTimer());
     }
     
 }

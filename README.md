@@ -30,6 +30,7 @@ is also less expensive than the USB to serial board we have used in the past wit
 * roam input used to determine if robot should
     1. Stay in place (perhaps for programming)
 	2. Roam (perhaps following a line)
+* PWM output at about 1 KHz on pad RC4 (set to 10% duty cycle)
 
 ## Pololu 3Pi robot
 
@@ -41,6 +42,28 @@ controlled from a XPRESS board.
 More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
+
+### Time Branch (as of June 5, 2020)
+
+#### Roam Mode
+
+In roam mode the robot will 
+
+1.  do a self calibration of the sensors and then follow a line for approximatly 10 seconds. 
+2.  If the robot detects a line on both the far left and far right at the same time it will stop until power is cycled off and on. 
+    Picking the robot up will have the same effect of shutting the robot down until power is recycled.
+	
+#### No Roam Mode
+
+The purpose of no Roam Mode is to
+
+1. Allow the robot to be programmed
+2. Allow the robot batteries to be charged
+3. Allow the robot to be in an interactive mode in which a USB cable and PuTTY can be used to control the robot and check sensor readings.
+
+The menu meantioned in list item 3. looks as follows:
+
+![](images/menu-time.png)
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
