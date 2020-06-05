@@ -123,7 +123,7 @@ Showing the 75 ohm 2 watt resistor (located under the expansion board.
 
 ![](images/charging-75ohm-sm.jpg)
 
-**Will update photos. Had to move one jumper to top side of board as it caused rubbing on right wheel. Also bend tab on barrow connector
+**Will update photos. Had to move one jumper to top side of board as it caused rubbing on right wheel. Also bend tab on barrel connector
 so it is flush on board before soldering.**
   
 ## Added Print Sensor Values to menu
