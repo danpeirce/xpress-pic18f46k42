@@ -1,6 +1,6 @@
 # Testing PIC18F46K42 XPRESS Board
 
-Initial testing of Microchip XPRESS board with the PIC18F46K42 target MCU.
+Initial testing of Microchip XPRESS board with the PIC18F46K42 target MCU. Most resent testing has been covered in a private repository.
 
 The example Microchip Code Configurator was used to generate most of the code in the initial commit of this project.
 It was my first attempt at using the Code Configurator tool. Example code for main was found in UART.h.
