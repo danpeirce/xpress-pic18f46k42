@@ -102,33 +102,32 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
-    TMR1_StartTimer();
-    TMR2_StartTimer();
-    TMR3_StartTimer();
+    TMR1_StartTimer();  // short times and clock source for timer 3
+    TMR2_StartTimer();  // PWM clock source (not used yet)
+    TMR3_StartTimer();  // long times
     //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
     //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
         unsigned int time1;
-		const unsigned int time1_inc = 57; // 57 for about 10 seconds
+        const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
-		time1 = TMR3_ReadTimer()+time1_inc;
-        go_pd();    // comment out so sensor readings easily displayed
-                       // while tethered with USB cable
+        time1 = TMR3_ReadTimer()+time1_inc;
+        go_pd();    // tell slave to start PID mode
         while(1)
         {
             tmr3read = TMR3_ReadTimer();
             if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
             {
-                stop_pd();
+                stop_pd(); // tell slave to stop PID mode
                 while(1);
             }
             sensorvalues = readsensors();
             __delay_ms(6);
             if ((*sensorvalues > 500) && (*(sensorvalues+4)>500))
             {
-                stop_pd();
+                stop_pd(); // tell slave to stop PID mode
                 while(1);
             }
         }
