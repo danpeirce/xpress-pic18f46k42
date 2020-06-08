@@ -111,13 +111,15 @@ void main(void)
     {
         unsigned int * sensorvalues;
         unsigned int time1;
+		const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
-        time1 = TMR3_ReadTimer()+57;
+		time1 = TMR3_ReadTimer()+time1_inc;
         go_pd();    // comment out so sensor readings easily displayed
                        // while tethered with USB cable
         while(1)
         {
-            if (TMR3_ReadTimer()>time1)
+            tmr3read = TMR3_ReadTimer();
+            if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
             {
                 stop_pd();
                 while(1);
