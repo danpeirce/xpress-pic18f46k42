@@ -110,7 +110,7 @@ void main(void)
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
-        unsigned int time1;
+        unsigned int time1, tmr3read;
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
         time1 = TMR3_ReadTimer()+time1_inc;
