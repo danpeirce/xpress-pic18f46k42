@@ -124,8 +124,7 @@ void main(void)
                 while(1);
             }
             sensorvalues = readsensors();
-            __delay_ms(6);
-            if ((*sensorvalues > 500) && (*(sensorvalues+4)>500))
+            if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
             {
                 stop_pd(); // tell slave to stop PID mode
                 while(1);
@@ -174,7 +173,7 @@ void print_sensors(void)
     while(1)
     {
         sensorvalues = readsensors();
-        __delay_ms(80);
+        // __delay_ms(80);
         printf("\rsensor values = %4u, ", *sensorvalues);
         printf("%4u, ", *(sensorvalues+1));
         printf("%4u, ", *(sensorvalues+2));
