@@ -34,3 +34,15 @@ and all pasted characters appeared in the PuTTY terminal and were correctly sent
 Others have commented on the limitation of the USART to USB bridge on the Xpress board:
 
 * [Xpress PIC18F46K42 board virtual COM port bridge to UART receive limitations](https://www.microchip.com/forums/m1097510.aspx)
+
+## After Build Copy
+
+Added after build excute option.
+
+~~~~
+copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
+~~~~
+
+* the output path will depend on the computer and operating system
+
+![](images/after-build.png)

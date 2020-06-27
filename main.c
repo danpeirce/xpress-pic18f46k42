@@ -43,7 +43,7 @@
     SOFTWARE.
 */
 //  execute this command after build (project properties build)
-//  copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex
+//  copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
 //  output path depends on computer
 
 #include "mcc_generated_files/mcc.h"
