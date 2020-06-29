@@ -21,7 +21,7 @@ a virtual com port.
 
 Solder Bump for 3.3 volts removed.
 
-![](images/solder-bump-removed.jpg]
+![](images/solder-bump-removed.jpg)
 
 Solder Bump for 5 volts added.
 
