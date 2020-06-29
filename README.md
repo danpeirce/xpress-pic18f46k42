@@ -21,11 +21,11 @@ a virtual com port.
 
 Solder Bump for 3.3 volts removed.
 
-!()[images/solder-bump-removed.jpg]
+![](images/solder-bump-removed.jpg]
 
 Solder Bump for 5 volts added.
 
-!()[images/solder-bump-added.jpg]
+![](images/solder-bump-added.jpg)
 
 ## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
 
