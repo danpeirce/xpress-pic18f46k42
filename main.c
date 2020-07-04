@@ -78,10 +78,10 @@ void main(void)
     {
         char rxData;
             // Logic to echo received data
-        test1_PORT = 1;
+        //test1_PORT = 1;
         if(UART2_is_rx_ready())
         {
-            test2_PORT = 1;
+            //test2_PORT = 1;
             rxData = UART2_Read();
             if(UART2_is_tx_ready()) // for USB echo
             {
@@ -93,9 +93,9 @@ void main(void)
                 UART1_Write(rxData);
                 if(rxData == '\r') UART1_Write('\n'); // add newline to return
             }
-            test2_PORT = 0;
+            //test2_PORT = 0;
         }
-        test1_PORT = 0; 
+        //test1_PORT = 0; 
     }
 }
 /**

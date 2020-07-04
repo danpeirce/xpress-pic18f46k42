@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for .
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.80.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.3
         Device            :  PIC18F46K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above
-        MPLAB 	          :  MPLAB X 5.30	
+        Compiler          :  XC8 2.20 and above
+        MPLAB 	          :  MPLAB X 5.40	
 */
 
 /*
@@ -112,46 +112,6 @@
 #define RC7_ResetPullup()           do { WPUCbits.WPUC7 = 0; } while(0)
 #define RC7_SetAnalogMode()         do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define RC7_SetDigitalMode()        do { ANSELCbits.ANSELC7 = 0; } while(0)
-
-// get/set test1 aliases
-#define test1_TRIS                 TRISDbits.TRISD0
-#define test1_LAT                  LATDbits.LATD0
-#define test1_PORT                 PORTDbits.RD0
-#define test1_WPU                  WPUDbits.WPUD0
-#define test1_OD                   ODCONDbits.ODCD0
-#define test1_ANS                  ANSELDbits.ANSELD0
-#define test1_SetHigh()            do { LATDbits.LATD0 = 1; } while(0)
-#define test1_SetLow()             do { LATDbits.LATD0 = 0; } while(0)
-#define test1_Toggle()             do { LATDbits.LATD0 = ~LATDbits.LATD0; } while(0)
-#define test1_GetValue()           PORTDbits.RD0
-#define test1_SetDigitalInput()    do { TRISDbits.TRISD0 = 1; } while(0)
-#define test1_SetDigitalOutput()   do { TRISDbits.TRISD0 = 0; } while(0)
-#define test1_SetPullup()          do { WPUDbits.WPUD0 = 1; } while(0)
-#define test1_ResetPullup()        do { WPUDbits.WPUD0 = 0; } while(0)
-#define test1_SetPushPull()        do { ODCONDbits.ODCD0 = 0; } while(0)
-#define test1_SetOpenDrain()       do { ODCONDbits.ODCD0 = 1; } while(0)
-#define test1_SetAnalogMode()      do { ANSELDbits.ANSELD0 = 1; } while(0)
-#define test1_SetDigitalMode()     do { ANSELDbits.ANSELD0 = 0; } while(0)
-
-// get/set test2 aliases
-#define test2_TRIS                 TRISDbits.TRISD1
-#define test2_LAT                  LATDbits.LATD1
-#define test2_PORT                 PORTDbits.RD1
-#define test2_WPU                  WPUDbits.WPUD1
-#define test2_OD                   ODCONDbits.ODCD1
-#define test2_ANS                  ANSELDbits.ANSELD1
-#define test2_SetHigh()            do { LATDbits.LATD1 = 1; } while(0)
-#define test2_SetLow()             do { LATDbits.LATD1 = 0; } while(0)
-#define test2_Toggle()             do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0)
-#define test2_GetValue()           PORTDbits.RD1
-#define test2_SetDigitalInput()    do { TRISDbits.TRISD1 = 1; } while(0)
-#define test2_SetDigitalOutput()   do { TRISDbits.TRISD1 = 0; } while(0)
-#define test2_SetPullup()          do { WPUDbits.WPUD1 = 1; } while(0)
-#define test2_ResetPullup()        do { WPUDbits.WPUD1 = 0; } while(0)
-#define test2_SetPushPull()        do { ODCONDbits.ODCD1 = 0; } while(0)
-#define test2_SetOpenDrain()       do { ODCONDbits.ODCD1 = 1; } while(0)
-#define test2_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
-#define test2_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
 
 /**
    @Param
