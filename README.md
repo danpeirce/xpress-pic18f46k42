@@ -6,7 +6,7 @@ This branch of the project was set up to do a simple UART test of the two UARTs 
 ## Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
-a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as 
+a multi-function device. This allows one to both download programs to it as a mass storage device and use the interface as 
 a virtual com port. 
 
 ### Pins Used
@@ -15,7 +15,10 @@ a virtual com port.
 
 * UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
-    * Communication between UART2 and the interface IC is at 9600 baud.
+    * Communication between UART2 and the interface IC is at 115200 baud but the interface IC has a default speed of only 9600 baud. 
+	  The baud rate must be reset to 115200: 
+	  *  every time the target is programmed and 
+	  *  every time the reset button on the Xpress board is pressed.
 
 ### Solder Bumps
 
