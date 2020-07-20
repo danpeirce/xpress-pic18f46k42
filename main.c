@@ -54,6 +54,7 @@
  */
 void main(void)
 {
+    char active = 0;
     // Initialize the device
     SYSTEM_Initialize();
 
@@ -66,7 +67,32 @@ void main(void)
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
-
+    
+    // uart2 switch to 9600 baud
+        // BRGL 225; 
+    U2BRGL = 0xE1;
+    // BRGH 4; 
+    U2BRGH = 0x04;
+    printf("\r\n\t\t*** Board Reset ***\r\n");
+    printf("\r\n\t\tSet terminal to 115200 baud and hit Enter\r\n");
+        // uart2 switch to 115200 baud
+    U2BRGL = 0x67;
+        // BRGH 0; 
+    U2BRGH = 0x00;
+    while(!active)
+    {
+        char rxData;
+            // Logic to echo received data
+        //test1_PORT = 1;
+        if(UART2_is_rx_ready())
+        {
+            //test2_PORT = 1;
+            if ('\r' == UART2_Read())
+            {
+                active = 1;
+            }
+        }
+    }
     printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
     printf("\t\tECHO TEST\n\r");
