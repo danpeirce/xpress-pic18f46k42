@@ -2,12 +2,19 @@
     Board](#testing-pic18f46k42-xpress-board)
       - [Board Features](#board-features)
           - [Pins Used](#pins-used)
-          - [Solder Bumps](#solder-bumps)
       - [Connecting UART1 Tx to USB to Serial Adaptor to Test
         Board](#connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board)
+          - [Solder Bumps](#solder-bumps)
       - [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
       - [After Build Copy](#after-build-copy)
+
+<!---
+use 
+pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
+
+pandoc -s --toc -t gfm README.pandoc.md -o README.md
+-->
 
 <!---
 use 
@@ -39,8 +46,8 @@ storage device and use the interface as a virtual com port.
   - UART1 is at 115200 baud. Tx1 is on RC6.
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 115200
-        baud but the interface PIC has a default speed of 9600 baud.
-        The baud rate must be reset to 115200:
+        baud but the interface PIC has a default speed of 9600 baud. The
+        baud rate must be reset to 115200:
           - every time the target is programmed and
           - every time the reset button on the Xpress board is pressed.
 
@@ -48,11 +55,13 @@ After reset the two terminal windows will look something like this:
 
 ![](images/terminal-uart2-115200-1.png)
 
-To reset the UART2 terminal to 115200 baud select **Change Settings** from the pull down window.
+To reset the UART2 terminal to 115200 baud select **Change Settings**
+from the pull down window.
 
 ![](images/terminal-uart2-115200-2.png)
 
-Select the previously saved settings for 115200 baud for this **COM** port. Then **Apply**
+Select the previously saved settings for 115200 baud for this **COM**
+port. Then **Apply**
 
 ![](images/terminal-uart2-115200-3.png)
 
