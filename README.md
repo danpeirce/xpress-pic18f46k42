@@ -52,7 +52,7 @@ To reset the UART2 terminal to 115200 baud select **Change Settings** from the p
 
 ![](images/terminal-uart2-115200-2.png)
 
-Select the previously saved ettings for 115200 baud for this **COM** port. Then **Apply**
+Select the previously saved settings for 115200 baud for this **COM** port. Then **Apply**
 
 ![](images/terminal-uart2-115200-3.png)
 
