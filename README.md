@@ -44,11 +44,19 @@ storage device and use the interface as a virtual com port.
           - every time the target is programmed and
           - every time the reset button on the Xpress board is pressed.
 
+After reset the two terminal windows will look something like this:
+
 ![](images/terminal-uart2-115200-1.png)
+
+To reset the UART2 terminal to 115200 baud select **Change Settings** from the pull down window.
 
 ![](images/terminal-uart2-115200-2.png)
 
+Select the previously saved ettings for 115200 baud for this **COM** port. Then **Apply**
+
 ![](images/terminal-uart2-115200-3.png)
+
+Next hit the **Enter** key on the PC keyboard:
 
 ![](images/terminal-uart2-115200-4.png)
 
