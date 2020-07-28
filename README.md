@@ -32,13 +32,25 @@ storage device and use the interface as a virtual com port.
 
 ![](images/pins.png)
 
+## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
+
+![](images/uart-forward-2-1.jpg)
+
   - UART1 is at 115200 baud. Tx1 is on RC6.
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 115200
-        baud but the interface IC has a default speed of only 9600 baud.
+        baud but the interface PIC has a default speed of 9600 baud.
         The baud rate must be reset to 115200:
           - every time the target is programmed and
           - every time the reset button on the Xpress board is pressed.
+
+![](images/terminal-uart2-115200-1.png)
+
+![](images/terminal-uart2-115200-2.png)
+
+![](images/terminal-uart2-115200-3.png)
+
+![](images/terminal-uart2-115200-4.png)
 
 ### Solder Bumps
 
@@ -49,10 +61,6 @@ Solder Bump for 3.3 volts removed.
 Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
-
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
-
-![](images/uart-forward-2-1.jpg)
 
 ## Working with PuTTY and limitations
 
