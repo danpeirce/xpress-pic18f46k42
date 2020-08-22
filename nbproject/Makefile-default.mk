@@ -86,7 +86,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC18F46K42
-ProjectDir="C:\Users\danp\MPLABXProjects\xpress-pic18f46k42"
+ProjectDir="C:\Users\newdp\MPlabX\xpress-pic18f46k42"
 ProjectName=xpress-pic-18F46k42
 ConfName=default
 ImagePath="dist\default\${IMAGE_TYPE}\xpress-pic18f46k42.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
