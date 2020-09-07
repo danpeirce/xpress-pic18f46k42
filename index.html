@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="by Dan Peirce B.Sc." />
+  <title>Testing PIC18F46K42 XPRESS Board</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="pandocbd.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Testing PIC18F46K42 XPRESS Board</h1>
+<p class="author">by Dan Peirce B.Sc.</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#testing-pic18f46k42-xpress-board">Testing PIC18F46K42 XPRESS Board</a>
+<ul>
+<li><a href="#board-features">Board Features</a>
+<ul>
+<li><a href="#pins-used">Pins Used</a></li>
+<li><a href="#solder-bumps">Solder Bumps</a></li>
+</ul></li>
+<li><a href="#connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board">Connecting UART1 Tx to USB to Serial Adaptor to Test Board</a></li>
+<li><a href="#working-with-putty-and-limitations">Working with PuTTY and limitations</a></li>
+<li><a href="#after-build-copy">After Build Copy</a></li>
+</ul></li>
+</ul>
+</nav>
+<!---
+use 
+pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
+
+pandoc -s --toc -t gfm README.pandoc.md -o README.md
+-->
+<h1 id="testing-pic18f46k42-xpress-board">Testing PIC18F46K42 XPRESS Board</h1>
+<p>This branch of the project was set up to do a simple UART test of the two UARTs on the PIC18F46K42 XPRESS board.</p>
+<h2 id="board-features">Board Features</h2>
+<p>This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as a virtual com port.</p>
+<h3 id="pins-used">Pins Used</h3>
+<p><img src="images/pins.png" /></p>
+<ul>
+<li>UART1 is at 115200 baud. Tx1 is on RC6.</li>
+<li>UART2 is connected to the XPRESS boards USB interface PIC.
+<ul>
+<li>Communication between UART2 and the interface IC is at 9600 baud.</li>
+</ul></li>
+</ul>
+<h3 id="solder-bumps">Solder Bumps</h3>
+<p>Solder Bump for 3.3 volts removed.</p>
+<p><img src="images/solder-bump-removed.jpg" /></p>
+<p>Solder Bump for 5 volts added.</p>
+<p><img src="images/solder-bump-added.jpg" /></p>
+<h2 id="connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board">Connecting UART1 Tx to USB to Serial Adaptor to Test Board</h2>
+<p><img src="images/uart-forward-2-1.jpg" /></p>
+<h2 id="working-with-putty-and-limitations">Working with PuTTY and limitations</h2>
+<p>One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the terminal. There is an issue though if one attempts pasting into the PuTTY terminal (using a right mouse click). In that case only the first character is sent. This is an issue of the USB to serial bridge on the Xpress board and not the PIC code! This was verified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected and all pasted characters appeared in the PuTTY terminal and were correctly sent out uart1 TX.</p>
+<figure>
+<img src="images/uart1-uart2.jpg" alt="uart1-uart2.jpg" /><figcaption aria-hidden="true">uart1-uart2.jpg</figcaption>
+</figure>
+<p>Others have commented on the limitation of the USART to USB bridge on the Xpress board:</p>
+<ul>
+<li><a href="https://www.microchip.com/forums/m1097510.aspx">Xpress PIC18F46K42 board virtual COM port bridge to UART receive limitations</a></li>
+</ul>
+<h2 id="after-build-copy">After Build Copy</h2>
+<p>Added after build execute option.</p>
+<pre><code>copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y</code></pre>
+<ul>
+<li>the output path will depend on the computer and operating system</li>
+</ul>
+<p><img src="images/after-build.png" /></p>
+</body>
+</html>
