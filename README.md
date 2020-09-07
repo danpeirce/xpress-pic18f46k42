@@ -16,12 +16,6 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-<!---
-use 
-pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
-
-pandoc -s --toc -t gfm README.pandoc.md -o README.md
--->
 
 # Testing PIC18F46K42 XPRESS Board
 
