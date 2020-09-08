@@ -1,10 +1,14 @@
--   [Testing PIC18F46K42 XPRESS
-    Board](#testing-pic18f46k42-xpress-board)
-    -   [Board Features](#board-features)
+-   [Testing PIC18F46K42 XPRESS Board with
+    ESP8266](#testing-pic18f46k42-xpress-board-with-esp8266)
+    -   [PIC18F46K42 XPRESS Board
+        Features](#pic18f46k42-xpress-board-features)
         -   [Pins Used](#pins-used)
         -   [Solder Bumps](#solder-bumps)
     -   [Connecting UART1 Tx to USB to Serial Adaptor to Test
         Board](#connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board)
+    -   [Connecting UART1 to ESP8266
+        module](#connecting-uart1-to-esp8266-module)
+        -   [More on ESP8266 Module](#more-on-esp8266-module)
     -   [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
     -   [After Build Copy](#after-build-copy)
@@ -16,14 +20,14 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-Testing PIC18F46K42 XPRESS Board
-================================
+Testing PIC18F46K42 XPRESS Board with ESP8266
+=============================================
 
-This branch of the project was set up to do a simple UART test of the
-two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to explore adding a ESP8266 module
+to the PIC18F46K42 XPRESS Board.
 
-Board Features
---------------
+PIC18F46K42 XPRESS Board Features
+---------------------------------
 
 This board has a USB microB connector. It has a PIC MCU on board
 configured to act as an interface and it enumerates as a multifunction
@@ -53,6 +57,26 @@ Connecting UART1 Tx to USB to Serial Adaptor to Test Board
 ----------------------------------------------------------
 
 ![](images/uart-forward-2-1.jpg)
+
+Connecting UART1 to ESP8266 module
+----------------------------------
+
+**planning to add notes**
+
+### More on ESP8266 Module
+
+There is more than one way to use these modules. For either APSC1299 or
+PHYS2600 it would be fitting to use the pass through mode.
+
+-   [Adafruit HUZZAH ESP8266 Breakout PRODUCT ID:
+    2471](https://www.adafruit.com/product/2471)
+-   [ESP8266 HUZZAH BREAKOUT BOARD
+    Digikey](https://www.digikey.ca/en/products/detail/adafruit-industries-llc/2471/5355489?utm_adgroup=RF%2FIF%20and%20RFID&utm_source=google&utm_medium=cpc&utm_campaign=Smart%20Shopping_Product_RF%2FIF%20and%20RFID&utm_term=&productid=5355489&gclid=EAIaIQobChMIqsCw_oPU6wIVlhitBh1k-QyWEAYYAiABEgLrJvD_BwE)
+-   [at
+    commands](https://www.espressif.com/sites/default/files/documentation/4a-esp8266_at_instruction_set_en.pdf)
+-   [Version 1.3 2017 ESP8266 AT Command
+    Examples](https://www.espressif.com/sites/default/files/documentation/4b-esp8266_at_command_examples_en.pdf)
+-   [TCP/IP Builder 1.9 for PC](https://www.drk.com.ar/builder.php)
 
 Working with PuTTY and limitations
 ----------------------------------
