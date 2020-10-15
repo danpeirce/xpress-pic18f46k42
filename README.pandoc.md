@@ -10,8 +10,10 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to do a simple UART test of the two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to to allow the on board UART to serial bridge to be used by a separate circuit. To 
+facilitate this both RC6 abd RC7 are set as inputs and the program then just goes into an enless loop.
 
+![](DIP-PIC-Xpress.jpg)
 
 ## Board Features
 
@@ -37,32 +39,5 @@ Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
 
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
 
-![](images/uart-forward-2-1.jpg)
 
-## Working with PuTTY and limitations
-
-One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the 
-terminal. There is an issue though if one attempts pasting into the PuTTY terminal (using a right mouse click). In that case
-only the first character is sent. This is an issue of the USB to serial bridge on the Xpress board and not the PIC code!
-This was verified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected
-and all pasted characters appeared in the PuTTY terminal and were correctly sent out uart1 TX.
-
-![uart1-uart2.jpg](images/uart1-uart2.jpg)
-
-Others have commented on the limitation of the USART to USB bridge on the Xpress board:
-
-* [Xpress PIC18F46K42 board virtual COM port bridge to UART receive limitations](https://www.microchip.com/forums/m1097510.aspx)
-
-## After Build Copy
-
-Added after build execute option.
-
-~~~~
-copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
-~~~~
-
-* the output path will depend on the computer and operating system
-
-![](images/after-build.png)
