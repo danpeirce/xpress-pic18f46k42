@@ -1,10 +1,8 @@
--   [Testing PIC18F46K42 XPRESS
-    Board](#testing-pic18f46k42-xpress-board)
+-   [Testing programs in the DIP PIC18F46K42
+    IC](#testing-programs-in-the-dip-pic18f46k42-ic)
     -   [Board Features](#board-features)
         -   [Pins Used](#pins-used)
         -   [Solder Bumps](#solder-bumps)
-    -   [Connecting UART1 Tx to USB to Serial Adaptor to Test
-        Board](#connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board)
     -   [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
     -   [After Build Copy](#after-build-copy)
@@ -16,11 +14,19 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-Testing PIC18F46K42 XPRESS Board
-================================
+Testing programs in the DIP PIC18F46K42 IC
+==========================================
 
-This branch of the project was set up to do a simple UART test of the
-two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to test the feasibility of using a
+DIP version of the PIC18F46K42 as the target device and connecting to
+the Xpress board as a USB to serial adaptor. The reasons for doing this:
+
+-   to allow a PICkit3 or PICkit4 to be used as a programmer/debugger.
+-   to allow one to try features of the PIC18F46K42 that are
+    incompatible with the Xpress board. The incompatibility arises if a
+    feature requires RC7 to be no-load. On the Xpress board the output
+    from the UART to serial bridge is connected to RC7 through a 220 Ω
+    resistor.
 
 Board Features
 --------------
@@ -34,7 +40,8 @@ storage device and use the interface as a virtual com port.
 
 ![](images/pins.png)
 
--   UART1 is at 115200 baud. Tx1 is on RC6.
+-   UART1 is at 115200 baud. Tx1 is on RC6. (to be relocated away from
+    RC7).
 -   UART2 is connected to the XPRESS boards USB interface PIC.
     -   Communication between UART2 and the interface IC is at 9600
         baud.
@@ -48,11 +55,6 @@ Solder Bump for 3.3 volts removed.
 Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
-
-Connecting UART1 Tx to USB to Serial Adaptor to Test Board
-----------------------------------------------------------
-
-![](images/uart-forward-2-1.jpg)
 
 Working with PuTTY and limitations
 ----------------------------------
