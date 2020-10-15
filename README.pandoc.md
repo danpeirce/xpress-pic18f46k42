@@ -25,10 +25,6 @@ a virtual com port.
 
 ![](images/pins.png)
 
-* UART1 is at 115200 baud. Tx1 is on RC6.
-* UART2 is connected to the XPRESS boards USB interface PIC. 
-    * Communication between UART2 and the interface IC is at 9600 baud.
-
 ### Solder Bumps
 
 Solder Bump for 3.3 volts removed.
