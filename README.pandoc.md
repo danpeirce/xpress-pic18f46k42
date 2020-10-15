@@ -13,7 +13,7 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 This branch of the project was set up to to allow the on board UART to serial bridge to be used by a separate circuit. To 
 facilitate this both RC6 abd RC7 are set as inputs and the program then just goes into an enless loop.
 
-![](DIP-PIC-Xpress.jpg)
+![](images/DIP-PIC-Xpress.jpg)
 
 ## Board Features
 
