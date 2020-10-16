@@ -17,6 +17,7 @@ and connecting to the Xpress board as a USB to serial adaptor. The reasons for d
 * to allow one to try features of the PIC18F46K42 that are incompatible with the Xpress board. The incompatibility arises if a feature 
 	requires RC7 to be no-load. On the Xpress board the output from the UART to serial bridge is connected to RC7 through a 220 Ω resistor.
 
+![](images/DIP-PIC-Xpress.jpg)
 
 ## Board Features
 

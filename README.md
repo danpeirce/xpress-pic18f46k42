@@ -28,6 +28,8 @@ the Xpress board as a USB to serial adaptor. The reasons for doing this:
     from the UART to serial bridge is connected to RC7 through a 220 Ω
     resistor.
 
+![](images/DIP-PIC-Xpress.jpg)
+
 Board Features
 --------------
 
