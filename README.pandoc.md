@@ -35,7 +35,7 @@ More information on the setup of the Xpress board can be found in the [branch du
 
 #### DIP PIC18F46K42
 
-*{image comming...}*
+![](images/dip-pins.png)
 
 * UART1 is at 115200 baud. Tx1 is on RC6. (to be relocated away from RC7).
 * UART2 is connected to the XPRESS boards USB interface PIC. 
