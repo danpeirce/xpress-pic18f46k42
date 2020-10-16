@@ -61,3 +61,6 @@ void main(void)
 /**
  End of File
 */
+
+// note add MyConfig.mc3 to Important Files so that I will not have to 
+//      start from scratch next time I update something on the MCC
