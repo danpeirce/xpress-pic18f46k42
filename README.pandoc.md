@@ -27,7 +27,15 @@ a virtual com port.
 
 ### Pins Used
 
+#### Xpress Board PIC
+
+More information on the setup of the Xpress board can be found in the [branch dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
+
 ![](images/pins.png)
+
+#### DIP PIC18F46K42
+
+*{image comming...}*
 
 * UART1 is at 115200 baud. Tx1 is on RC6. (to be relocated away from RC7).
 * UART2 is connected to the XPRESS boards USB interface PIC. 
