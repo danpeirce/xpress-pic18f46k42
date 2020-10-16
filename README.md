@@ -48,7 +48,7 @@ dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
 
 #### DIP PIC18F46K42
 
-*{image comming…}*
+![](images/dip-pins.png)
 
   - UART1 is at 115200 baud. Tx1 is on RC6. (to be relocated away from
     RC7).
