@@ -23,8 +23,8 @@ the Xpress board as a USB to serial adaptor. The reasons for doing this:
   - to allow a PICkit3 or PICkit4 to be used as a programmer/debugger.
   - to allow one to try features of the PIC18F46K42 that are
     incompatible with the Xpress board. The incompatibility arises if a
-    feature requires RC7 to be no-load. On the Xpress board the output
-    from the UART to serial bridge is connected to RC7 through a 220 Ω
+    feature requires RB7 to be no-load. On the Xpress board the output
+    from the UART to serial bridge is connected to RB7 through a 220 Ω
     resistor.
 
 ![](images/DIP-PIC-Xpress.jpg)
@@ -50,11 +50,14 @@ dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
 
 ![](images/dip-pins.png)
 
-  - UART1 is at 115200 baud. Tx1 is on RC6. (to be relocated away from
-    RC7).
+  - UART1 is at 115200 baud.
+      - Tx1 is on RC6.
+      - Rx1 is on RC7
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 9600
         baud.
+      - Tx2 is on RD6
+      - Rx2 is on RD7
 
 ### Solder Bumps
 
