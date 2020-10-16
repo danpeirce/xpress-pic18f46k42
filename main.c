@@ -29,33 +29,19 @@ void main(void)
 
     printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
+    printf("\t\tDEBUGGer TEST\n\r");
     printf("\t\t---- ----\n\n\r");
     
-    printf("\tKPU APSC1299\n\n\r");
+    printf("\tKPU PHYS1600\n\n\r");
     
     while (1)
     {
-        char rxData;
-            // Logic to echo received data
+        test1_PORT = 0;
+        LED1_PORT = 0;
+        printf("LED OFF\r\n");
+        LED1_PORT = 1;
+        printf("LED On\r\n");
         test1_PORT = 1;
-        if(UART2_is_rx_ready())
-        {
-            test2_PORT = 1;
-            rxData = UART2_Read();
-            if(UART2_is_tx_ready()) // for USB echo
-            {
-                UART2_Write(rxData);
-                if(rxData == '\r') UART2_Write('\n'); // add newline to return
-            }
-            if(UART1_is_tx_ready()) // out RC6
-            {
-                UART1_Write(rxData);
-                if(rxData == '\r') UART1_Write('\n'); // add newline to return
-            }
-            test2_PORT = 0;
-        }
-        test1_PORT = 0; 
     }
 }
 /**

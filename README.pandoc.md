@@ -10,7 +10,7 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing programs in the DIP PIC18F46K42 IC
 
-This branch of the project was set up to test the feasibility of using a DIP version of the PIC18F46K42 as the target device
+This branch of the project was set up to test debugging the DIP version of the PIC18F46K42 as the target device
 and connecting to the Xpress board as a USB to serial adaptor. The reasons for doing this:
 
 * to allow a PICkit3 or PICkit4 to be used as a programmer/debugger. 
@@ -19,7 +19,11 @@ and connecting to the Xpress board as a USB to serial adaptor. The reasons for d
 
 ![](images/DIP-PIC-Xpress.jpg)
 
-## Board Features
+## Breakpoints were used. It worked as expected.
+
+![](images/breakpoint.png)
+
+## Xpress Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
 a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as 

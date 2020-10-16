@@ -109,25 +109,25 @@
 #define test1_SetAnalogMode()      do { ANSELDbits.ANSELD0 = 1; } while(0)
 #define test1_SetDigitalMode()     do { ANSELDbits.ANSELD0 = 0; } while(0)
 
-// get/set test2 aliases
-#define test2_TRIS                 TRISDbits.TRISD1
-#define test2_LAT                  LATDbits.LATD1
-#define test2_PORT                 PORTDbits.RD1
-#define test2_WPU                  WPUDbits.WPUD1
-#define test2_OD                   ODCONDbits.ODCD1
-#define test2_ANS                  ANSELDbits.ANSELD1
-#define test2_SetHigh()            do { LATDbits.LATD1 = 1; } while(0)
-#define test2_SetLow()             do { LATDbits.LATD1 = 0; } while(0)
-#define test2_Toggle()             do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0)
-#define test2_GetValue()           PORTDbits.RD1
-#define test2_SetDigitalInput()    do { TRISDbits.TRISD1 = 1; } while(0)
-#define test2_SetDigitalOutput()   do { TRISDbits.TRISD1 = 0; } while(0)
-#define test2_SetPullup()          do { WPUDbits.WPUD1 = 1; } while(0)
-#define test2_ResetPullup()        do { WPUDbits.WPUD1 = 0; } while(0)
-#define test2_SetPushPull()        do { ODCONDbits.ODCD1 = 0; } while(0)
-#define test2_SetOpenDrain()       do { ODCONDbits.ODCD1 = 1; } while(0)
-#define test2_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
-#define test2_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
+// get/set LED1 aliases
+#define LED1_TRIS                 TRISDbits.TRISD1
+#define LED1_LAT                  LATDbits.LATD1
+#define LED1_PORT                 PORTDbits.RD1
+#define LED1_WPU                  WPUDbits.WPUD1
+#define LED1_OD                   ODCONDbits.ODCD1
+#define LED1_ANS                  ANSELDbits.ANSELD1
+#define LED1_SetHigh()            do { LATDbits.LATD1 = 1; } while(0)
+#define LED1_SetLow()             do { LATDbits.LATD1 = 0; } while(0)
+#define LED1_Toggle()             do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0)
+#define LED1_GetValue()           PORTDbits.RD1
+#define LED1_SetDigitalInput()    do { TRISDbits.TRISD1 = 1; } while(0)
+#define LED1_SetDigitalOutput()   do { TRISDbits.TRISD1 = 0; } while(0)
+#define LED1_SetPullup()          do { WPUDbits.WPUD1 = 1; } while(0)
+#define LED1_ResetPullup()        do { WPUDbits.WPUD1 = 0; } while(0)
+#define LED1_SetPushPull()        do { ODCONDbits.ODCD1 = 0; } while(0)
+#define LED1_SetOpenDrain()       do { ODCONDbits.ODCD1 = 1; } while(0)
+#define LED1_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
+#define LED1_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
 
 // get/set RD6 procedures
 #define RD6_SetHigh()            do { LATDbits.LATD6 = 1; } while(0)
