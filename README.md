@@ -1,8 +1,8 @@
--   [Testing PIC18F46K42 XPRESS
+  - [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
-    -   [Board Features](#board-features)
-        -   [Pins Used](#pins-used)
-        -   [Solder Bumps](#solder-bumps)
+      - [Board Features](#board-features)
+          - [Pins Used](#pins-used)
+          - [Solder Bumps](#solder-bumps)
 
 <!---
 use 
@@ -11,18 +11,16 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-Testing PIC18F46K42 XPRESS Board
-================================
+# Testing PIC18F46K42 XPRESS Board
 
 This branch of the project was set up to to allow the on board UART to
 serial bridge to be used by a separate circuit. To facilitate this both
-RC6 abd RC7 are set as inputs and the program then just goes into an
+RB6 abd RB7 are set as inputs and the program then just goes into an
 enless loop.
 
 ![](images/DIP-PIC-Xpress.jpg)
 
-Board Features
---------------
+## Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board
 configured to act as an interface and it enumerates as a multifunction

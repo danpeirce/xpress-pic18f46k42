@@ -11,7 +11,7 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 # Testing PIC18F46K42 XPRESS Board
 
 This branch of the project was set up to to allow the on board UART to serial bridge to be used by a separate circuit. To 
-facilitate this both RC6 abd RC7 are set as inputs and the program then just goes into an enless loop.
+facilitate this both RB6 abd RB7 are set as inputs and the program then just goes into an enless loop.
 
 ![](images/DIP-PIC-Xpress.jpg)
 
