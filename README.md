@@ -1,12 +1,3 @@
-  - [Testing programs in the DIP PIC18F46K42
-    IC](#testing-programs-in-the-dip-pic18f46k42-ic)
-      - [Board Features](#board-features)
-          - [Pins Used](#pins-used)
-          - [Solder Bumps](#solder-bumps)
-      - [Working with PuTTY and
-        limitations](#working-with-putty-and-limitations)
-      - [After Build Copy](#after-build-copy)
-
 <!---
 use 
 pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
@@ -14,42 +5,32 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-# Testing programs in the DIP PIC18F46K42 IC
+## Testing programs in the DIP PIC18F46K42 IC
 
 This branch of the project was set up to test the feasibility of using a
 DIP version of the PIC18F46K42 as the target device and connecting to
 the Xpress board as a USB to serial adaptor. The reasons for doing this:
 
-  - to allow a PICkit3 or PICkit4 to be used as a programmer/debugger.
   - to allow one to try features of the PIC18F46K42 that are
     incompatible with the Xpress board. The incompatibility arises if a
     feature requires RB7 to be no-load. On the Xpress board the output
     from the UART to serial bridge is connected to RB7 through a 220 Ω
     resistor.
 
-![](images/DIP-PIC-Xpress.jpg)
+**To see an unloaded output the programmer must be removed\!**
 
-## Board Features
+![](images/dip-pic-dac1.jpg)
 
-This board has a USB microB connector. It has a PIC MCU on board
-configured to act as an interface and it enumerates as a multifunction
-device. This allows one to both download programs to it as a mass
-storage device and use the interface as a virtual com port.
+![](images/dac1-output.png)
 
-### Pins Used
+## Pins Used
 
-#### Xpress Board PIC
-
-More information on the setup of the Xpress board can be found in the
-[branch
-dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
-
-![](images/pins.png)
-
-#### DIP PIC18F46K42
+### DIP PIC18F46K42
 
 ![](images/dip-pins.png)
 
+  - DAC1OUT2 is at pin 40. **To see an unloaded output the programmer
+    must be removed\!**
   - UART1 is at 115200 baud.
       - Tx1 is on RC6.
       - Rx1 is on RC7
@@ -59,7 +40,15 @@ dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
       - Tx2 is on RD6
       - Rx2 is on RD7
 
-### Solder Bumps
+### Xpress Board PIC
+
+More information on the setup of the Xpress board can be found in the
+[branch
+dummy-xpress](https://github.com/danpeirce/xpress-pic18f46k42/tree/dummy-xpress)
+
+![](images/pins.png)
+
+#### Solder Bumps
 
 Solder Bump for 3.3 volts removed.
 
@@ -91,7 +80,8 @@ the Xpress board:
 
 ## After Build Copy
 
-Added after build execute option.
+Added after build execute
+    option.
 
     copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
 

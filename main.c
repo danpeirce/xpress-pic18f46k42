@@ -37,8 +37,19 @@ void main(void)
     while (1)
     {
         char rxData;
+        static int count=0;
+        static unsigned char dac_value=0;
+        
             // Logic to echo received data
         test1_PORT = 1;
+        count++;
+        if (count>2200)
+        {
+            count=0;
+            DAC1_SetOutput(dac_value);
+            dac_value++;
+            if (dac_value > 31) dac_value=0;
+        }
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
