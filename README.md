@@ -1,5 +1,6 @@
 -   [Testing PIC18F46K42 XPRESS Board
     DAC](#testing-pic18f46k42-xpress-board-dac)
+    -   [Used Fixed Voltage Reference](#used-fixed-voltage-reference)
     -   [Without a Buffer IC](#without-a-buffer-ic)
         -   [No Load](#no-load)
         -   [10 K Load](#k-load)
@@ -31,6 +32,13 @@ hardwired to the output of another IC on the board through a 220 Ω
 resistor.
 
 ![](images/serial-connection.jpg)
+
+Used Fixed Voltage Reference
+----------------------------
+
+The internal fixed voltage reference was used with gain set to 4. This
+results in a reference voltage of four volts. With is the DAC output
+ranges from 0 to four volts.
 
 Without a Buffer IC
 -------------------

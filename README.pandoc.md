@@ -16,6 +16,11 @@ the DAC output pin because RB7 is hardwired to the output of another IC on the b
 
 ![](images/serial-connection.jpg) 
 
+## Used Fixed Voltage Reference
+
+The internal fixed voltage reference was used with gain set to 4. This results in a reference voltage of four volts. With is 
+the DAC output ranges from 0 to four volts.
+
 ## Without a Buffer IC
 
 There is no built in buffer for the DAC in the PIC18F46K42. Even a 10 kΩ load resistor has a drastic effect on the output voltage.
