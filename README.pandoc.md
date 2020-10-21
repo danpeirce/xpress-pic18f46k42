@@ -8,21 +8,40 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-# Testing PIC18F46K42 XPRESS Board
+# Testing PIC18F46K42 XPRESS Board DAC
 
-This branch of the project was set up to do a simple UART test of the two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to look at the output of the DAC. The PIC18F46K42 has just one internal 5 bit DAC. 
+It is possible to assign the DAC output to RA2 and/or RB7.  When using the Xpress board it is only practical to use RA2 as
+the DAC output pin because RB7 is hardwired to the output of another IC on the board through a 220 Ω resistor.
 
+![](images/serial-connection.jpg) 
 
-## Board Features
+## Without a Buffer IC
 
-This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
-a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as 
-a virtual com port. 
+There is no built in buffer for the DAC in the PIC18F46K42. Even a 10 kΩ load resistor has a drastic effect on the output voltage.
+This means it is necessary to use an external buffer for the DAC.
 
-### Pins Used
+### No Load
+
+![](images/out1-no-load.jpg)
+
+### 10 K Load
+
+![](images/out1-10k-load.jpg)
+
+![](images/cct-10k-load.jpg)
+
+## With IC Buffer and 400 ohm Load
+
+![](images/out1-buff-400ohm-load.jpg)
+
+![](images/cct-buff.jpg)
+
+## Pins Used
 
 ![](images/pins.png)
 
+* DAC1OUT1 is on pin 4 (RC2)
 * UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
