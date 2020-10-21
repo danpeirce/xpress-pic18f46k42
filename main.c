@@ -26,7 +26,7 @@ void main(void)
 {
     // Initialize the device
     SYSTEM_Initialize();
-
+    DAC1_SetOutput(26);
     printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
     printf("\t\tDAC1OUT1 TEST\n\r");
@@ -36,7 +36,7 @@ void main(void)
     while (1)
     {
         char rxData;
-        static unsigned char output_val=0;
+        /*static unsigned char output_val=0;
         static int out_cycle=0;
             // Logic to echo received data
         test1_PORT = 1;
@@ -47,7 +47,7 @@ void main(void)
             output_val++;
             if (output_val > 31) output_val = 0;
             out_cycle = 0;
-        }
+        } */
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
