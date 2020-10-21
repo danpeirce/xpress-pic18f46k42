@@ -29,16 +29,25 @@ void main(void)
 
     printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
+    printf("\t\tDAC1OUT1 TEST\n\r");
     printf("\t\t---- ----\n\n\r");
     
-    printf("\tKPU APSC1299\n\n\r");
-    
+    printf("\tKPU PHYS1600\n\n\r");
     while (1)
     {
         char rxData;
+        static unsigned char output_val=0;
+        static int out_cycle=0;
             // Logic to echo received data
         test1_PORT = 1;
+        out_cycle++;
+        if (out_cycle>2200)
+        {
+            DAC1_SetOutput(output_val);
+            output_val++;
+            if (output_val > 31) output_val = 0;
+            out_cycle = 0;
+        }
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
