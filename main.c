@@ -29,7 +29,7 @@ void main(void)
 
     printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
+    printf("\t\tADC TEST\n\r");
     printf("\t\t---- ----\n\n\r");
     
     printf("\tKPU APSC1299\n\n\r");
