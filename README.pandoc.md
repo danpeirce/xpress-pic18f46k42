@@ -10,8 +10,9 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to do a simple UART test of the two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to test a AXDL335 channel connected to a PIC18F46K42 XPRESS board.
 
+![](images/axdl335_z_AN0.jpg)
 
 ## Board Features
 
