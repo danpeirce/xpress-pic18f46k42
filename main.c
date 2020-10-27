@@ -41,7 +41,7 @@ void main(void)
         static adc_result_t adc_min = 2100;
         static adc_result_t adc_max = 2100;
         
-        ADCC_StartConversion(0);
+        ADCC_StartConversion(channel_ANA0);
         while(!ADCC_IsConversionDone());
         convertedValue = ADCC_GetConversionResult();
         if(convertedValue> adc_max) adc_max = convertedValue;

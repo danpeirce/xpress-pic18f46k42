@@ -1135,7 +1135,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RA0"/>
-         <value/>
+         <value>channel_ANA0</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="ADCC" registerAlias="ADCAP" settingAlias="ADCAP" alias="Additional uC disabled"/>
@@ -9639,7 +9639,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="ADCC" name="ANA0"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="WPUA" settingAlias="WPUA7" alias="set"/>
@@ -12629,11 +12629,11 @@
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.h</file>
-         <hash>00591439cc94bc01a564d2f4314bba7f9f4192964db7e71cf748fb1e1076c978</hash>
+         <hash>9858a0636f945dbc43a06bd50cf90959ed05d08aa1a139fdeb6201a878d18c7c</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\adcc.h</file>
-         <hash>be767de3269276c8f5e3e17f1a00e559830781a03125daa46832406c32cb2f83</hash>
+         <hash>e9069473736e3d0f8a1ef0d97e872fc49f59e68fc93e11672b4cc29419e547c6</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.c</file>
