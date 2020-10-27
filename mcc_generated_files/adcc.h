@@ -124,7 +124,7 @@ typedef enum
     adc_result_t convertedValue;    
 
     ADCC_Initialize();
-    convertedValue = ADCC_GetSingleConversion(channel_ANA0);
+    convertedValue = ADCC_GetSingleConversion(channel_DAC1);
     </code>
 */
 void ADCC_Initialize(void);
