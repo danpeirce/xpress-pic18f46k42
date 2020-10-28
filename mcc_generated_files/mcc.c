@@ -54,6 +54,7 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     UART2_Initialize();
     UART1_Initialize();
+    I2C1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
