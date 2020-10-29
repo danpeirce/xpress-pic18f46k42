@@ -18,8 +18,11 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to do a simple UART test of the
-two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to test the I2C interface from the
+PIC. A MCP23008 8 bit expander IC was chosen as a simple device to test
+the output of the I2C.
+
+*{updates to come – heading home for the day}*
 
 ## Board Features
 
