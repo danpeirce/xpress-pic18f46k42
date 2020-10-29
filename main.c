@@ -25,21 +25,19 @@
  */
 void main(void)
 {
-    static unsigned char data_buf1[3]= {0x00,0x00,0x00};
-    static unsigned char data_buf2[3]= {0x0A,0xFF,0x00};
     // Initialize the device
     SYSTEM_Initialize();
     
-    printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tI2C TEST\n\r");
-    printf("\t\t---- ----\n\n\r");
+    printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
+    printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
+    printf("\t\tI2C TEST\r\n");
+    printf("\t\t---- ----\r\n\n");
     
-    printf("\tKPU APSC1299\n\n\r");
+    printf("\tKPU APSC1299\r\n\n");
     // address, buffer, number of bytes
-    I2C1_WriteNBytes(0x40, data_buf1, 2 );
+    I2C1_Write1ByteRegister(0x25, 0x00, 0x00); // sets 8 pins as outputs
     printf("I2C data sent\r\n");
-    I2C1_WriteNBytes(0x40, data_buf2, 2 );
+    I2C1_Write1ByteRegister(0x25, 0x0A, 0xFF); // sets all outputs high
     printf("I2C data sent\r\n");
     while (1)
     {
