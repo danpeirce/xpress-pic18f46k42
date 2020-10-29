@@ -13,16 +13,33 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 This branch of the project was set up to test the I2C interface from the PIC. A MCP23008 8 bit expander IC was chosen as a simple 
 device to test the output of the I2C.
 
-*{updates to come -- heading home for the day}*
+* the pushbutton switch is a reset button for the MCP23008
+* only two of 8 I/O pins on the MCP23008 are connected to anything in the image.
+
+![](images/MCP23008_test_cct.jpg)
+
+## I2C Signals
+
+Channel 1 shows SCL1 and channel 2 shows SDA1.
+Note that 
+
+* data bits are latched in on the rising edge of SDA1. 
+* The pattern is seen here is the second one that triggered the scope
+  The first one told the device to make all the I/O outputs.
+  This one told the device to set all the outputs high.
+    * device address 0100 1010 followed by 
+	* an ACK 0 followed by 
+	* a register address 0000 1010 followed by
+	* The pattern of highs and lows 1111 1111 (runs off edge of scope image)
+* the device address seen here is 0100 1010 or 0x4A but the software constructs that from 
+    * the 7 bit address 0100101 plus 0 for write.
+	* in the firmware main.c the value 00100101 is used or 0x25 which is the same as 
+	  0x4A divided by two. If a read instruction is used it would be divided by 2 and a 1 added.
+	  
+![](images/dev_address_register_add.png) 
 
 
-## Board Features
-
-This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
-a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as 
-a virtual com port. 
-
-### Pins Used
+## Xpress Board Pins Used
 
 ![](images/pins.png)
 
