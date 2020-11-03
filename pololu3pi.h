@@ -1,0 +1,13 @@
+unsigned int readbatteryvoltage(void);
+unsigned int* readsensors(void);
+void sendbatteryvoltage(void);
+void send_hyphen(void);
+void send_APSC1299(void);
+void display_signature(void);
+void LCD_print(char *str, char length);
+void LCD_line2(void);
+void sendchar(char a_char);
+void calibrate(void);
+void go_pd(void);
+void stop_pd(void);
+void print_sensors(void);
