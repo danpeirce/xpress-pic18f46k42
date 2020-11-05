@@ -23,33 +23,14 @@ a virtual com port.
 
 ![](images/pins.png)
 
-* UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
-
-### Solder Bumps
-
-Solder Bump for 3.3 volts removed.
-
-![](images/solder-bump-removed.jpg)
-
-Solder Bump for 5 volts added.
-
-![](images/solder-bump-added.jpg)
-
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
-
-![](images/uart-forward-2-1.jpg)
 
 ## Working with PuTTY and limitations
 
 One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the 
 terminal. There is an issue though if one attempts pasting into the PuTTY terminal (using a right mouse click). In that case
 only the first character is sent. This is an issue of the USB to serial bridge on the Xpress board and not the PIC code!
-This was verified by using a USB to serial bridge on a different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In this case the code worked as expected
-and all pasted characters appeared in the PuTTY terminal and were correctly sent out uart1 TX.
-
-![uart1-uart2.jpg](images/uart1-uart2.jpg)
 
 Others have commented on the limitation of the USART to USB bridge on the Xpress board:
 
@@ -58,6 +39,8 @@ Others have commented on the limitation of the USART to USB bridge on the Xpress
 ## After Build Copy
 
 Added after build execute option.
+
+Note the path varies depending on where the project is located.
 
 ~~~~
 copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y

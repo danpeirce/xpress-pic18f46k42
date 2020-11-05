@@ -7,7 +7,6 @@
       <itemPath>mcc_generated_files/device_config.h</itemPath>
       <itemPath>mcc_generated_files/mcc.h</itemPath>
       <itemPath>mcc_generated_files/pin_manager.h</itemPath>
-      <itemPath>mcc_generated_files/uart1.h</itemPath>
       <itemPath>mcc_generated_files/uart2.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
@@ -21,7 +20,6 @@
       <itemPath>mcc_generated_files/device_config.c</itemPath>
       <itemPath>mcc_generated_files/mcc.c</itemPath>
       <itemPath>mcc_generated_files/pin_manager.c</itemPath>
-      <itemPath>mcc_generated_files/uart1.c</itemPath>
       <itemPath>mcc_generated_files/uart2.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -68,8 +66,8 @@
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
         <makeCustomizationPreStep></makeCustomizationPreStep>
-        <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>copy C:\Users\newdp\MPlabX\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex c:\output.hex /y</makeCustomizationPostStep>
+        <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
+        <makeCustomizationPostStep>copy C:\Users\danp\MPlabXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
