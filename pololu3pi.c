@@ -20,6 +20,55 @@ void print_sensors(void)
     
 }
 
+void foreward(unsigned char speed)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC1);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC5);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+}
+
+void backward(unsigned char speed)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC2);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC6);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+}
+
+void spinleft(unsigned char speed)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC2);      // left motor backwards
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC5);     // right motor forward
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+}
+
+void spinright(unsigned char speed)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC1);      // left motor forward
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xC6);     // right motor backward
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(speed);
+}
+
+
 unsigned int readbatteryvoltage(void)
 {
     unsigned char lbyte, ubyte;
@@ -91,6 +140,12 @@ void sendchar(char a_char)
     UART1_Write(1);     // send one character
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(a_char);     // send one character
+}
+
+void clearLCD(void)
+{
+    while(!UART1_is_tx_ready()) continue;
+    UART1_Write(0xB7);   // clear LCD
 }
 
 void LCD_print(char *str, char length)
@@ -173,7 +228,7 @@ void calibrate(void)
     LCD_print("Cal Done", 8); // LCD msg
 }
 
-void go_pd(void)
+void go_pd(unsigned char speed)
 {
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xBB);   // start PD control

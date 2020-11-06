@@ -31,6 +31,10 @@ void main(void)
     // the delay caused by these printf statements ensures 3Pi has time to
     // be ready for LCD commands
     {
+        printf(" \r\n");
+        printf("\r\n\n\n\n\n\n\n\n");   
+                   // this should clear the terminal screen mostly
+                           // otherwise may display junk from power cycle
         printf("\tKPU APSC1299\n\n\r");
         printf("\t\t  Menu\n\r");
         printf("\t\t--------\r\n");  
@@ -42,20 +46,21 @@ void main(void)
         printf("\t\t-. Send hyphen to LCD\r\n");
         printf("\t\t~. LCD message APSC1299\r\n");
         printf("\t\treturn. LCD go to start of line two\r\n");
-        printf("\t\t?. LCD display error and hex 3F\r\n");
-        printf("\t\t' '. LCD display error and hex 20\r\n");
+        printf("\t\t<, robot spin left\r\n");
+        printf("\t\t>, robot spin right\r\n");
+        printf("\t\t|, robot stop\r\n");
         printf("\t\t--------\r\n\n");
     }
 
     sendbatteryvoltage(); // sends battery voltage to both LCD and USB
+	printf("> ");        // print prompt
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
     TMR1_StartTimer();  // short times and clock source for timer 3
     TMR2_StartTimer();  // PWM clock source (not used yet)
     TMR3_StartTimer();  // long times
-    //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
-    //printf("Timer Value = %u\r\n",TMR1_ReadTimer());
+
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
@@ -63,7 +68,7 @@ void main(void)
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
         time1 = TMR3_ReadTimer()+time1_inc;
-        go_pd();    // tell slave to start PID mode
+        go_pd(50);    // tell slave to start PID mode
         while(1)
         {
             tmr3read = TMR3_ReadTimer();
@@ -107,6 +112,9 @@ void main(void)
             else if (rxData == '-') send_hyphen();     // send hyphen to LCD
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
+            else if (rxData == '<') spinleft(50);
+            else if (rxData == '>') spinright(50);
+            else if (rxData == '|') foreward(0);
             else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
 
             test2_PORT = 0;
