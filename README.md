@@ -230,12 +230,7 @@ board. This works fine when one is typing into the terminal. There is an
 issue though if one attempts pasting into the PuTTY terminal (using a
 right mouse click). In that case only the first character is sent. This
 is an issue of the USB to serial bridge on the Xpress board and not the
-PIC code\! This was verified by using a USB to serial bridge on a
-different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In
-this case the code worked as expected and all pasted characters appeared
-in the PuTTY terminal and were correctly sent out uart1 TX.
-
-![uart1-uart2.jpg](images/uart1-uart2.jpg)
+PIC code\!
 
 Others have commented on the limitation of the USART to USB bridge on
 the Xpress board:
