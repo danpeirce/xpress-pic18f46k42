@@ -89,6 +89,26 @@
 #define RB7_SetAnalogMode()         do { ANSELBbits.ANSELB7 = 1; } while(0)
 #define RB7_SetDigitalMode()        do { ANSELBbits.ANSELB7 = 0; } while(0)
 
+// get/set R_SENSOR aliases
+#define R_SENSOR_TRIS                 TRISDbits.TRISD1
+#define R_SENSOR_LAT                  LATDbits.LATD1
+#define R_SENSOR_PORT                 PORTDbits.RD1
+#define R_SENSOR_WPU                  WPUDbits.WPUD1
+#define R_SENSOR_OD                   ODCONDbits.ODCD1
+#define R_SENSOR_ANS                  ANSELDbits.ANSELD1
+#define R_SENSOR_SetHigh()            do { LATDbits.LATD1 = 1; } while(0)
+#define R_SENSOR_SetLow()             do { LATDbits.LATD1 = 0; } while(0)
+#define R_SENSOR_Toggle()             do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0)
+#define R_SENSOR_GetValue()           PORTDbits.RD1
+#define R_SENSOR_SetDigitalInput()    do { TRISDbits.TRISD1 = 1; } while(0)
+#define R_SENSOR_SetDigitalOutput()   do { TRISDbits.TRISD1 = 0; } while(0)
+#define R_SENSOR_SetPullup()          do { WPUDbits.WPUD1 = 1; } while(0)
+#define R_SENSOR_ResetPullup()        do { WPUDbits.WPUD1 = 0; } while(0)
+#define R_SENSOR_SetPushPull()        do { ODCONDbits.ODCD1 = 0; } while(0)
+#define R_SENSOR_SetOpenDrain()       do { ODCONDbits.ODCD1 = 1; } while(0)
+#define R_SENSOR_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
+#define R_SENSOR_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
+
 /**
    @Param
     none
