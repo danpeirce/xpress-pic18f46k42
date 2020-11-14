@@ -58,6 +58,59 @@ USB Frames
 
 see <https://microchipdeveloper.com/usb:frames>
 
+The following table was extracted from that page
+
+<span style="font-size:125%;">**FULL SPEED**</span> <span
+style="white-space: pre-wrap;"></span>Frame size: 1 ms  
+
+<table style="width:97%;">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+<col style="width: 24%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Supported<br />
+Transfer<br />
+Types</strong></td>
+<td style="text-align: left;"><strong>Maximum<br />
+Size of<br />
+Transfer</strong></td>
+<td style="text-align: left;"><strong>Transfers<br />
+per frame</strong></td>
+<td style="text-align: left;"><strong>Maximum<br />
+Theoretical<br />
+Throughput</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Control</td>
+<td style="text-align: left;">64 bytes</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">64 kbytes/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Interrupt</td>
+<td style="text-align: left;">64 bytes</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">64 kbytes/s</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bulk</td>
+<td style="text-align: left;">64 bytes</td>
+<td style="text-align: left;">Up to 19</td>
+<td style="text-align: left;">1.2 Mbytes/s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Isochronous</td>
+<td style="text-align: left;">1023 bytes</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">1023 kbytes/s</td>
+</tr>
+</tbody>
+</table>
+
 Working with PuTTY and limitations
 ----------------------------------
 

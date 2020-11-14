@@ -43,6 +43,25 @@ removing the 47 KΩ resistor and adding a 10 nF capacitor and 200 Ω resistor on
 
 see [https://microchipdeveloper.com/usb:frames](https://microchipdeveloper.com/usb:frames)
 
+The following table was extracted from that page
+
+[**FULL SPEED**]{style="font-size:125%;"} [
+]{style="white-space: pre-wrap;"}Frame size: 1 ms\
+
+  ----------------- ----------------- ----------------- -----------------
+  **Supported\      **Maximum\        **Transfers\      **Maximum\
+  Transfer\         Size of\          per frame**       Theoretical\
+  Types**           Transfer**                          Throughput**
+
+  Control           64 bytes          1                 64 kbytes/s
+
+  Interrupt         64 bytes          1                 64 kbytes/s
+
+  Bulk              64 bytes          Up to 19          1.2 Mbytes/s
+
+  Isochronous       1023 bytes        1                 1023 kbytes/s
+  ----------------- ----------------- ----------------- -----------------
+
 ## Working with PuTTY and limitations
 
 One can use a PuTTY terminal with the virtual serial port of the Xpress board. This works fine when one is typing into the 
