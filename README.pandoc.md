@@ -28,7 +28,7 @@ There are two variants of the QTR-1xx reflective sensor.
 1.  QTR-1A is intended to be an analogue board. On left in image below.
 2.  QTR-1RC is intended connected to a general purpose I/O pin.
 
-![](compare-ccts.png)
+![](images/compare-ccts.png)
 
 ## Working with PuTTY and limitations
 
