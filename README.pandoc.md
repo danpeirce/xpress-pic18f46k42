@@ -10,21 +10,25 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to do a simple UART test of the two UARTs on the PIC18F46K42 XPRESS board.
+This branch of the project was set up to test a reflective sensor connected to the PIC18F46K42 XPRESS board.
 
-
-## Board Features
-
-This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
-a multifunction device. This allows one to both download programs to it as a mass storage device and use the interface as 
-a virtual com port. 
-
-### Pins Used
+ 
+## Pins Used
 
 ![](images/pins.png)
 
+* The reflective sensor is connected to R_SENSOR (RD1).
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
+
+## Variants of Sensor Board
+
+There are two variants of the QTR-1xx reflective sensor.
+
+1.  QTR-1A is intended to be an analogue board. On left in image below.
+2.  QTR-1RC is intended connected to a general purpose I/O pin.
+
+![](compare-ccts.png)
 
 ## Working with PuTTY and limitations
 
