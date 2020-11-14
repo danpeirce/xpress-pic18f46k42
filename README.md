@@ -2,6 +2,8 @@
     Board](#testing-pic18f46k42-xpress-board)
     -   [Pins Used](#pins-used)
     -   [Variants of Sensor Board](#variants-of-sensor-board)
+        -   [Conversion to QTR-1RC](#conversion-to-qtr-1rc)
+    -   [USB Frames](#usb-frames)
     -   [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
     -   [After Build Copy](#after-build-copy)
@@ -35,9 +37,26 @@ Variants of Sensor Board
 There are two variants of the QTR-1xx reflective sensor.
 
 1.  QTR-1A is intended to be an analogue board. On left in image below.
-2.  QTR-1RC is intended connected to a general purpose I/O pin.
+2.  QTR-1RC is intended connected to a general purpose I/O pin. On right
+    in image below.
 
 ![](images/compare-ccts.png)
+
+### Conversion to QTR-1RC
+
+I actually ordered the wrong part. For testing purposes I was able to
+convert the QTR1A to be equivalent to the QTR-1RC by removing the 47 KΩ
+resistor and adding a 10 nF capacitor and 200 Ω resistor on the
+breadboard.
+
+![](images/sensor_cct.jpg)
+
+![](images/sensor_tape.jpg)
+
+USB Frames
+----------
+
+see <https://microchipdeveloper.com/usb:frames>
 
 Working with PuTTY and limitations
 ----------------------------------
