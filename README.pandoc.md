@@ -21,6 +21,36 @@ This branch of the project was set up to test a reflective sensor connected to t
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
 
+## Very Simple Test With Scope
+
+For the first simple test I used a scope to look at the timing and simple delays in the code. This is not the 
+method I would use if using the PIC to measure the timing.
+
+~~~~c
+R_SENSOR_TRIS = 0; // make pin an output
+__delay_us(20);
+R_SENSOR_TRIS = 1; // change pin to an input
+__delay_ms(30);   // allow capacitor to charge
+~~~~
+
+**Note**
+
+* One leg of the capacitor is tied to V<sub>DD</sub> so the voltage is high when capacitor is discharged
+* The phototransistor in the sensor acts as a nearly constant current sink which charges the capacitor. Since a capacitor 
+  follows dv/dt = 1/C * I the dv/dt is as constant as the current.
+
+### Signal When the Sensor is Over Black Tape
+
+![](images/sig_tape_centre.jpg)
+
+### Signal When the Sensor is Over White Paper
+
+![](images/sig_white.jpg)
+
+### Signal When the Sensor is Over Edge of Tape
+
+![](images/sig_tape_edge.jpg)
+
 ## Variants of Sensor Board
 
 There are two variants of the QTR-1xx reflective sensor.
@@ -38,6 +68,7 @@ removing the 47 KΩ resistor and adding a 10 nF capacitor and 200 Ω resistor on
 ![](images/sensor_cct.jpg)
 
 ![](images/sensor_tape.jpg)
+
 
 
 ## Working with PuTTY and limitations

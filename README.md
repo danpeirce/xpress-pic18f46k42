@@ -1,6 +1,13 @@
 -   [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
     -   [Pins Used](#pins-used)
+    -   [Very Simple Test With Scope](#very-simple-test-with-scope)
+        -   [Signal When the Sensor is Over Black
+            Tape](#signal-when-the-sensor-is-over-black-tape)
+        -   [Signal When the Sensor is Over White
+            Paper](#signal-when-the-sensor-is-over-white-paper)
+        -   [Signal When the Sensor is Over Edge of
+            Tape](#signal-when-the-sensor-is-over-edge-of-tape)
     -   [Variants of Sensor Board](#variants-of-sensor-board)
         -   [Conversion to QTR-1RC](#conversion-to-qtr-1rc)
     -   [Working with PuTTY and
@@ -30,6 +37,38 @@ Pins Used
 -   UART2 is connected to the XPRESS boards USB interface PIC.
     -   Communication between UART2 and the interface IC is at 9600
         baud.
+
+Very Simple Test With Scope
+---------------------------
+
+For the first simple test I used a scope to look at the timing and
+simple delays in the code. This is not the method I would use if using
+the PIC to measure the timing.
+
+    R_SENSOR_TRIS = 0; // make pin an output
+    __delay_us(20);
+    R_SENSOR_TRIS = 1; // change pin to an input
+    __delay_ms(30);   // allow capacitor to charge
+
+**Note**
+
+-   One leg of the capacitor is tied to V<sub>DD</sub> so the voltage is
+    high when capacitor is discharged
+-   The phototransistor in the sensor acts as a nearly constant current
+    sink which charges the capacitor. Since a capacitor follows dv/dt =
+    1/C \* I the dv/dt is as constant as the current.
+
+### Signal When the Sensor is Over Black Tape
+
+![](images/sig_tape_centre.jpg)
+
+### Signal When the Sensor is Over White Paper
+
+![](images/sig_white.jpg)
+
+### Signal When the Sensor is Over Edge of Tape
+
+![](images/sig_tape_edge.jpg)
 
 Variants of Sensor Board
 ------------------------
