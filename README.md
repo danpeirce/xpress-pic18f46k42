@@ -3,9 +3,9 @@
     -   [Pins Used](#pins-used)
     -   [Variants of Sensor Board](#variants-of-sensor-board)
         -   [Conversion to QTR-1RC](#conversion-to-qtr-1rc)
-    -   [USB Frames](#usb-frames)
     -   [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
+        -   [USB Frames](#usb-frames)
     -   [After Build Copy](#after-build-copy)
 
 <!---
@@ -53,12 +53,38 @@ breadboard.
 
 ![](images/sensor_tape.jpg)
 
-USB Frames
-----------
+Working with PuTTY and limitations
+----------------------------------
+
+One can use a PuTTY terminal with the virtual serial port of the Xpress
+board. This works fine when one is typing into the terminal. There is an
+issue though if one attempts pasting into the PuTTY terminal (using a
+right mouse click). In that case only the first character is sent. This
+is an issue of the USB to serial bridge on the Xpress board and not the
+PIC code!
+
+Others have commented on the limitation of the USART to USB bridge on
+the Xpress board:
+
+-   [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
+    limitations](https://www.microchip.com/forums/m1097510.aspx)
+
+### USB Frames
+
+I got interested in looking at the USB frames. In this branch I was
+using delays. If one were using a typical FTDI USB to serial bridge the
+characters could arrive at the PIC UART Rx pin at the full rate of the
+serial interface. The bridge on the Xpress board limits the rate.
 
 see <https://microchipdeveloper.com/usb:frames>
 
-The following table was extracted from that page
+The following table was extracted from that page.
+
+**Note**
+
+-   The Xpress board uses USB 2 full speed.
+-   Virtual COM ports enumerate as CDC class USB devices
+-   CDC class USB devices use bulk transfers for data
 
 <span style="font-size:125%;">**FULL SPEED**</span> <span
 style="white-space: pre-wrap;"></span>Frame size: 1 ms  
@@ -110,22 +136,6 @@ Throughput</strong></td>
 </tr>
 </tbody>
 </table>
-
-Working with PuTTY and limitations
-----------------------------------
-
-One can use a PuTTY terminal with the virtual serial port of the Xpress
-board. This works fine when one is typing into the terminal. There is an
-issue though if one attempts pasting into the PuTTY terminal (using a
-right mouse click). In that case only the first character is sent. This
-is an issue of the USB to serial bridge on the Xpress board and not the
-PIC code!
-
-Others have commented on the limitation of the USART to USB bridge on
-the Xpress board:
-
--   [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
-    limitations](https://www.microchip.com/forums/m1097510.aspx)
 
 After Build Copy
 ----------------
