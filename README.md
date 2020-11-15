@@ -28,6 +28,11 @@ Testing PIC18F46K42 XPRESS Board
 This branch of the project was set up to test a reflective sensor
 connected to the PIC18F46K42 XPRESS board.
 
+There is another repository which deals with the 3D design of the
+plastic support for the reflective sensor board.
+
+-   <https://github.com/danpeirce/support-r-sensor>
+
 Pins Used
 ---------
 
