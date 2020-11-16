@@ -199,4 +199,4 @@ Note the path varies depending on where the project is located.
 Tried Creating a Digraph of Part of this Repository
 ---------------------------------------------------
 
-<img src="graph.svg" width="2000" />
+<img src="graph.png"  />

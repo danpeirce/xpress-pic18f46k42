@@ -134,4 +134,4 @@ copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpr
 
 ## Tried Creating a Digraph of Part of this Repository
 
-<img src="graph.svg" width="2000" />
+<img src="graph.png"  />
