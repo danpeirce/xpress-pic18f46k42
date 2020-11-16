@@ -131,3 +131,7 @@ copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpr
 * the output path will depend on the computer and operating system
 
 ![](images/after-build.png)
+
+## Tried Creating a Digraph of Part of this Repository
+
+<img src="graph.svg" width="100"/>
