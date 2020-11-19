@@ -10,13 +10,9 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to test the I2C interface from the PIC. A MCP23008 8 bit expander IC was chosen as a simple 
-device to test the output of the I2C.
+This branch of the project was set up to test the Grove 16x2 LCD display.
 
-* the pushbutton switch is a reset button for the MCP23008
-* only two of 8 I/O pins on the MCP23008 are connected to anything in the image.
 
-![](images/MCP23008_test_cct.jpg)
 
 ## I2C Signals
 
@@ -57,9 +53,9 @@ Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
 
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
+## LCD notes
 
-![](images/uart-forward-2-1.jpg)
+* I2C Address 	0X3E from [Grove - 16x2 LCD Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)
 
 ## Working with PuTTY and limitations
 

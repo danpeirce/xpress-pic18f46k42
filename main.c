@@ -25,6 +25,7 @@
  */
 void main(void)
 {
+	// uint8_t setup_buf[] = { ***just starting to work on this****
     // Initialize the device
     SYSTEM_Initialize();
     
