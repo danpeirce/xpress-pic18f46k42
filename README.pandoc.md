@@ -12,9 +12,33 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 This branch of the project was set up to test the Grove 16x2 LCD display.
 
+## LCD notes
 
+* I2C Address 	0X3E from [Grove - 16x2 LCD Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)
+* [Grove Datasheet with initialization sequence](https://raw.githubusercontent.com/SeeedDocument/Grove-16x2_LCD_Series/master/res/JDH_1804_Datasheet.pdf)
 
-## I2C Signals
+### 
+
+## Xpress Board Pins Used
+
+![](images/pins.png)
+
+* UART2 is connected to the XPRESS boards USB interface PIC. 
+    * Communication between UART2 and the interface IC is at 9600 baud.
+
+### Solder Bumps
+
+Solder Bump for 3.3 volts removed.
+
+![](images/solder-bump-removed.jpg)
+
+Solder Bump for 5 volts added.
+
+![](images/solder-bump-added.jpg)
+
+## I2C Signals (relavent to I2C expander)
+
+*This section not relavent to LCD and may be removed from this branch*
 
 Channel 1 shows SCL1 and channel 2 shows SDA1.
 Note that 
@@ -33,29 +57,6 @@ Note that
 	  0x4A divided by two. If a read instruction is used it would be divided by 2 and a 1 added.
 	  
 ![](images/dev_address_register_add.png) 
-
-
-## Xpress Board Pins Used
-
-![](images/pins.png)
-
-* UART1 is at 115200 baud. Tx1 is on RC6.
-* UART2 is connected to the XPRESS boards USB interface PIC. 
-    * Communication between UART2 and the interface IC is at 9600 baud.
-
-### Solder Bumps
-
-Solder Bump for 3.3 volts removed.
-
-![](images/solder-bump-removed.jpg)
-
-Solder Bump for 5 volts added.
-
-![](images/solder-bump-added.jpg)
-
-## LCD notes
-
-* I2C Address 	0X3E from [Grove - 16x2 LCD Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)
 
 ## Working with PuTTY and limitations
 
