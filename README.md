@@ -1,9 +1,13 @@
   - [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
-      - [I2C Signals](#i2c-signals)
+      - [LCD notes](#lcd-notes)
+          - [Initialization Sequence](#initialization-sequence)
+          - [Sending Characters to the
+            Display](#sending-characters-to-the-display)
       - [Xpress Board Pins Used](#xpress-board-pins-used)
           - [Solder Bumps](#solder-bumps)
-      - [LCD notes](#lcd-notes)
+      - [3D Printed Support for the
+        Display](#d-printed-support-for-the-display)
       - [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
       - [After Build Copy](#after-build-copy)
@@ -20,33 +24,99 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 This branch of the project was set up to test the Grove 16x2 LCD
 display.
 
-## I2C Signals
+![](images/lcd-grove.jpg)
 
-Channel 1 shows SCL1 and channel 2 shows SDA1. Note that
+## LCD notes
 
-  - data bits are latched in on the rising edge of SDA1.
-  - The pattern is seen here is the second one that triggered the scope
-    The first one told the device to make all the I/O outputs. This one
-    told the device to set all the outputs high.
-      - device address 0100 1010 followed by
-      - an ACK 0 followed by
-      - a register address 0000 1010 followed by
-      - The pattern of highs and lows 1111 1111 (runs off edge of scope
-        image)
-  - the device address seen here is 0100 1010 or 0x4A but the software
-    constructs that from
-      - the 7 bit address 0100101 plus 0 for write.
-      - in the firmware main.c the value 00100101 is used or 0x25 which
-        is the same as 0x4A divided by two. If a read instruction is
-        used it would be divided by 2 and a 1 added.
+  - I2C Address 0X3E from [Grove - 16x2 LCD
+    Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)
+  - [Grove Datasheet with initialization
+    sequence](https://raw.githubusercontent.com/SeeedDocument/Grove-16x2_LCD_Series/master/res/JDH_1804_Datasheet.pdf)
 
-![](images/dev_address_register_add.png)
+### Initialization Sequence
+
+This is essentially taken from [Grove Datasheet with initialization
+sequence](https://raw.githubusercontent.com/SeeedDocument/Grove-16x2_LCD_Series/master/res/JDH_1804_Datasheet.pdf)
+
+Some things were not clear from the Seeed document. For example I found
+that to send commands to display I it was necessary to send a 0x80
+before the command byte. This was discovered by looking at
+**rgb\_lcd.cpp** which is the grove lcd library that was written for
+Arduino. I also found that before sending a series of characters to be
+displayed it was necessary to send a 0x40. That was also gleaned from
+**rgb\_lcd.cpp**.
+
+  - Power On
+  - *Wait for more than 15 ms after VDD rises to 4.5V*
+  - “Function Set” 001X NFXX
+      - where X is don’t care
+      - N is 0 1-line mode
+      - **N is 1 2-line mode**  
+      - \*\*F is 0 5\*8 dots\*\*  
+      - F is 1 5\*11 dots
+  - *Wait for more than 39 µs*
+  - “Display ON/OFF Control” 0000 1DCB
+      - where D 0 is display off
+      - *D 1 is display on*
+      - C 0 is Cursor off
+      - *C 1 is Cursor On*
+      - *B 0 is blink off*
+      - B 1 is blink on
+  - *Wait for more than 39 µs*
+  - “Display Clear” 0000 0001
+  - *Wait for more than 1.53 ms*
+  - “Entry Mode Set” 0000 0010
+
+<!-- end list -->
+
+``` c
+// Initialization Sequence
+__delay_ms(16); 
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0x28);
+__delay_us(41);
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0x0E);
+__delay_us(41);
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01);
+__delay_ms(2); 
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0x02);
+__delay_us(41);
+```
+
+### Sending Characters to the Display
+
+Some things were not clear from the Seeed document. Some of these were
+also mentioned in the previous section.
+
+  - To send commands to display it is necessary to send a **0x80**
+    before the command byte. This was discovered by looking at
+    **rgb\_lcd.cpp** which is the grove LCD library that was written for
+    Arduino.
+  - Before sending a series of characters to be displayed it was
+    necessary to send a **0x40**. That was also gleaned from
+    **rgb\_lcd.cpp**.
+  - To set the display to row 0 , col 0 a **0x80** command was sent
+  - To set the display to row 1 , col 0 a **0xC0** command was sent
+
+<!-- end list -->
+
+``` c
+// send messages
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0x80); // set to row 0 col 0
+__delay_us(41);
+I2C1_WriteNBytes(lcd_address, data, 17 ); // array data contains first 
+                                          // string
+                                          // 
+I2C1_Write1ByteRegister(lcd_address, 0x80, 0xC0); // set to row 1 col 0
+__delay_us(41);
+
+I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg contains
+                                             // second string
+```
 
 ## Xpress Board Pins Used
 
 ![](images/pins.png)
 
-  - UART1 is at 115200 baud. Tx1 is on RC6.
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 9600
         baud.
@@ -61,10 +131,13 @@ Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
 
-## LCD notes
+## 3D Printed Support for the Display
 
-  - I2C Address 0X3E from [Grove - 16x2 LCD
-    Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)
+A part was 3D printed to hold the display off the table. This should
+help ensure nothing is shorted on the back and also tilts the display at
+a convenient viewing angle.
+
+![](images/3D-support.jpg)
 
 ## Working with PuTTY and limitations
 
