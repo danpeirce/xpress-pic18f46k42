@@ -5,7 +5,6 @@
           - [Sending Characters to the
             Display](#sending-characters-to-the-display)
       - [Xpress Board Pins Used](#xpress-board-pins-used)
-          - [Solder Bumps](#solder-bumps)
       - [3D Printed Support for the
         Display](#d-printed-support-for-the-display)
       - [Working with PuTTY and
@@ -51,9 +50,9 @@ displayed it was necessary to send a 0x40. That was also gleaned from
   - “Function Set” 001X NFXX
       - where X is don’t care
       - N is 0 1-line mode
-      - **N is 1 2-line mode**  
-      - \*\*F is 0 5\*8 dots\*\*  
-      - F is 1 5\*11 dots
+      - *N is 1 2-line mode*  
+      - *F is 0 5x8 dots*  
+      - F is 1 5x11 dots
   - *Wait for more than 39 µs*
   - “Display ON/OFF Control” 0000 1DCB
       - where D 0 is display off
@@ -120,16 +119,6 @@ I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg contains
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 9600
         baud.
-
-### Solder Bumps
-
-Solder Bump for 3.3 volts removed.
-
-![](images/solder-bump-removed.jpg)
-
-Solder Bump for 5 volts added.
-
-![](images/solder-bump-added.jpg)
 
 ## 3D Printed Support for the Display
 
