@@ -103,7 +103,7 @@ void i2c_lcd_initialize(void)
     static uint8_t data[] = " KPU APSC1299";
     uint8_t *msg_pnt = data;
     
-	data[0] = 0x40;
+    data[0] = 0x40;
     __delay_ms(16); 
 	I2C1_Write1ByteRegister(lcd_address, 0x80, 0x28);
     __delay_us(41);
@@ -114,6 +114,9 @@ void i2c_lcd_initialize(void)
     I2C1_Write1ByteRegister(lcd_address, 0x80, 0x02);
     __delay_us(41);
     //strcpy(data, apsc_msg); 
+    //I2C1_Write1ByteRegister(lcd_address, 0x40, data[0]);
+    __delay_us(41);
+    //I2C1_Write1ByteRegister(lcd_address, 0x40, data[1]);
     I2C1_WriteNBytes(lcd_address, msg_pnt, 13 );
 }
 /**
