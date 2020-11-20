@@ -46,10 +46,7 @@ void main(void)
     
     printf("\tKPU APSC1299\r\n\n");
     // address, buffer, number of bytes
-    I2C1_Write1ByteRegister(0x25, 0x00, 0x00); // sets 8 pins as outputs
-    printf("I2C data sent\r\n");
-    I2C1_Write1ByteRegister(0x25, 0x0A, 0xFF); // sets all outputs high
-    printf("I2C data sent\r\n");
+
     while (1)
     {
         char rxData;
@@ -102,22 +99,22 @@ void main(void)
 
 void i2c_lcd_initialize(void)
 {
-    static uint8_t setup_buf[] = { 0x28, 0x0E, 0x01, 0x02};
-    //static uint8_t data[20];
-    uint8_t *msg_pnt;
+    //static uint8_t setup_buf[] = { 0x28, 0x0E, 0x01, 0x02};
+    static uint8_t data[] = " KPU APSC1299";
+    uint8_t *msg_pnt = data;
     
-    *msg_pnt = 'A';
+	data[0] = 0x40;
     __delay_ms(16); 
-    I2C1_WriteNBytes(lcd_address, setup_buf+0, 1 );
+	I2C1_Write1ByteRegister(lcd_address, 0x80, 0x28);
     __delay_us(41);
-    I2C1_WriteNBytes(lcd_address, setup_buf+1, 1 );
+    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x0E);
     __delay_us(41);
-    I2C1_WriteNBytes(lcd_address, setup_buf+2, 1 );
+    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01);
     __delay_ms(2); 
-    I2C1_WriteNBytes(lcd_address, setup_buf+3, 1 );
+    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x02);
     __delay_us(41);
     //strcpy(data, apsc_msg); 
-    I2C1_WriteNBytes(lcd_address, msg_pnt, 1 );
+    I2C1_WriteNBytes(lcd_address, msg_pnt, 13 );
 }
 /**
  End of File
