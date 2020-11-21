@@ -100,11 +100,14 @@ name_msg[0] = 0x40;  // 0x40 to send data; 0x80 to send command
 ~~~~
 
 **data** and **name_msg** were set up as arrays initialized with strings. The first character of the string
-was a space. The code then changes that first character to a 0x40 which will tell the LCD display the other bytes 
+was a space. The code then changes that first character to a **0x40** which will tell the LCD display the other bytes 
 coming are data and not commands. I could simplify this. Looking at an ASCII table I see that an ascii "@" is codded
-as hex 0x40. I could simply start the strings with an "**@**". Another more elegant solution would be to write a 
+as hex **0x40**. I could simply start the strings with an "@". Another more elegant solution would be to write a 
 new function to use rather than **I2C1_WriteNBytes** which would add the **0x40** transparently. For now I just used 
 functions provided by the MCC.
+
+It appears that the 0x40 to send data and 0x80 to send command are equivalent to or are precisely register values. The LCD
+documentation is not clear.
 
 ## Xpress Board Pins Used
 
