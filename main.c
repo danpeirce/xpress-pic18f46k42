@@ -41,7 +41,7 @@ void main(void)
     i2c_lcd_initialize();
     printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tI2C TEST\r\n");
+    printf("\t\tLCD TEST\r\n");
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
@@ -50,21 +50,31 @@ void main(void)
     while (1)
     {
         char rxData;
+        unsigned char cursor = 0x80; // local cursor counter
             // Logic to echo received data
         test1_PORT = 1;
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
             rxData = UART2_Read();
+            I2C1_Write1ByteRegister(lcd_address, 0x40, rxData);
+            cursor++;
+            if (rxData = '\t')  // use tab to clear LCD screen
+            {
+                I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
+                cursor = 0x80; // reset cursor counter variable 
+            }
             if(UART2_is_tx_ready()) // for USB echo
             {
-                UART2_Write(rxData);
-                if(rxData == '\r') UART2_Write('\n'); // add newline to return
-            }
-            if(UART1_is_tx_ready()) // out RC6
-            {
-                UART1_Write(rxData);
-                if(rxData == '\r') UART1_Write('\n'); // add newline to return
+                if (rxData = '\t') printf("\r\n\n\n");
+                else UART2_Write(rxData);
+                if(rxData == '\r') 
+                {
+                    UART2_Write('\n'); // add newline to return
+                    if (cursor >= 0xC0) cursor = 0x80; // move to other line
+                    else cursor = 0xC0;
+                    I2C1_Write1ByteRegister(lcd_address, 0x80, cursor);
+                }
             }
             test2_PORT = 0;
         }
@@ -102,6 +112,7 @@ void i2c_lcd_initialize(void)
     //static uint8_t setup_buf[] = { 0x28, 0x0E, 0x01, 0x02};
     static uint8_t data[] =     " KPU APSC1299 Int";
     static uint8_t name_msg[] = " Microcontrollers";
+    unsigned char count;
     //uint8_t *msg_pnt = data;
     
     // code put into string
@@ -130,7 +141,11 @@ void i2c_lcd_initialize(void)
     
     I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg contains
                                                  // second string
-
+    for(count=0;count<40;count++)    // 2 second delay
+    {
+        __delay_ms(50);
+    }
+    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
 }
 /**
  End of File
