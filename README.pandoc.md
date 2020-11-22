@@ -11,6 +11,11 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 # Testing PIC18F46K42 XPRESS Board
 
 This branch of the project was set up to test the Grove 16x2 LCD display.
+**Branch i2c-lcd-type** differs from **branch i2c-lcd** in this branch displays characters typed in the PuTTY terminal in the LCD in addition
+to Echoing them back to the terminal.
+
+* A '\\r' causes the LCD to switch lines and return to col 0.
+* A '\\t' clears the LCD. 
 
 ![](images/lcd-grove.jpg)
 
