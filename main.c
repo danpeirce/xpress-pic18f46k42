@@ -50,23 +50,26 @@ void main(void)
     while (1)
     {
         char rxData;
-        unsigned char cursor = 0x80; // local cursor counter
+        static unsigned char cursor = 0x80; // local cursor counter
             // Logic to echo received data
         test1_PORT = 1;
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
             rxData = UART2_Read();
-            I2C1_Write1ByteRegister(lcd_address, 0x40, rxData);
-            cursor++;
-            if (rxData = '\t')  // use tab to clear LCD screen
+            if(rxData != '\r') 
+            {
+                I2C1_Write1ByteRegister(lcd_address, 0x40, rxData);
+                cursor++;
+            }
+            if (rxData == '\t')  // use tab to clear LCD screen
             {
                 I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
                 cursor = 0x80; // reset cursor counter variable 
             }
             if(UART2_is_tx_ready()) // for USB echo
             {
-                if (rxData = '\t') printf("\r\n\n\n");
+                if (rxData == '\t') printf("\r\n\n\n");
                 else UART2_Write(rxData);
                 if(rxData == '\r') 
                 {
@@ -146,6 +149,7 @@ void i2c_lcd_initialize(void)
         __delay_ms(50);
     }
     I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
+    __delay_ms(50);
 }
 /**
  End of File
