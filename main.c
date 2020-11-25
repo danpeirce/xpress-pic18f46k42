@@ -113,15 +113,10 @@ void main(void)
 void i2c_lcd_initialize(void)
 {
     //static uint8_t setup_buf[] = { 0x28, 0x0E, 0x01, 0x02};
-    static uint8_t data[] =     " KPU APSC1299 Int";
-    static uint8_t name_msg[] = " Microcontrollers";
+    static uint8_t data[] =     "@KPU APSC1299 Int"; // 0x40 to send data;
+    static uint8_t name_msg[] = "@Microcontrollers"; // @ is same as 0x40
     unsigned char count;
-    //uint8_t *msg_pnt = data;
-    
-    // code put into string
-    data[0] = 0x40;      // 0x40 to send data; 0x80 to send command
-    name_msg[0] = 0x40;  // 0x40 to send data; 0x80 to send command
-    
+   
     // Initialization Sequence
     __delay_ms(16); 
 	I2C1_Write1ByteRegister(lcd_address, 0x80, 0x28);
