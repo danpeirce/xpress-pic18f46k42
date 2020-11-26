@@ -95,24 +95,17 @@ I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg contains
 In addition I should point out how **data** and **name_msg** were defined.
 
 ~~~~c
-static uint8_t data[] =     " KPU APSC1299 Int";
-static uint8_t name_msg[] = " Microcontrollers";
+static uint8_t data[] =     "@KPU APSC1299 Int";
+static uint8_t name_msg[] = "@Microcontrollers";
 //uint8_t *msg_pnt = data;
-
-// code put into string
-data[0] = 0x40;      // 0x40 to send data; 0x80 to send command
-name_msg[0] = 0x40;  // 0x40 to send data; 0x80 to send command
 ~~~~
 
 **data** and **name_msg** were set up as arrays initialized with strings. The first character of the string
-was a space. The code then changes that first character to a **0x40** which will tell the LCD display the other bytes 
-coming are data and not commands. I could simplify this. Looking at an ASCII table I see that an ascii "@" is coded
-as hex **0x40**. I could simply start the strings with an "@". Another more elegant solution would be to write a 
-new function to use rather than **I2C1_WriteNBytes** which would add the **0x40** transparently. For now I just used 
-functions provided by the MCC.
+is a '@' (which is a 0x40; to indicate the bytes coming are data and not commands). Notice on an ASCII tables that an ascii "@" is coded
+as hex **0x40**. 
 
-It appears that the 0x40 to send data and 0x80 to send command are equivalent to or are precisely register values. The LCD
-documentation is not clear.
+It appears that the 0x40 to send data and 0x80 to send command are equivalent to register values on simpler devices. The LCD
+documentation is not clear. It may be more correct that in the case of the LCD they are simply codes interpreted by the LCD module MCU.
 
 ## Xpress Board Pins Used
 
