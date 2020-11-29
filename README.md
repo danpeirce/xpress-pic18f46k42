@@ -1,13 +1,12 @@
-  - [Testing PIC18F46K42 XPRESS
+-   [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
-      - [I2C Signals](#i2c-signals)
-      - [Xpress Board Pins Used](#xpress-board-pins-used)
-          - [Solder Bumps](#solder-bumps)
-      - [Connecting UART1 Tx to USB to Serial Adaptor to Test
+    -   [Xpress Board Pins Used](#xpress-board-pins-used)
+        -   [Solder Bumps](#solder-bumps)
+    -   [Connecting UART1 Tx to USB to Serial Adaptor to Test
         Board](#connecting-uart1-tx-to-usb-to-serial-adaptor-to-test-board)
-      - [Working with PuTTY and
+    -   [Working with PuTTY and
         limitations](#working-with-putty-and-limitations)
-      - [After Build Copy](#after-build-copy)
+    -   [After Build Copy](#after-build-copy)
 
 <!---
 use 
@@ -16,47 +15,21 @@ pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-# Testing PIC18F46K42 XPRESS Board
+Testing PIC18F46K42 XPRESS Board
+================================
 
-This branch of the project was set up to test the I2C interface from the
-PIC. A MCP23008 8 bit expander IC was chosen as a simple device to test
-the output of the I2C.
+This branch of the project was set up to test the I2C interface for an
+oled module; however, I doubt I will actually get started on this in the
+near future. There are more pressing things to look at.
 
-  - the pushbutton switch is a reset button for the MCP23008
-  - only two of 8 I/O pins on the MCP23008 are connected to anything in
-    the image.
-
-![](images/MCP23008_test_cct.jpg)
-
-## I2C Signals
-
-Channel 1 shows SCL1 and channel 2 shows SDA1. Note that
-
-  - data bits are latched in on the rising edge of SDA1.
-  - The pattern is seen here is the second one that triggered the scope
-    The first one told the device to make all the I/O outputs. This one
-    told the device to set all the outputs high.
-      - device address 0100 1010 followed by
-      - an ACK 0 followed by
-      - a register address 0000 1010 followed by
-      - The pattern of highs and lows 1111 1111 (runs off edge of scope
-        image)
-  - the device address seen here is 0100 1010 or 0x4A but the software
-    constructs that from
-      - the 7 bit address 0100101 plus 0 for write.
-      - in the firmware main.c the value 00100101 is used or 0x25 which
-        is the same as 0x4A divided by two. If a read instruction is
-        used it would be divided by 2 and a 1 added.
-
-![](images/dev_address_register_add.png)
-
-## Xpress Board Pins Used
+Xpress Board Pins Used
+----------------------
 
 ![](images/pins.png)
 
-  - UART1 is at 115200 baud. Tx1 is on RC6.
-  - UART2 is connected to the XPRESS boards USB interface PIC.
-      - Communication between UART2 and the interface IC is at 9600
+-   UART1 is at 115200 baud. Tx1 is on RC6.
+-   UART2 is connected to the XPRESS boards USB interface PIC.
+    -   Communication between UART2 and the interface IC is at 9600
         baud.
 
 ### Solder Bumps
@@ -69,18 +42,20 @@ Solder Bump for 5 volts added.
 
 ![](images/solder-bump-added.jpg)
 
-## Connecting UART1 Tx to USB to Serial Adaptor to Test Board
+Connecting UART1 Tx to USB to Serial Adaptor to Test Board
+----------------------------------------------------------
 
 ![](images/uart-forward-2-1.jpg)
 
-## Working with PuTTY and limitations
+Working with PuTTY and limitations
+----------------------------------
 
 One can use a PuTTY terminal with the virtual serial port of the Xpress
 board. This works fine when one is typing into the terminal. There is an
 issue though if one attempts pasting into the PuTTY terminal (using a
 right mouse click). In that case only the first character is sent. This
 is an issue of the USB to serial bridge on the Xpress board and not the
-PIC code\! This was verified by using a USB to serial bridge on a
+PIC code! This was verified by using a USB to serial bridge on a
 different board (TTLyFTDI USB-to-TTL Cable Adapter) fed into RB7. In
 this case the code worked as expected and all pasted characters appeared
 in the PuTTY terminal and were correctly sent out uart1 TX.
@@ -90,15 +65,16 @@ in the PuTTY terminal and were correctly sent out uart1 TX.
 Others have commented on the limitation of the USART to USB bridge on
 the Xpress board:
 
-  - [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
+-   [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
     limitations](https://www.microchip.com/forums/m1097510.aspx)
 
-## After Build Copy
+After Build Copy
+----------------
 
 Added after build execute option.
 
     copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
 
-  - the output path will depend on the computer and operating system
+-   the output path will depend on the computer and operating system
 
 ![](images/after-build.png)

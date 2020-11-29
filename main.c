@@ -3,7 +3,7 @@
   File Name:
     main.c
 */
-//	File has been modified from Code Configurator generated file by Dan Peirce B.Sc. Sept 4, 2019
+
 /**
   Description:
     Generation Information :
@@ -34,11 +34,9 @@ void main(void)
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
-    // address, buffer, number of bytes
-    I2C1_Write1ByteRegister(0x25, 0x00, 0x00); // sets 8 pins as outputs
-    printf("I2C data sent\r\n");
-    I2C1_Write1ByteRegister(0x25, 0x0A, 0xFF); // sets all outputs high
-    printf("I2C data sent\r\n");
+
+    // this file is not yet updated for an oled
+	
     while (1)
     {
         char rxData;

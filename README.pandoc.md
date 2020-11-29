@@ -10,36 +10,10 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to test the I2C interface from the PIC. A MCP23008 8 bit expander IC was chosen as a simple 
-device to test the output of the I2C.
+This branch of the project was set up to test the I2C interface for an oled module; however, I doubt I will actually get 
+started on this in the near future. There are more pressing things to look at.
 
-* the pushbutton switch is a reset button for the MCP23008
-* only two of 8 I/O pins on the MCP23008 are connected to anything in the image.
-
-![](images/MCP23008_test_cct.jpg)
-
-## I2C Signals
-
-Channel 1 shows SCL1 and channel 2 shows SDA1.
-Note that 
-
-* data bits are latched in on the rising edge of SDA1. 
-* The pattern is seen here is the second one that triggered the scope
-  The first one told the device to make all the I/O outputs.
-  This one told the device to set all the outputs high.
-    * device address 0100 1010 followed by 
-	* an ACK 0 followed by 
-	* a register address 0000 1010 followed by
-	* The pattern of highs and lows 1111 1111 (runs off edge of scope image)
-* the device address seen here is 0100 1010 or 0x4A but the software constructs that from 
-    * the 7 bit address 0100101 plus 0 for write.
-	* in the firmware main.c the value 00100101 is used or 0x25 which is the same as 
-	  0x4A divided by two. If a read instruction is used it would be divided by 2 and a 1 added.
-	  
-![](images/dev_address_register_add.png) 
-
-
-## Xpress Board Pins Used
+## Xpress Board Pins Used 
 
 ![](images/pins.png)
 
