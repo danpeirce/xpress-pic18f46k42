@@ -42,7 +42,7 @@ void main(void)
     i2c_lcd_initialize();
     printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tLCD TEST\r\n");
+    printf("\t\tI2C LCD TEST\r\n");
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
