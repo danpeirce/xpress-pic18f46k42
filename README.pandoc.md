@@ -10,14 +10,22 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to test the Grove 16x2 LCD display.
-**Branch i2c-lcd-type** differs from **branch i2c-lcd** in this branch displays characters typed in the PuTTY terminal in the LCD in addition
-to Echoing them back to the terminal.
+This branch of the project was set up to test the Grove 16x2 LCD display as the new stdout.
+**Branch i2c-lcd-stdout** differs from **branch i2c-lcd-type** in this branch printf() will send the string to the LCD and not to PuTTY!
 
 * A '\\r' causes the LCD to switch lines and return to col 0.
 * A '\\t' clears the LCD. 
 
-![](images/lcd-grove.jpg)
+![](images/backslash_test.jpg)
+
+To get that output I typed the following:
+
+![](images/backslash_test.png)
+
+Note that the LCD does not print the standard ASCII '\' but instead print the first character shown in the LCD display.
+
+The current program detects the typed '\' and adds the string " ~ backslash" using a printf() function.
+Note it also does not print the tilda character. It instead prints a forward arrow.
 
 ## LCD notes
 
