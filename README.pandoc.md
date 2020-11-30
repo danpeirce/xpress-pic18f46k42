@@ -25,7 +25,7 @@ To get that output I typed the following:
 Note that the LCD does not print the standard ASCII '\' but instead print the first character shown in the LCD display.
 
 The current program detects the typed '\\' and adds the string " ~ backslash" using a printf() function.
-Note it also does not print the tilda character. It instead prints a forward arrow.
+Note it also does not print the tilde character. It instead prints a forward arrow.
 
 ## LCD notes
 

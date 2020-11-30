@@ -39,7 +39,7 @@ the first character shown in the LCD display.
 
 The current program detects the typed ‘\\’ and adds the string " \~
 backslash" using a printf() function. Note it also does not print the
-tilda character. It instead prints a forward arrow.
+tilde character. It instead prints a forward arrow.
 
 ## LCD notes
 
