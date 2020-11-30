@@ -22,11 +22,11 @@
 #include <string.h>
 
 
-#define _XTAL_FREQ 48000000
+// #define _XTAL_FREQ 48000000 note already defined in mcc_generated_files/device_config.h
 
 void i2c_lcd_initialize(void);
 
-i2c1_address_t lcd_address = 0X3E; 
+i2c1_address_t lcd_address = LCD_ADDRESS; 
 
 const char apsc_msg[] = "KPU APSC1299"; 
 
@@ -50,7 +50,8 @@ void main(void)
     while (1)
     {
         char rxData;
-        static unsigned char cursor = 0x80; // local cursor counter
+        static unsigned char cursor = LINE1_START_ADDRESS; // local cursor counter
+		                                              // static so only initialized once 
             // Logic to echo received data
         test1_PORT = 1;
         if(UART2_is_rx_ready())
@@ -59,13 +60,13 @@ void main(void)
             rxData = UART2_Read();
             if(rxData != '\r') 
             {
-                I2C1_Write1ByteRegister(lcd_address, 0x40, rxData);
+                I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
                 cursor++;
             }
             if (rxData == '\t')  // use tab to clear LCD screen
             {
-                I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
-                cursor = 0x80; // reset cursor counter variable 
+                I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR); // clear display
+                cursor = LINE1_START_ADDRESS; // reset cursor counter variable 
             }
             if(UART2_is_tx_ready()) // for USB echo
             {
@@ -74,9 +75,9 @@ void main(void)
                 if(rxData == '\r') 
                 {
                     UART2_Write('\n'); // add newline to return
-                    if (cursor >= 0xC0) cursor = 0x80; // move to other line
-                    else cursor = 0xC0;
-                    I2C1_Write1ByteRegister(lcd_address, 0x80, cursor);
+                    if (cursor >= LINE2_START_ADDRESS) cursor = LINE1_START_ADDRESS; // move to other line
+                    else cursor = LINE2_START_ADDRESS;
+                    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
             test2_PORT = 0;
@@ -112,38 +113,40 @@ void main(void)
 
 void i2c_lcd_initialize(void)
 {
-    //static uint8_t setup_buf[] = { 0x28, 0x0E, 0x01, 0x02};
+    //static uint8_t setup_buf[] = { FUNCTION_SET, DISPLAY_ON_OFF, LCD_CLEAR, ENTRY_MODE};
     static uint8_t data[] =     "@KPU APSC1299 Int"; // 0x40 to send data;
-    static uint8_t name_msg[] = "@Microcontrollers"; // @ is same as 0x40
+    static uint8_t name_msg[] = "@Microcontrollers"; // @ is same as 0x40 same as LCD_DATA
     unsigned char count;
    
     // Initialization Sequence
     __delay_ms(16); 
-	I2C1_Write1ByteRegister(lcd_address, 0x80, 0x28);
+	I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, FUNCTION_SET);  // 001X NFXX  or 0x28
     __delay_us(41);
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x0E);
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, DISPLAY_ON);   // 0000 1DCB or 0x0E
     __delay_us(41);
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01);
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR);   // 0000 0001  or 0x01
     __delay_ms(2); 
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x02);
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, ENTRY_MODE);  // 0000 0010   or 0x02
     __delay_us(41);
 
     // send messages
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x80); // set to row 0 col 0
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LINE1_START_ADDRESS); // set to row 0 col 0
     __delay_us(41);
-    I2C1_WriteNBytes(lcd_address, data, 17 ); // array data contains first 
+    I2C1_WriteNBytes(lcd_address, data, 17 ); // array data[] contains first 
                                               // string
-                                              // 
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0xC0); // set to row 1 col 0
+                                              // 17 is data code plus 16 characters
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LINE2_START_ADDRESS); // set to row 1 col 0
     __delay_us(41);
     
-    I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg contains
+    I2C1_WriteNBytes(lcd_address, name_msg, 17); // array name_msg[] contains
                                                  // second string
-    for(count=0;count<40;count++)    // 2 second delay
-    {
+                                              // string
+                                              // 17 is data code plus 16 characters												 
+    for(count=0;count<40;count++)    // 2 second delay so message displayed for
+    {                                //    2 seconds as a splash screen
         __delay_ms(50);
     }
-    I2C1_Write1ByteRegister(lcd_address, 0x80, 0x01); // clear display
+    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR); // clear display
     __delay_ms(50);
 }
 /**
