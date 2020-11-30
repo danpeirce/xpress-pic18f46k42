@@ -40,12 +40,7 @@ void main(void)
     // Initialize the device
     SYSTEM_Initialize();
     i2c_lcd_initialize();
-    printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tI2C LCD TEST\r\n");
-    printf("\t\t---- ----\r\n\n");
-    
-    printf("\tKPU APSC1299\r\n\n");
+
     // address, buffer, number of bytes
 
     while (1)
@@ -69,9 +64,15 @@ void main(void)
                 I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR); // clear display
                 cursor = LINE1_START_ADDRESS; // reset cursor counter variable 
             }
+            if(rxData == '\\') printf(" ~ backslash");
             if(UART2_is_tx_ready()) // for USB echo
             {
-                if (rxData == '\t') printf("\r\n\n\n");
+                if (rxData == '\t') 
+                {
+                    UART2_Write('\r');
+                    UART2_Write('\n');
+                    UART2_Write('\n');
+                }
                 else UART2_Write(rxData);
                 if(rxData == '\r') 
                 {

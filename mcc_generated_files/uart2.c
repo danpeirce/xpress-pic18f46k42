@@ -172,12 +172,13 @@ char getch(void)
     return UART2_Read();
 }
 
+/*
 void putch(char txData)
 {
     UART2_Write(txData);
 }
 
-
+*/
 
 
 
