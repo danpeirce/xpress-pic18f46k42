@@ -18,6 +18,7 @@
 
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/examples/i2c1_master_example.h"
+#include "i2c-lcd.h"
 #include <stdio.h>
 #include <string.h>
 
