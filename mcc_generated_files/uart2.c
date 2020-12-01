@@ -172,12 +172,13 @@ char getch(void)
     return UART2_Read();
 }
 
+/*
 void uart2_out(char txData)  // renamed to allow for redirection of stdout
 {
     UART2_Write(txData);
 }
 
-
+*/
 
 
 void UART2_DefaultFramingErrorHandler(void){}
