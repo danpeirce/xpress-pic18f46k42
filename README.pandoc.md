@@ -11,7 +11,24 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 # Testing PIC18F46K42 XPRESS Board
 
 This branch of the project was set up to test the Grove 16x2 LCD display as the new stdout.
-**Branch i2c-lcd-stdout** differs from **branch i2c-lcd-type** in this branch printf() will send the string to the LCD and not to PuTTY!
+**Branch stdout** differs from **branch i2c-lcd-stdout** in this branch printf() will send the string to the output chosen. Either LCD or PuTTY!
+A function pointer **stdout** allows the output to be set to either lcd_out or uart2_out.
+
+See [What does printf output do in an XC8 program?](https://microchipdeveloper.com/faq:29)
+
+~~~~c
+void main(void)
+{
+    // Initialize the device
+    SYSTEM_Initialize();
+    i2c_lcd_initialize();
+	stdout = uart2_out;
+    header_uart2();
+	stdout = lcd_out;
+	...snip...
+~~~~
+
+The following is unchanged except the PuTTY header is now back:
 
 * A '\\r' causes the LCD to switch lines and return to col 0.
 * A '\\t' clears the LCD. 
