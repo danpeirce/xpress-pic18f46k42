@@ -172,13 +172,11 @@ char getch(void)
     return UART2_Read();
 }
 
-/*
-void putch(char txData)
+void uart2_out(char txData)  // renamed to allow for redirection of stdout
 {
     UART2_Write(txData);
 }
 
-*/
 
 
 

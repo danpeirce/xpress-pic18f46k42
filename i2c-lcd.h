@@ -10,3 +10,6 @@
 #define DISPLAY_ON              0x0E  // "Display ON/OFF Control"  0000 1DCB or 0x0E
 #define LCD_CLEAR               0X01 // "Display Clear"  0000 0001  or 0x01
 #define ENTRY_MODE              0X02 // "Entry Mode Set"  0000 0010   or 0x02
+
+void lcd_out(char txData);
+void i2c_lcd_initialize(void);
