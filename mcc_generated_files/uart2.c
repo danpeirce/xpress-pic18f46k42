@@ -167,18 +167,8 @@ void UART2_Write(uint8_t txData)
     U2TXB = txData;    // Write the data byte to the USART.
 }
 
-char getch(void)
-{
-    return UART2_Read();
-}
 
-/*
-void uart2_out(char txData)  // renamed to allow for redirection of stdout
-{
-    UART2_Write(txData);
-}
 
-*/
 
 
 void UART2_DefaultFramingErrorHandler(void){}

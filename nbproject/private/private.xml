@@ -5,10 +5,10 @@
         <group>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/i2c-lcd.h</file>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/stdout.h</file>
+            <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/mcc_generated_files/uart2.c</file>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/stdout.c</file>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/nbproject/Makefile-default.mk</file>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/main.c</file>
-            <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/mcc_generated_files/uart2.h</file>
             <file>file:/C:/Users/danp/MPLABXProjects/xpress-pic18f46k42/i2c-lcd.c</file>
         </group>
     </open-files>
