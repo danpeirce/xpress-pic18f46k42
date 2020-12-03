@@ -66,8 +66,18 @@ There are two variants of the QTR-1xx reflective sensor.
 
 ### Conversion to QTR-1RC
 
-I actually ordered the wrong part. For testing purposes I was able to convert the QTR1A to be equivalent to the QTR-1RC by 
+The QTR-1A was ordered. It was converted to be equivalent to the QTR-1RC by 
 removing the 47 KΩ resistor and adding a 10 nF capacitor and 200 Ω resistor on the breadboard.
+
+A close up of a QTR-1A is shown here.
+
+![](images/with_47k_header.jpg)
+
+The 47 KΩ resistor needs to be removed to in order to do the conversion.
+
+![](images/with_header.jpg)
+
+A 0.01 µF (10 nF) capacitor and a 200 Ω resistor are added on the breadboard.
 
 ![](images/sensor_cct.jpg)
 
