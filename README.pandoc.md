@@ -139,6 +139,20 @@ documentation is not clear. It may be more correct that in the case of the LCD t
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
 
+## MCC Settings
+
+### I2C Module
+
+The parts not expanded have the default settings.
+
+![](images/mcc_i2c.png)
+
+### Pins Module
+
+Note the selection of open drain (OD)
+
+![](images/mcc_pin_module.png)
+
 ## 3D Printed Support for the Display
 
 A part was 3D printed to hold the display off the table. This should help ensure nothing is shorted on the back and also tilts the 

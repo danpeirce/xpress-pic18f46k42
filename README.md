@@ -5,6 +5,9 @@
         -   [Sending Characters to the
             Display](#sending-characters-to-the-display)
     -   [Xpress Board Pins Used](#xpress-board-pins-used)
+    -   [MCC Settings](#mcc-settings)
+        -   [I2C Module](#i2c-module)
+        -   [Pins Module](#pins-module)
     -   [3D Printed Support for the
         Display](#d-printed-support-for-the-display)
     -   [Working with PuTTY and
@@ -167,6 +170,21 @@ Xpress Board Pins Used
 -   UART2 is connected to the XPRESS boards USB interface PIC.
     -   Communication between UART2 and the interface IC is at 9600
         baud.
+
+MCC Settings
+------------
+
+### I2C Module
+
+The parts not expanded have the default settings.
+
+![](images/mcc_i2c.png)
+
+### Pins Module
+
+Note the selection of open drain (OD)
+
+![](images/mcc_pin_module.png)
 
 3D Printed Support for the Display
 ----------------------------------
