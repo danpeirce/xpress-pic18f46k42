@@ -27,12 +27,27 @@ void main(void)
     // Initialize the device
     SYSTEM_Initialize();
 
-    printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
-    printf("\t\t---- ----\n\n\r");
+    printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
+    printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
+    printf("\t\tsscanf TEST\r\n");
+    printf("\t\t---- ----\r\n\n");
     
-    printf("\tKPU APSC1299\n\n\r");
+    printf("\tKPU APSC1299\r\n\n");
+    
+    { // this block based on page 398 of user guide 50002737C
+        char s[] = "5 T green 3000000.00";
+        int number, items;
+        char letter;
+        char color[10];
+        float salary;
+        items = sscanf(s, "%d %c %s %f", &number, &letter, &color, &salary);
+        printf("Number of items scanned = %d\r\n", items);
+        printf("Favorite number = %d\r\n", number);
+        printf("Favorite letter = %c\r\n", letter);
+        printf("Favorite color = %s\r\n", color);
+        printf("Desired salary = $%.2f\r\n", salary);
+    }
+    
     
     while (1)
     {
