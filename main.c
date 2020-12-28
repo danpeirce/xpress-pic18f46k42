@@ -81,8 +81,30 @@ void main(void)
                     I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
-            if(rxData == 'S') I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
-            if(rxData == 'R') printf("%d", I2C1_Read1ByteRegister(0X68, 0X03));
+            if(rxData == 'S') 
+            {
+                I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
+                I2C1_Write1ByteRegister(0X68, 0X01, (2*16+0));  //minute
+                //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
+                /*
+                I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
+                I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
+                I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
+                I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
+            }
+            if(rxData == 'R') 
+            {
+                char timeh;
+                printf(" 20%x/", I2C1_Read1ByteRegister(0X68, 0X06)); // year
+                printf("%x/", I2C1_Read1ByteRegister(0X68, 0X05)); // month
+                printf("%x,", I2C1_Read1ByteRegister(0X68, 0X04)); // day of month
+                printf(" day #%d,", I2C1_Read1ByteRegister(0X68, 0X03)); // day of week
+                printf(" time %02x:", 0x1F&(timeh=I2C1_Read1ByteRegister(0X68, 0X02)) );
+                printf("%02x:", I2C1_Read1ByteRegister(0X68, 0X01));
+                printf("%02x", I2C1_Read1ByteRegister(0X68, 0X00));
+                if (timeh/32 & 0x01) puts(" PM\r" );
+                else puts(" AM\r");
+            }
             test2_PORT = 0;
         }
         test1_PORT = 0; 
