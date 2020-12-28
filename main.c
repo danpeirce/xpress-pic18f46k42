@@ -81,6 +81,8 @@ void main(void)
                     I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
+            if(rxData == 'S') I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
+            if(rxData == 'R') printf("%d", I2C1_Read1ByteRegister(0X68, 0X03));
             test2_PORT = 0;
         }
         test1_PORT = 0; 
