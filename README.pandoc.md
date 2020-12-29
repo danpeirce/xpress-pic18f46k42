@@ -29,6 +29,10 @@ DS3231 Real Time Clock (RTC) Breakout Board from Adafruit
 * [board information fro Adafruit](https://cdn-learn.adafruit.com/downloads/pdf/adafruit-ds3231-precision-rtc-breakout.pdf)
 * [datasheet for IC](https://datasheets.maximintegrated.com/en/ds/DS3231.pdf)
 
+### Registers in DS3231
+
+![](images/DS3231-reg.png)
+
 ## LCD notes
 
 * I2C Address 	0X3E from [Grove - 16x2 LCD Specification](https://wiki.seeedstudio.com/Grove-16x2_LCD_Series/#specification)

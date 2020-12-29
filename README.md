@@ -2,6 +2,7 @@
     Board](#testing-pic18f46k42-xpress-board)
     -   [DS3231 Real Time Clock (RTC) Breakout
         Board](#ds3231-real-time-clock-rtc-breakout-board)
+        -   [Registers in DS3231](#registers-in-ds3231)
     -   [LCD notes](#lcd-notes)
         -   [Initialization Sequence](#initialization-sequence)
         -   [Sending Characters to the
@@ -47,6 +48,10 @@ DS3231 Real Time Clock (RTC) Breakout Board from Adafruit
     Adafruit](https://cdn-learn.adafruit.com/downloads/pdf/adafruit-ds3231-precision-rtc-breakout.pdf)
 -   [datasheet for
     IC](https://datasheets.maximintegrated.com/en/ds/DS3231.pdf)
+
+### Registers in DS3231
+
+![](images/DS3231-reg.png)
 
 LCD notes
 ---------
