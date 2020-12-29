@@ -29,6 +29,10 @@ DS3231 Real Time Clock (RTC) Breakout Board from Adafruit
 * [board information fro Adafruit](https://cdn-learn.adafruit.com/downloads/pdf/adafruit-ds3231-precision-rtc-breakout.pdf)
 * [datasheet for IC](https://datasheets.maximintegrated.com/en/ds/DS3231.pdf)
 
+### I2C Address of RTC
+
+* 0x68 is hardwired
+
 ### Registers in DS3231
 
 ![](images/DS3231-reg.png)
