@@ -10,14 +10,24 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-This branch of the project was set up to test the Grove 16x2 LCD display.
-**Branch i2c-lcd-type** differs from **branch i2c-lcd** in this branch displays characters typed in the PuTTY terminal in the LCD in addition
-to Echoing them back to the terminal.
+This branch echos characters typed in the PuTTY terminal in addition to sending them to the LCD.
 
 * A '\\r' causes the LCD to switch lines and return to col 0.
 * A '\\t' clears the LCD. 
 
+The program will also will send a time stamp to the PuTTY terminal any time a "R" is typed.
+
+![](images/time-stamp.png)
+
 ![](images/lcd-grove.jpg)
+
+## DS3231 Real Time Clock (RTC) Breakout Board
+
+DS3231 Real Time Clock (RTC) Breakout Board from Adafruit
+
+* [from digikey](https://www.digikey.ca/en/products/detail/adafruit-industries-llc/3013/5875808)
+* [board information fro Adafruit](https://cdn-learn.adafruit.com/downloads/pdf/adafruit-ds3231-precision-rtc-breakout.pdf)
+* [datasheet for IC](https://datasheets.maximintegrated.com/en/ds/DS3231.pdf)
 
 ## LCD notes
 
