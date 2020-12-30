@@ -63,7 +63,7 @@ quote
 
 In PuTTY it would be more acurate to say a mask is applied as follows:
 
-    0x3F & key
+    0x1F & key
 
 since **ctrl + t** has the same result as **ctrl + T**. They both result
 in the non-printable **DC4** (same as 0x14). Note that the **t** is
