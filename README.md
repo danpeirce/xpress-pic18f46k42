@@ -1,5 +1,8 @@
 -   [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
+    -   [This Branch of Project](#this-branch-of-project)
+        -   [Typing Ctrl and some other character in
+            PuTTY](#typing-ctrl-and-some-other-character-in-putty)
     -   [DS3231 Real Time Clock (RTC) Breakout
         Board](#ds3231-real-time-clock-rtc-breakout-board)
         -   [I2C Address of RTC](#i2c-address-of-rtc)
@@ -25,18 +28,48 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 Testing PIC18F46K42 XPRESS Board
 ================================
 
+This Branch of Project
+----------------------
+
+The program send a timestamp after the initial header on startup. The
+program will also will send a time stamp to the PuTTY terminal any time
+a **ctrl**+‘**t**’ is typed.
+
+![](images/time-stamp.png)
+
 This branch echos characters typed in the PuTTY terminal in addition to
 sending them to the LCD.
 
 -   A ‘\\r’ causes the LCD to switch lines and return to col 0.
 -   A ‘\\t’ clears the LCD.
 
-The program will also will send a time stamp to the PuTTY terminal any
-time a “R” is typed.
-
-![](images/time-stamp.png)
-
 ![](images/lcd-grove.jpg)
+
+### Typing Ctrl and some other character in PuTTY
+
+In the PuTTY terminal program the Ctrl key modifies character keys by
+applying a mask. The result is similar to what is described at
+<https://www.vocabulary.com/articles/wc/ctrlshiftreturn-keys-to-your-computer/>
+
+quote
+
+> …if the operator held down the Ctrl key while typing a character, the
+> Teletype machine in effect subtracted 64 from the value of that
+> letter. Glance again at the chart from earlier. Let’s say that the
+> operator wanted a horizontal tab (9). The operator could press Ctrl
+> and I (73) at the same time. To create a page break/form feed (12),
+> the operator pressed Ctrl+L. To embed a character to ring the bell,
+> the operator used Ctrl+G.
+
+In PuTTY it would be more acurate to say a mask is applied as follows:
+
+    0x3F & key
+
+since **ctrl + t** has the same result as **ctrl + T**. They both result
+in the non-printable **DC4** (same as 0x14). Note that the **t** is
+**0x74** and **T** is **0x54**.
+
+An **ASCCII** table can be found at <http://www.asciitable.com/>
 
 DS3231 Real Time Clock (RTC) Breakout Board
 -------------------------------------------
@@ -52,7 +85,7 @@ DS3231 Real Time Clock (RTC) Breakout Board from Adafruit
 
 ### I2C Address of RTC
 
--   0x68 is hardwired
+-   I2C Address 0x68 is hardwired
 
 ### Registers in DS3231
 

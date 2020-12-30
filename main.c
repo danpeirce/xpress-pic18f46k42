@@ -1,15 +1,5 @@
 /**
-
-  File Name:
-    main.c
-*/
-//   set up for Grove I2C LCD Nov 20, 2020 by Dan Peirce B.Sc.
-/**
-  Description:
-    Generation Information :
-        Product Revision  :  PIC18 MCUs - 1.77
-        Device            :  PIC18F46K42
-        Driver Version    :  2.00
+  File Name: main.c
 */
 
 //  execute this command after build (project properties build)
@@ -24,7 +14,7 @@
 
 
 // #define _XTAL_FREQ 48000000 note already defined in mcc_generated_files/device_config.h
-
+void print_time(void);
 void i2c_lcd_initialize(void);
 
 i2c1_address_t lcd_address = LCD_ADDRESS; 
@@ -46,6 +36,7 @@ void main(void)
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
+    print_time();
     // address, buffer, number of bytes
 
     while (1)
@@ -81,34 +72,48 @@ void main(void)
                     I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
-            if(rxData == 'S') 
+            if(rxData == 0x13)  // use ctrl s in terminal for read time 
             {
-                I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
-                I2C1_Write1ByteRegister(0X68, 0X01, (2*16+0));  //minute
-                //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
                 /*
+                I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
+                I2C1_Write1ByteRegister(0X68, 0X01, (2*16+9));  //minute
+                //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
+                
                 I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
                 I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
                 I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
                 I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
             }
-            if(rxData == 'R') 
-            {
-                char timeh;
-                printf(" 20%x/", I2C1_Read1ByteRegister(0X68, 0X06)); // year
-                printf("%x/", I2C1_Read1ByteRegister(0X68, 0X05)); // month
-                printf("%x,", I2C1_Read1ByteRegister(0X68, 0X04)); // day of month
-                printf(" day #%d,", I2C1_Read1ByteRegister(0X68, 0X03)); // day of week
-                printf(" time %02x:", 0x1F&(timeh=I2C1_Read1ByteRegister(0X68, 0X02)) );
-                printf("%02x:", I2C1_Read1ByteRegister(0X68, 0X01));
-                printf("%02x", I2C1_Read1ByteRegister(0X68, 0X00));
-                if (timeh/32 & 0x01) puts(" PM\r" );
-                else puts(" AM\r");
-            }
+            if(rxData == 0x14) print_time(); // use ctrl t in terminal for read and print time 
+
             test2_PORT = 0;
         }
         test1_PORT = 0; 
     }
+}
+
+void print_time(void)
+{
+    const char *days[8];
+    days[0] = "\0";
+    days[1] = "Monday";
+    days[2] = "Tuesday";
+    days[3] = "Wednesday";
+    days[4] = "Thursday";
+    days[5] = "Friday";
+    days[6] = "Saturday";
+    days[7] = "Sunday";
+    
+    char timeh;
+    printf(" 20%x/", I2C1_Read1ByteRegister(0X68, 0X06)); // year
+    printf("%x/", I2C1_Read1ByteRegister(0X68, 0X05)); // month
+    printf("%x,", I2C1_Read1ByteRegister(0X68, 0X04)); // day of month
+    printf(" day %s,", days[I2C1_Read1ByteRegister(0X68, 0X03)]); // day of week
+    printf(" time %02x:", 0x1F&(timeh=I2C1_Read1ByteRegister(0X68, 0X02)) );
+    printf("%02x:", I2C1_Read1ByteRegister(0X68, 0X01));
+    printf("%02x", I2C1_Read1ByteRegister(0X68, 0X00));
+    if (timeh/32 & 0x01) puts(" PM\r" );
+    else puts(" AM\r");
 }
 
 /*
