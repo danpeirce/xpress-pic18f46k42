@@ -15,6 +15,7 @@
 
 // #define _XTAL_FREQ 48000000 note already defined in mcc_generated_files/device_config.h
 void print_time(void);
+void set_time(void); // dummy function needs manual chages to actually set time or date
 void i2c_lcd_initialize(void);
 
 i2c1_address_t lcd_address = LCD_ADDRESS; 
@@ -32,7 +33,7 @@ void main(void)
     i2c_lcd_initialize();
     printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tI2C LCD TEST\r\n");
+    printf("\t\tI2C RTC TEST\r\n");
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
@@ -72,18 +73,8 @@ void main(void)
                     I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
-            if(rxData == 0x13)  // use ctrl s in terminal for read time 
-            {
-                /*
-                I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
-                I2C1_Write1ByteRegister(0X68, 0X01, (2*16+9));  //minute
-                //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
-                
-                I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
-                I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
-                I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
-                I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
-            }
+            if(rxData == 0x13) set_time(); // use ctrl s in terminal for set time 
+
             if(rxData == 0x14) print_time(); // use ctrl t in terminal for read and print time 
 
             test2_PORT = 0;
@@ -116,6 +107,18 @@ void print_time(void)
     else puts(" AM\r");
 }
 
+void set_time(void)
+{
+                /* uncomment and manually setup current time and date
+    I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
+    I2C1_Write1ByteRegister(0X68, 0X01, (2*16+9));  //minute
+    //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
+
+    I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
+    I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
+    I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
+    I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
+}
 /*
 ### Initialization Sequence
 
