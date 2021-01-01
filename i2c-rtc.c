@@ -4,8 +4,8 @@
 #include "i2c-rtc.h"
 #include <stdio.h>
 
-void (*state)(void) = echo;
-uint8_t data[7];
+void (*state)(void) = echo; // state used here and used as extern in main.c
+static uint8_t data[7];     // static to limit scope to this file
 const char * days[] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
                         "Saturday", "Sunday"
                       };
