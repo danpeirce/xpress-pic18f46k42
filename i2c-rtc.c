@@ -24,6 +24,11 @@ void print_time(void)
     else puts(" AM\r");
 }
 
+void set_seconds(unsigned char seconds)
+{
+    
+}
+
 void set_time(void)
 {
                 /* uncomment and manually setup current time and date
