@@ -18,6 +18,7 @@
       <itemPath>mcc_generated_files/uart1.h</itemPath>
       <itemPath>mcc_generated_files/uart2.h</itemPath>
       <itemPath>i2c-lcd.h</itemPath>
+      <itemPath>i2c-rtc.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -40,6 +41,7 @@
       <itemPath>mcc_generated_files/pin_manager.c</itemPath>
       <itemPath>mcc_generated_files/uart1.c</itemPath>
       <itemPath>mcc_generated_files/uart2.c</itemPath>
+      <itemPath>i2c-rtc.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

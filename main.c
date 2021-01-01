@@ -9,13 +9,13 @@
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/examples/i2c1_master_example.h"
 #include "i2c-lcd.h"
+#include "i2c-rtc.h"
 #include <stdio.h>
 #include <string.h>
 
 
 // #define _XTAL_FREQ 48000000 note already defined in mcc_generated_files/device_config.h
-void print_time(void);
-void set_time(void); // dummy function needs manual chages to actually set time or date
+
 void i2c_lcd_initialize(void);
 
 i2c1_address_t lcd_address = LCD_ADDRESS; 
@@ -83,45 +83,7 @@ void main(void)
     }
 }
 
-void print_time(void)
-{
-    const char *days[8];
-    days[0] = "\0";
-    days[1] = "Monday";
-    days[2] = "Tuesday";
-    days[3] = "Wednesday";
-    days[4] = "Thursday";
-    days[5] = "Friday";
-    days[6] = "Saturday";
-    days[7] = "Sunday";
-    
-    uint8_t data[7];
-    I2C1_Read1ByteRegister(0X68, 0X12); // read last register so loops to first
-    // void I2C1_ReadNBytes(i2c1_address_t address, uint8_t *data, size_t len)
-    I2C1_ReadNBytes(0X68, data, 0x07);
-    printf(" 20%x/", data[0X06]); // year
-    printf("%x/", data[0X05]); // month
-    printf("%x,", data[0X04]); // day of month
-    printf(" day %s,", days[data[0X03]]); // day of week
-    printf(" time %02x:", 0x1F&(data[0X02]) );
-    printf("%02x:", data[0X01]);
-    printf("%02x", data[0X00]);
-    if (data[0X02]/32 & 0x01) puts(" PM\r" );
-    else puts(" AM\r");
-}
 
-void set_time(void)
-{
-                /* uncomment and manually setup current time and date
-    I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
-    I2C1_Write1ByteRegister(0X68, 0X01, (2*16+9));  //minute
-    //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
-
-    I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
-    I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
-    I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
-    I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
-}
 /*
 ### Initialization Sequence
 
