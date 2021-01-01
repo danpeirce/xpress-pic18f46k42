@@ -1,12 +1,49 @@
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/examples/i2c1_master_example.h"
+#include "i2c-lcd.h"
 #include "i2c-rtc.h"
 #include <stdio.h>
 
+void (*state)(void) = echo;
 uint8_t data[7];
 const char * days[] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
                         "Saturday", "Sunday"
                       };
+
+void echo(void)
+{
+    char rxData; 
+    static unsigned char cursor = LINE1_START_ADDRESS; // local cursor counter
+		                                              // static so only initialized once     
+    test2_PORT = 1;
+    rxData = UART2_Read();
+    if(rxData != '\r') 
+    {
+        I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, rxData);
+        cursor++;
+    }
+    if (rxData == '\t')  // use tab to clear LCD screen
+    {
+        I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_COMMAND, LCD_CLEAR); // clear display
+        cursor = LINE1_START_ADDRESS; // reset cursor counter variable 
+    }
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if (rxData == '\t') printf("\r\n\n\n");
+        else UART2_Write(rxData);
+        if(rxData == '\r') 
+        {
+            UART2_Write('\n'); // add newline to return
+            if (cursor >= LINE2_START_ADDRESS) cursor = LINE1_START_ADDRESS; // move to other line
+            else cursor = LINE2_START_ADDRESS;
+            I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_COMMAND, cursor);
+        }
+    }
+    if(rxData == 0x13) set_time(); // use ctrl s in terminal for set time 
+    if(rxData == 0x14) print_time(); // use ctrl t in terminal for read and print time 
+
+    test2_PORT = 0;
+}
 
 void print_time(void)
 {
