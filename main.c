@@ -39,7 +39,9 @@ void main(void)
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
-    print_time();
+    read_rtc();
+    uart2_time();
+    lcd_time();
     // address, buffer, number of bytes
 
     while (1)

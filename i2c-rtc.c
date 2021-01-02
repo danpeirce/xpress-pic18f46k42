@@ -4,6 +4,9 @@
 #include "i2c-rtc.h"
 #include <stdio.h>
 
+
+void set_time(void); // dummy function needs manual changes to actually set time or date
+
 void (*state)(void) = echo; // state used here and used as extern in main.c
 static uint8_t data[7];     // static to limit scope to this file
 const char * days[] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
@@ -40,31 +43,86 @@ void echo(void)
         }
     }
     if(rxData == 0x13) set_time(); // use ctrl s in terminal for set time 
-    if(rxData == 0x14) print_time(); // use ctrl t in terminal for read and print time 
+    if(rxData == 0x14) 
+    {
+        read_rtc();
+        uart2_time(); // use ctrl t in terminal for read and print time
+        lcd_time();
+    } 
 
     test2_PORT = 0;
 }
 
-void print_time(void)
+void read_rtc(void)
 {
     I2C1_Read1ByteRegister(0X68, 0X12); // read last register so loops to first
     I2C1_ReadNBytes(0X68, data, 0x07);
+}
 
+void uart2_time(void)
+{    
     printf(" 20%x/", data[0X06]); // year
     printf("%x/", data[0X05]); // month
     printf("%x,", data[0X04]); // day of month
     printf(" day %s,", days[data[0X03]-1u]); // day of week
-    printf(" time %02x:", 0x1F&(data[0X02]) );
-    printf("%02x:", data[0X01]);
-    printf("%02x", data[0X00]);
+    printf(" time %02x:", 0x1F&(data[0X02]) ); // hour
+    printf("%02x:", data[0X01]); //minute
+    printf("%02x", data[0X00]);  // seconds
     if (data[0X02]/32 & 0x01) puts(" PM\r" );
     else puts(" AM\r");
 }
 
-void set_seconds(unsigned char seconds)
+union 
 {
-    
+    struct
+    {
+        uint8_t lower: 4;
+        uint8_t upper: 1;
+        uint8_t   pm:  1;
+        uint8_t  mode: 1;  // am/pm
+        uint8_t unnused: 1;
+    };
+    uint8_t byte;
+} hour_parts;
+
+union 
+{
+    struct
+    {
+        uint8_t lower: 4;
+        uint8_t upper: 4;
+    };
+    uint8_t byte;
+} byte_nibbles;
+
+void lcd_time(void)
+{
+    char ones, tens;
+    hour_parts.byte = data[0x02]; // hour
+    ones = hour_parts.lower + '0'; // convert to ascii
+    tens = hour_parts.upper + '0';
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, tens);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ones);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ':');
+    byte_nibbles.byte = data[0X01]; // minutes
+    ones = byte_nibbles.lower + '0'; // convert to ascii
+    tens = byte_nibbles.upper + '0';
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, tens);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ones);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ':');
+    byte_nibbles.byte = data[0X00]; // minutes
+    ones = byte_nibbles.lower + '0'; // convert to ascii
+    tens = byte_nibbles.upper + '0';
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, tens);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ones);
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ' ');
+    if (hour_parts.pm) I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, 'P');
+    else I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, 'A');
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, 'M');
+    I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ' ');
 }
+
+
 
 void set_time(void)
 {
