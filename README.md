@@ -38,10 +38,16 @@ a **ctrl**+‘**t**’ is typed.
 ![](images/time-stamp.png)
 
 This branch echos characters typed in the PuTTY terminal in addition to
-sending them to the LCD.
+sending printable characters to the LCD.
 
 -   A ‘\\r’ causes the LCD to switch lines and return to col 0.
 -   A ‘\\t’ clears the LCD.
+-   A Ctrl + t causes the time to be displayed in the LCD and both time
+    and date to be displayed in PuTTY.
+-   A Ctrl + d causes the date to be displayed in the LCD and both time
+    and date to be displayed in PuTTY.
+-   A Ctrl + g will cause a bell tone in the terminal but be ignored by
+    the LCD.
 
 ![](images/lcd-grove.jpg)
 
