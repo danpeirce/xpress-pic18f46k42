@@ -6,7 +6,7 @@
 
 
 void set_time(void); // dummy function needs manual changes to actually set time or date
-
+void lcd_date(void);
 void (*state)(void) = echo; // state used here and used as extern in main.c
 static uint8_t data[7];     // static to limit scope to this file
 const char * days[] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
@@ -20,7 +20,7 @@ void echo(void)
 		                                              // static so only initialized once     
     test2_PORT = 1;
     rxData = UART2_Read();
-    if(rxData != '\r') 
+    if((rxData != '\r')&&(rxData>=' ')) 
     {
         I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, rxData);
         cursor++;
@@ -48,8 +48,15 @@ void echo(void)
         read_rtc();
         uart2_time(); // use ctrl t in terminal for read and print time
         lcd_time();
+        cursor = cursor + 11;
     } 
-
+    if(rxData == 0x04) 
+    {
+        read_rtc();
+        uart2_time(); // use ctrl t in terminal for read and print time
+        lcd_date();
+        cursor = cursor + 10;
+    }
     test2_PORT = 0;
 }
 
@@ -62,8 +69,8 @@ void read_rtc(void)
 void uart2_time(void)
 {    
     printf(" 20%x/", data[0X06]); // year
-    printf("%x/", data[0X05]); // month
-    printf("%x,", data[0X04]); // day of month
+    printf("%02x/", data[0X05]); // month
+    printf("%02x,", data[0X04]); // day of month
     printf(" day %s,", days[data[0X03]-1u]); // day of week
     printf(" time %02x:", 0x1F&(data[0X02]) ); // hour
     printf("%02x:", data[0X01]); //minute
@@ -122,6 +129,26 @@ void lcd_time(void)
     I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_DATA, ' ');
 }
 
+void lcd_date(void)
+{
+    char str[] = "@2000/00/00"; // some characters modified below
+    int index = 3;
+    byte_nibbles.byte = data[0x06]; // year
+    str[index] = byte_nibbles.upper + '0'; // convert to ascii digit
+    index++;
+    str[index] = byte_nibbles.lower + '0';
+    index = index + 2;                     // skip over '/'
+    byte_nibbles.byte = data[0x05]; // month
+    str[index] = (0x01 & byte_nibbles.upper) + '0';
+    index++;
+    str[index] = byte_nibbles.lower + '0';
+    index = index + 2;
+    byte_nibbles.byte = data[0x04]; // month
+    str[index] = byte_nibbles.upper + '0';
+    index++;
+    str[index] = byte_nibbles.lower + '0';
+    I2C1_WriteNBytes( LCD_ADDRESS, str, 11 );
+}
 
 
 void set_time(void)
