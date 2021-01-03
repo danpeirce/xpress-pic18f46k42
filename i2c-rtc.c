@@ -4,9 +4,16 @@
 #include "i2c-rtc.h"
 #include <stdio.h>
 
+// state functions
+void set_time(void); 
+void set_minutes10(void);
+void set_minutes1(void);
 
-void set_time(void); // dummy function needs manual changes to actually set time or date
+// other functions used only in i2c-rtc.c
 void lcd_date(void);
+
+
+// variables
 void (*state)(void) = echo; // state used here and used as extern in main.c
 static uint8_t data[7];     // static to limit scope to this file
 const char * days[] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
@@ -42,7 +49,11 @@ void echo(void)
             I2C1_Write1ByteRegister( LCD_ADDRESS , LCD_COMMAND, cursor);
         }
     }
-    if(rxData == 0x13) set_time(); // use ctrl s in terminal for set time 
+    if(rxData == 0x13) 
+    {
+        puts("\r\n\n**Set Time**\r\n m for minute\r\n s for second\r\n\n");
+        state =  set_time; // use ctrl s in terminal for set time
+    } 
     if(rxData == 0x14) 
     {
         read_rtc();
@@ -153,7 +164,89 @@ void lcd_date(void)
 
 void set_time(void)
 {
-                /* uncomment and manually setup current time and date
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if (rxData == '\t') printf("\r\n\n\n");
+        else UART2_Write(rxData);
+        if(rxData == '\r') 
+        {
+            UART2_Write('\n'); // add newline to return
+        }
+        if ((rxData == 'm') || (rxData == 'M'))
+        {
+            printf("\r\nEnter minutes xx ");
+            state = set_minutes10;
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_minutes10(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData >= '0') && (rxData <= '9'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.upper = rxData - '0';
+            state = set_minutes1;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_minutes1(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData >= '0') && (rxData <= '9'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.lower = rxData - '0';
+            I2C1_Write1ByteRegister(0X68, 0X01, byte_nibbles.byte);  //minute
+            puts(" set\r\n");
+            state = echo;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+/* uncomment and manually setup current time and date
+{
+                
     I2C1_Write1ByteRegister(0X68, 0X00, (3*16+0));  //second 0
     I2C1_Write1ByteRegister(0X68, 0X01, (2*16+9));  //minute
     //I2C1_Write1ByteRegister(0X68, 0X02, (4*16+2*16+1*16+0));  //hour
@@ -161,5 +254,6 @@ void set_time(void)
     I2C1_Write1ByteRegister(0X68, 0X03, 0x07);
     I2C1_Write1ByteRegister(0X68, 0X04, (2*16+7));  //27 day
     I2C1_Write1ByteRegister(0X68, 0X05, (1*16+2));  // 12 month
-    I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year */
+    I2C1_Write1ByteRegister(0X68, 0X06, (2*16+0));  // 20 year 
 }
+*/
