@@ -86,7 +86,7 @@ FIXDEPS=fixDeps
 
 # The following macros may be used in the pre and post step lines
 Device=PIC18F46K42
-ProjectDir="C:\Users\newdp\MPlabX\xpress-pic18f46k42"
+ProjectDir="C:\Users\danp\MPLABXProjects\xpress-pic18f46k42"
 ProjectName=xpress-pic-18F46k42
 ConfName=default
 ImagePath="dist\default\${IMAGE_TYPE}\xpress-pic18f46k42.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
@@ -104,8 +104,8 @@ ifneq ($(INFORMATION_MESSAGE), )
 endif
 	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/xpress-pic18f46k42.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 	@echo "--------------------------------------"
-	@echo "User defined post-build step: [copy C:\Users\newdp\MPlabX\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex d:\output.hex /y]"
-	@copy C:\Users\newdp\MPlabX\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex d:\output.hex /y
+	@echo "User defined post-build step: [copy C:\Users\danp\MPlabXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex e:\output.hex /y]"
+	@copy C:\Users\danp\MPlabXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex e:\output.hex /y
 	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=18F46K42
