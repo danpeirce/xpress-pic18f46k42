@@ -6,6 +6,9 @@
 
 // state functions
 void set_time(void); 
+void set_am_pm(void);
+void set_hours10(void);
+void set_hours1(void);
 void set_minutes10(void);
 void set_minutes1(void);
 void set_seconds10(void);
@@ -53,7 +56,7 @@ void echo(void)
     }
     if(rxData == 0x13) 
     {
-        puts("\r\n\n**Set Time**\r\n m for minute\r\n s for second\r\n\n");
+        puts("\r\n\n**Set Time**\r\n h for hours \r\n m for minute\r\n s for second\r\n\n");
         state =  set_time; // use ctrl s in terminal for set time
     } 
     if(rxData == 0x14) 
@@ -179,6 +182,11 @@ void set_time(void)
         {
             UART2_Write('\n'); // add newline to return
         }
+        if ((rxData == 'h') || (rxData == 'H'))
+        {
+            printf("\r\nEnter A for AM P for PM x ");
+            state = set_am_pm;
+        }
         if ((rxData == 'm') || (rxData == 'M'))
         {
             printf("\r\nEnter minutes xx ");
@@ -188,6 +196,99 @@ void set_time(void)
         {
             printf("\r\nEnter seconds xx ");
             state = set_seconds10;
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_am_pm(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData == 'A') || (rxData == 'a'))
+        {
+            UART2_Write('A');
+            printf("M\r\nEnter hours xx ");
+            byte_nibbles.upper =  0b0100;
+            state = set_hours10;  // next state
+        }
+        if ((rxData == 'P') || (rxData == 'p'))
+        {
+            UART2_Write('P');
+            printf("M\r\nEnter hours xx ");
+            byte_nibbles.upper =  0b0110;
+            state = set_hours10;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_hours10(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData == '0') || (rxData == '1'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.upper = rxData - '0' + byte_nibbles.upper;
+            state = set_hours1;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_hours1(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((byte_nibbles.upper&0b0001) && (rxData >= '0') && (rxData <= '2'))
+        {     // valid from 10 to 12
+            UART2_Write(rxData);
+            byte_nibbles.lower = rxData - '0';
+            I2C1_Write1ByteRegister(0X68, 0X02, byte_nibbles.byte);  //hour
+            puts(" set\r\n");
+            state = echo;  // next state
+        }
+        if ((!(byte_nibbles.upper&0b0001)) && (rxData >= '0') && (rxData <= '9'))
+        {    // also valid from 00 to 09
+            UART2_Write(rxData);
+            byte_nibbles.lower = rxData - '0';
+            I2C1_Write1ByteRegister(0X68, 0X02, byte_nibbles.byte);  //hour
+            puts(" set\r\n");
+            state = echo;  // next state
         }
         if (rxData == 0x11)   // ctrl+q
         {
