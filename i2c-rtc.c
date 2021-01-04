@@ -8,6 +8,8 @@
 void set_time(void); 
 void set_minutes10(void);
 void set_minutes1(void);
+void set_seconds10(void);
+void set_seconds1(void);
 
 // other functions used only in i2c-rtc.c
 void lcd_date(void);
@@ -182,6 +184,11 @@ void set_time(void)
             printf("\r\nEnter minutes xx ");
             state = set_minutes10;
         }
+        if ((rxData == 's') || (rxData == 'S'))
+        {
+            printf("\r\nEnter seconds xx ");
+            state = set_seconds10;
+        }
         if (rxData == 0x11)   // ctrl+q
         {
             puts("\r\nCancel time set\r\n");
@@ -231,6 +238,58 @@ void set_minutes1(void)
             UART2_Write(rxData);
             byte_nibbles.lower = rxData - '0';
             I2C1_Write1ByteRegister(0X68, 0X01, byte_nibbles.byte);  //minute
+            puts(" set\r\n");
+            state = echo;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_seconds10(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData >= '0') && (rxData <= '5'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.upper = rxData - '0';
+            state = set_seconds1;  // next state
+        }
+        if (rxData == 0x11)   // ctrl+q
+        {
+            puts("\r\nCancel time set\r\n");
+            state = echo;
+        }
+    }
+
+    test2_PORT = 0;
+}
+
+void set_seconds1(void)
+{
+    char rxData; 
+    
+    test2_PORT = 1;
+    rxData = UART2_Read();
+
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if ((rxData >= '0') && (rxData <= '9'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.lower = rxData - '0';
+            I2C1_Write1ByteRegister(0X68, 0X00, byte_nibbles.byte);  //minute
             puts(" set\r\n");
             state = echo;  // next state
         }
