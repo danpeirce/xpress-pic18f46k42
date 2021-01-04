@@ -201,7 +201,7 @@ void set_minutes10(void)
 
     if(UART2_is_tx_ready()) // for USB echo
     {
-        if ((rxData >= '0') && (rxData <= '9'))
+        if ((rxData >= '0') && (rxData <= '5'))
         {
             UART2_Write(rxData);
             byte_nibbles.upper = rxData - '0';
