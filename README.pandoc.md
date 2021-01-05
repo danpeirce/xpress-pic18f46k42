@@ -25,7 +25,7 @@ This branch echos characters typed in the PuTTY terminal in addition to sending 
 * A Ctrl + d causes the date to be displayed in the LCD and both time and date to be displayed in PuTTY.
 * A Ctrl + g will cause a bell tone in the terminal but be ignored by the LCD.
 
-![](images/lcd-grove.jpg)
+![](images/rtc-lcd-xpress.jpg)
 
 ### Typing Ctrl and some other character in PuTTY
 
