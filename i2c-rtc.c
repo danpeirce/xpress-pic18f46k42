@@ -212,7 +212,7 @@ void set_time(void)
         if ((rxData == 'o') || (rxData == 'O'))
         {
             printf("\r\nEnter Month xx ");
-            state = set_years10;
+            state = set_months10;
         }
         if ((rxData == 'd') || (rxData == 'D'))
         {
@@ -460,7 +460,15 @@ void set_months1(void)
 
     if(UART2_is_tx_ready()) // for USB echo
     {
-        if ((rxData >= '0') && (rxData <= '9'))
+        if ( (byte_nibbles.upper==0) && (rxData >= '0') && (rxData <= '9'))
+        {
+            UART2_Write(rxData);
+            byte_nibbles.lower = rxData - '0';
+            I2C1_Write1ByteRegister(0X68, 0X05, byte_nibbles.byte);  //minute
+            puts(" set\r\n");
+            state = echo;  // next state
+        }
+        if ( (byte_nibbles.upper==1) && (rxData >= '0') && (rxData <= '2'))
         {
             UART2_Write(rxData);
             byte_nibbles.lower = rxData - '0';
