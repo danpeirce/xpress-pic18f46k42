@@ -27,11 +27,11 @@ The default state of this branch echos characters typed in the PuTTY terminal in
 * A **Ctrl + s* will switch states in order to set a time or date parameter. A menu will appear in the terminal as shown below.
     * In the set state one is prompted to choose one of six options:
 
-![](set-state.png)
+![](images/set-state.png)
 
 * When **y** for year is selected a prompt to enter the last two digits of the year will appear.
 	
-![](set-year.png)
+![](images/set-year.png)
 
 * non digit characters are ignored.
 * when setting items like the month inappropriate characters will be ignored. 
