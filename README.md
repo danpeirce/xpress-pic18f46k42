@@ -37,8 +37,8 @@ a **ctrl**+‘**t**’ is typed.
 
 ![](images/time-stamp.png)
 
-The default state of this branch echos characters typed in the PuTTY
-terminal in addition to sending printable characters to the LCD.
+The default state **echo** of this branch echos characters typed in the
+PuTTY terminal in addition to sending printable characters to the LCD.
 
 -   A ‘\\r’ causes the LCD to switch lines and return to col 0.
 -   A ‘\\t’ clears the LCD.
@@ -48,7 +48,7 @@ terminal in addition to sending printable characters to the LCD.
     time and date to be displayed in PuTTY.
 -   A **Ctrl + g** will cause a bell tone in the terminal but be ignored
     by the LCD.
--   A \*\*Ctrl + s\* will switch states in order to set a time or date
+-   A **Ctrl + s** will switch states in order to set a time or date
     parameter. A menu will appear in the terminal as shown below.
     -   In the set state one is prompted to choose one of six options:
 
@@ -65,6 +65,8 @@ terminal in addition to sending printable characters to the LCD.
     -   For the month the first digit must be a 0 or a 1.
     -   For the month the second digit must be a 0, 1 or 2 if the first
         digit is a one otherwise it can be any digit.
+-   One can return to the **echo** state without entering a number by
+    pushing **Ctrl + q** (quit the entry state).
 
 ![](images/rtc-lcd-xpress.jpg)
 
