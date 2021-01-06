@@ -10,20 +10,53 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
-## This Branch of Project
+## Testing RTC with Xpress Board
 
-The program send a timestamp after the initial header on startup. The program will also will send a 
+The program sends a timestamp after the initial header on startup. The program will also will send a 
 time stamp to the PuTTY terminal any time a **ctrl**+'**t**' is typed.
 
 ![](images/time-stamp.png)
 
-This branch echos characters typed in the PuTTY terminal in addition to sending printable characters to the LCD.
+The default state of this branch echos characters typed in the PuTTY terminal in addition to sending printable characters to the LCD.
 
 * A '\\r' causes the LCD to switch lines and return to col 0.
 * A '\\t' clears the LCD. 
-* A Ctrl + t causes the time to be displayed in the LCD and both time and date to be displayed in PuTTY.
-* A Ctrl + d causes the date to be displayed in the LCD and both time and date to be displayed in PuTTY.
-* A Ctrl + g will cause a bell tone in the terminal but be ignored by the LCD.
+* A **Ctrl + t** causes the time to be displayed in the LCD and both time and date to be displayed in PuTTY.
+* A **Ctrl + d** causes the date to be displayed in the LCD and both time and date to be displayed in PuTTY.
+* A **Ctrl + g** will cause a bell tone in the terminal but be ignored by the LCD.
+* A **Ctrl + s* will switch states in order to set a time or date parameter. A menu will appear in the terminal as shown below.
+    * In the set state one is prompted to choose one of six options:
+
+~~~~
+                TEST CODE
+                ---- ----
+                I2C RTC TEST
+                ---- ----
+
+        KPU APSC1299
+
+ 2021/01/05, day Tuesday, time 10:46:26 PM
+
+
+**Set Time**
+ h for hours
+ m for minute
+ s for second
+
+
+**Set Date**
+ y for year
+ o for month
+ d for day of month
+
+~~~~
+
+    * When **y** for year is selected a prompt to enter the last two digits of the year will appear.
+	
+~~~~
+y
+Enter Year xx 
+~~~~
 
 ![](images/rtc-lcd-xpress.jpg)
 
