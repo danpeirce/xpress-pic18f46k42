@@ -52,33 +52,19 @@ terminal in addition to sending printable characters to the LCD.
     parameter. A menu will appear in the terminal as shown below.
     -   In the set state one is prompted to choose one of six options:
 
-<!-- -->
+![](set-state.png)
 
-                    TEST CODE
-                    ---- ----
-                    I2C RTC TEST
-                    ---- ----
+-   When **y** for year is selected a prompt to enter the last two
+    digits of the year will appear.
 
-            KPU APSC1299
+![](set-year.png)
 
-     2021/01/05, day Tuesday, time 10:46:26 PM
-
-
-    **Set Time**
-     h for hours
-     m for minute
-     s for second
-
-
-    **Set Date**
-     y for year
-     o for month
-     d for day of month
-
-    * When **y** for year is selected a prompt to enter the last two digits of the year will appear.
-
-    y
-    Enter Year xx 
+-   non digit characters are ignored.
+-   when setting items like the month inappropriate characters will be
+    ignored.
+    -   For the month the first digit must be a 0 or a 1.
+    -   For the month the second digit must be a 0, 1 or 2 if the first
+        digit is a one otherwise it can be any digit.
 
 ![](images/rtc-lcd-xpress.jpg)
 
