@@ -32,13 +32,14 @@ void main(void)
     printf("\r\n\n\n\n\n\n\n\n\n");         // short form feed on terminal window
     printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tR-Sensor TEST\r\n");
+    printf("\t\tR-Sensor count TEST\r\n");
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n\n\n");
     printf("> ");
     
     R_SENSOR_LAT = 1; // pin will be high when set as an output
+    unsigned long count=0;
     while (1)
     {
         char rxData;
@@ -54,9 +55,14 @@ void main(void)
             }
         } 
         R_SENSOR_TRIS = 0; // make pin an output
-        __delay_us(20);
-        R_SENSOR_TRIS = 1; // change pin to an input
-        __delay_ms(30);   // allow capacitor to charge
+        __delay_us(20);    // discharge - both sides of cap will be   high
+        R_SENSOR_TRIS = 1; // change pin to an input - sensor will pull one
+                           // side of cap low
+        while( R_SENSOR_PORT == 1) count++;  // allow capacitor to charge
+        printf("\r%lu     ", count/10);    // dividing by 100 keeps value in 
+        count=0;                            // a nice range and through away
+                                         // variation between samples
+        __delay_ms(30);   // delay so cursor appears in one spot only
     }
 }
 /**

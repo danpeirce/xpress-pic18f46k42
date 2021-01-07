@@ -28,7 +28,9 @@ There is another repository which deals with the 3D design of the plastic suppor
 ## Very Simple Test With Scope
 
 For the first simple test I used a scope to look at the timing and simple delays in the code. This is not the 
-method I would use if using the PIC to measure the timing.
+method I would use if using the PIC to measure the timing. I have made small changes to the code since writting this section 
+but the signal has not changed a lot. The noticable difference on the scope with the current version is a longer delay before
+discharging the capacitor.
 
 ~~~~c
 R_SENSOR_TRIS = 0; // make pin an output
@@ -54,6 +56,19 @@ __delay_ms(30);   // allow capacitor to charge
 ### Signal When the Sensor is Over Edge of Tape
 
 ![](images/sig_tape_edge.jpg)
+
+## Adding a count to the Code
+
+I have added a count to the code so that comparisons could be made by looking at the count instead of using an oscilloscope. On could use a timer
+to get values that convert directly to milliseconds.
+
+![](images/count.png)
+
+* over white the count was about 271
+* over black electricians tape the count was around 2240.
+* oven the edge of the tape the value varied between the min and max. The distance between the sensor and the surface is about 8 mm which allows the sensor
+  to get a good average value near the edge of the tape.
+
 
 ## Variants of Sensor Board
 
