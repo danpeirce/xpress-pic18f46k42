@@ -59,8 +59,8 @@ void main(void)
         R_SENSOR_TRIS = 1; // change pin to an input - sensor will pull one
                            // side of cap low
         while( R_SENSOR_PORT == 1) count++;  // allow capacitor to charge
-        printf("\r%lu     ", count/10);    // dividing by 100 keeps value in 
-        count=0;                            // a nice range and through away
+        printf("\r%lu     ", count/10);    // dividing by 10 keeps value in 
+        count=0;                            // a nice range and avoids
                                          // variation between samples
         __delay_ms(30);   // delay so cursor appears in one spot only
     }
