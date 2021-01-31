@@ -233,7 +233,7 @@ void go_pd(unsigned char speed)
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xBB);   // start PD control
     while(!UART1_is_tx_ready()) continue;
-    UART1_Write(50);   // set speed to 100
+    UART1_Write(speed);   // set speed 
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(1);   // set a = 1
     while(!UART1_is_tx_ready()) continue;
