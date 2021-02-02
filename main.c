@@ -108,7 +108,7 @@ void main(void)
                                                        //  and send to PuTTY
             else if (rxData == '@') display_signature();
             else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
-            else if (rxData == 's') print_sensors();     // print values loop
+            else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
             else if (rxData == '-') send_hyphen();     // send hyphen to LCD
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2

@@ -15,7 +15,7 @@ void print_sensors(void)
         printf("%4u, ", *(sensorvalues+2));
         printf("%4u, ", *(sensorvalues+3));
         printf("%4u", *(sensorvalues+4));
-        printf(" | Timer Value = %5u",TMR3_ReadTimer());
+        //printf(" | Timer Value = %5u",TMR3_ReadTimer());
     }
     
 }
