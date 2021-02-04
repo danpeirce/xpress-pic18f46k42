@@ -35,14 +35,14 @@ void main(void)
         printf("\r\n\n\n\n\n\n\n\n");   
                    // this should clear the terminal screen mostly
                            // otherwise may display junk from power cycle
-        printf("\tKPU APSC1299\n\n\r");
+        printf("\tKPU APSC1299 3pi-menu-basic2\n\n\r");
         printf("\t\t  Menu\n\r");
         printf("\t\t--------\r\n");  
         printf("\t\t@. Pololu Signature?\r\n"); 
         printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
         printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
         printf("\t\tc. Clear LCD\r\n");
-        printf("\t\ts. Print Sensor Values\r\n");
+        printf("\t   ctrl+s. Print Sensor Values\r\n");
         printf("\t\t-. Send hyphen to LCD\r\n");
         printf("\t\t~. LCD message APSC1299\r\n");
         printf("\t\treturn. LCD go to start of line two\r\n");
