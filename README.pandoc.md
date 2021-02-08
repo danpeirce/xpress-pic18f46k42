@@ -71,7 +71,7 @@ The purpose of no Roam Mode is to
 
 The menu meantioned in list item 3. looks as follows:
 
-![](images/menu-time.png)
+![](images/menu-basic3.png)
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
