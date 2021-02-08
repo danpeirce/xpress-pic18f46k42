@@ -1,3 +1,5 @@
+
+void menu(void);
 unsigned int readbatteryvoltage(void);
 unsigned int* readsensors(void);
 void sendbatteryvoltage(void);

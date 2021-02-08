@@ -30,27 +30,7 @@ void main(void)
    
     // the delay caused by these printf statements ensures 3Pi has time to
     // be ready for LCD commands
-    {
-        printf(" \r\n");
-        printf("\r\n\n\n\n\n\n\n\n");   
-                   // this should clear the terminal screen mostly
-                           // otherwise may display junk from power cycle
-        printf("\tKPU APSC1299 3pi-menu-basic2\n\n\r");
-        printf("\t\t  Menu\n\r");
-        printf("\t\t--------\r\n");  
-        printf("\t\t@. Pololu Signature?\r\n"); 
-        printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
-        printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
-        printf("\t\tc. Clear LCD\r\n");
-        printf("\t   ctrl+s. Print Sensor Values\r\n");
-        printf("\t\t-. Send hyphen to LCD\r\n");
-        printf("\t\t~. LCD message APSC1299\r\n");
-        printf("\t\treturn. LCD go to start of line two\r\n");
-        printf("\t\t<, robot spin left\r\n");
-        printf("\t\t>, robot spin right\r\n");
-        printf("\t\t|, robot stop\r\n");
-        printf("\t\t--------\r\n\n");
-    }
+    menu();
 
     sendbatteryvoltage(); // sends battery voltage to both LCD and USB
 	printf("> ");        // print prompt
@@ -69,19 +49,19 @@ void main(void)
         calibrate();
         time1 = TMR3_ReadTimer()+time1_inc;
         go_pd(50);    // tell slave to start PID mode
-        while(1)
+        while(roam_PORT)
         {
             tmr3read = TMR3_ReadTimer();
             if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
             {
                 stop_pd(); // tell slave to stop PID mode
-                while(1);
+                while(roam_PORT);
             }
             sensorvalues = readsensors();
             if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
             {
                 stop_pd(); // tell slave to stop PID mode
-                while(1);
+                while(roam_PORT);
             }
         }
     }
@@ -115,6 +95,7 @@ void main(void)
             else if (rxData == '<') spinleft(50);
             else if (rxData == '>') spinright(50);
             else if (rxData == '|') foreward(0);
+            else if (rxData == 0x1B) menu();
             else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
 
             test2_PORT = 0;

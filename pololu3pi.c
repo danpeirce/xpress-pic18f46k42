@@ -2,10 +2,34 @@
 #include "pololu3pi.h"
 #include <stdio.h>
 
+void menu(void)
+{
+    printf(" \r\n");
+    printf("\r\n\n\n\n\n\n\n\n");   
+               // this should clear the terminal screen mostly
+                       // otherwise may display junk from power cycle
+    printf("\tKPU APSC1299 3pi-menu-basic3\n\n\r");
+    printf("\t\t  Menu\n\r");
+    printf("\t\t--------\r\n");  
+    printf("\t\t@. Pololu Signature?\r\n"); 
+    printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
+    printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
+    printf("\t\tc. Clear LCD\r\n");
+    printf("\t   ctrl+s. Print Sensor Values\r\n");
+    printf("\t\t-. Send hyphen to LCD\r\n");
+    printf("\t\t~. LCD message APSC1299\r\n");
+    printf("\t\treturn. LCD go to start of line two\r\n");
+    printf("\t\t<, robot spin left\r\n");
+    printf("\t\t>, robot spin right\r\n");
+    printf("\t\t|, robot stop\r\n");
+    printf("\t     Esc, Print Menu\r\n");
+    printf("\t\t--------\r\n\n");
+}
+
 void print_sensors(void)
 {
     unsigned int * sensorvalues;
-    calibrate();
+    // calibrate();
     while(1)
     {
         sensorvalues = readsensors();
