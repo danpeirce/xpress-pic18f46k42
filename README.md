@@ -1,16 +1,15 @@
-  - [Testing PIC18F46K42 XPRESS
-    Board](#testing-pic18f46k42-xpress-board)
-      - [Tags](#tags)
-      - [Board Features](#board-features)
+  - [Expansion of Pololu 3Pi Robot with Xpress
+    board](#expansion-of-pololu-3pi-robot-with-xpress-board)
+      - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
       - [Pololu 3Pi robot](#pololu-3pi-robot)
-          - [Time Branch (as of June 5,
-            2020)](#time-branch-as-of-june-5-2020)
+          - [3pi-menu-basic3 Branch (as of February,
+            2021)](#pi-menu-basic3-branch-as-of-february-2021)
       - [Mounting PIC XPRESS board on 3Pi Expansion
         board](#mounting-pic-xpress-board-on-3pi-expansion-board)
-          - [Mount 1](#mount-1)
+          - [Mount 1 (historical)](#mount-1-historical)
           - [Mount 2](#mount-2)
-      - [Roam and No Roam Shunt Jumper](#roam-and-no-roam-shunt-jumper)
+      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
       - [Autocalibrates when in Roam
         mode](#autocalibrates-when-in-roam-mode)
       - [Read Sensors](#read-sensors)
@@ -30,28 +29,9 @@ skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-# Testing PIC18F46K42 XPRESS Board
+# Expansion of Pololu 3Pi Robot with Xpress board
 
-Initial testing of Microchip XPRESS board with the PIC18F46K42 target
-MCU. Most recent testing has been covered in a private repository.
-
-The example Microchip Code Configurator was used to generate most of the
-code in the initial commit of this project. It was my first attempt at
-using the Code Configurator tool. Example code for main was found in
-UART.h.
-
-So far no interrupts have been used.
-
-A branch has been added to the project for basic testing of the XPRESS
-board. See
-<https://github.com/danpeirce/xpress-pic18f46k43/tree/test-Xpress>.
-
-## Tags
-
-The tags section has been moved to a new file
-**tags-readme-April2020.md**
-
-## Board Features
+## Xpress Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board
 configured to act as an interface and it enumerates as a multifunction
@@ -85,7 +65,7 @@ More information on the Pololu 3Pi robot
 
   - <https://www.pololu.com/product/975>
 
-### Time Branch (as of June 5, 2020)
+### 3pi-menu-basic3 Branch (as of February, 2021)
 
 #### Roam Mode
 
@@ -95,8 +75,9 @@ In roam mode the robot will
     approximatly 10 seconds.
 2.  If the robot detects a line on both the far left and far right at
     the same time it will stop until power is cycled off and on. Picking
-    the robot up will have the same effect of shutting the robot down
-    until power is recycled.
+    the robot up will have the same effect of stopping the robot motors.
+3.  One can switch the robot to No Roam mode after the sensor
+    calibration.
 
 #### No Roam Mode
 
@@ -114,7 +95,7 @@ The menu meantioned in list item 3. looks as follows:
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
-### Mount 1
+### Mount 1 (historical)
 
 The first XPRESS board mount was forward on the 3Pi expansion board.
 This appeared to have a negative effect on the balance and stability of
@@ -132,9 +113,9 @@ Wiring under the XPRESS board.
 
 ![](images/expansion-wire-s.jpg)
 
-## Roam and No Roam Shunt Jumper
+## Roam and No Roam Slide Switch
 
-The image below shows the jumper in the no roam possition.
+The image below shows the slide switch in the no roam possition.
 
 ![](images/no_roam_s.jpg)
 
