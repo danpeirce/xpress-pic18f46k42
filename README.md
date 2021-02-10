@@ -93,6 +93,20 @@ The menu meantioned in list item 3. looks as follows:
 
 ![](images/menu-basic3.png)
 
+#### Displaying Sensor Readings
+
+One can in sequence use
+
+1.  Roam mode to calibrate the sensors
+2.  Pick up the robot and switch to No Roam mode (leaving the robot
+    turned on)
+3.  Plug in the USB cable
+4.  Use Ctrl+s to continously read sensor values
+
+![sensor-readings.png](sensor-readings.png)
+
+That is Coolterminal. In PuTTY the reading overwrite a single line.
+
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
 ### Mount 1 (historical)
