@@ -103,7 +103,7 @@ One can in sequence use
 3.  Plug in the USB cable
 4.  Use Ctrl+s to continously read sensor values
 
-![sensor-readings.png](sensor-readings.png)
+![images/sensor-readings.png](sensor-readings.png)
 
 That is Coolterminal. In PuTTY the reading overwrite a single line.
 
