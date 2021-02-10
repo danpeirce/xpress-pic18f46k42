@@ -16,7 +16,6 @@ void menu(void)
     printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
     printf("\t\tc. Clear LCD\r\n");
     printf("\t   ctrl+s. Print Sensor Values\r\n");
-    printf("\t\t-. Send hyphen to LCD\r\n");
     printf("\t\t~. LCD message APSC1299\r\n");
     printf("\t\treturn. LCD go to start of line two\r\n");
     printf("\t\t<, robot spin left\r\n");
@@ -217,18 +216,6 @@ void display_signature(void)
     signature[sig_length] = '\0';  // terminate string
     printf("\r\n\tThe Signature from 3Pi is: %s\r\n", signature);
     LCD_print(signature, sig_length);
-}
-
-// just to test that printing to the LCD is working
-void send_hyphen(void)
-{
-    // see https://www.pololu.com/docs/0J21/10.a 
-    while(!UART1_is_tx_ready()) continue;
-    UART1_Write(0xB8);   // print LCD command to slave
-    while(!UART1_is_tx_ready()) continue;
-    UART1_Write(1);     // send one character
-    while(!UART1_is_tx_ready()) continue;
-    UART1_Write('-');   // send a hyphen
 }
 
 void send_APSC1299(void)

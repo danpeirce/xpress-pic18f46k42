@@ -3,7 +3,6 @@ void menu(void);
 unsigned int readbatteryvoltage(void);
 unsigned int* readsensors(void);
 void sendbatteryvoltage(void);
-void send_hyphen(void);
 void send_APSC1299(void);
 void display_signature(void);
 void LCD_print(char *str, char length);
