@@ -93,7 +93,7 @@ void main(void)
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
             else if (rxData == '<') spinleft(50);
             else if (rxData == '>') spinright(50);
-            else if (rxData == '|') foreward(0);
+            else if (rxData == '|') forward(0);
             else if (rxData == 0x1B) menu();
             else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
 

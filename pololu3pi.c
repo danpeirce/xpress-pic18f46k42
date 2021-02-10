@@ -43,7 +43,7 @@ void print_sensors(void)
     
 }
 
-void foreward(unsigned char speed)
+void forward(unsigned char speed)
 {
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xC1);

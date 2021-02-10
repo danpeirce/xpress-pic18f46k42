@@ -6,7 +6,7 @@ void sendbatteryvoltage(void);
 void send_APSC1299(void);
 void display_signature(void);
 void LCD_print(char *str, char length);
-void foreward(unsigned char speed);
+void forward(unsigned char speed);
 void backward(unsigned char speed);
 void spinleft(unsigned char speed);
 void spinright(unsigned char speed);
