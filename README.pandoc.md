@@ -43,7 +43,7 @@ More information on the Pololu 3Pi robot
 
 In roam mode the robot will 
 
-1.  do a self calibration of the sensors and then follow a line for approximatly 10 seconds. 
+1.  do a self calibration of the sensors and then follow a line for approximately 10 seconds. 
 2.  If the robot detects a line on both the far left and far right at the same time it will stop until power is cycled off and on. 
     Picking the robot up will have the same effect of stopping the robot motors.
 3.  One can switch the robot to No Roam mode after the sensor calibration.
@@ -60,7 +60,7 @@ The menu meantioned in list item 3. looks as follows:
 
 ![](images/menu-basic3.png)
 
-#### Displaying Sensor Readings
+### Displaying Sensor Readings
 
 One can in sequence use 
 
@@ -72,6 +72,10 @@ One can in sequence use
 ![images/sensor-readings.png](images/sensor-readings.png)
 
 That is Coolterminal. In PuTTY the reading overwrite a single line.
+
+A video about displaying sensor readings:
+
+[![Calibrate and Read Robot Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 

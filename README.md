@@ -1,28 +1,3 @@
-  - [Expansion of Pololu 3Pi Robot with Xpress
-    board](#expansion-of-pololu-3pi-robot-with-xpress-board)
-      - [Xpress Board Features](#xpress-board-features)
-          - [Pins Used](#pins-used)
-      - [Pololu 3Pi robot](#pololu-3pi-robot)
-          - [3pi-menu-basic3 Branch (as of February,
-            2021)](#pi-menu-basic3-branch-as-of-february-2021)
-      - [Mounting PIC XPRESS board on 3Pi Expansion
-        board](#mounting-pic-xpress-board-on-3pi-expansion-board)
-          - [Mount 1 (historical)](#mount-1-historical)
-          - [Mount 2](#mount-2)
-      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
-      - [Autocalibrates when in Roam
-        mode](#autocalibrates-when-in-roam-mode)
-      - [Read Sensors](#read-sensors)
-      - [Proportional Derivative Control in Roam
-        mode](#proportional-derivative-control-in-roam-mode)
-      - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
-      - [Charging Circuit](#charging-circuit)
-      - [Added Print Sensor Values to
-        menu](#added-print-sensor-values-to-menu)
-      - [Code Configurator settings](#code-configurator-settings)
-      - [Working with PuTTY and issues](#working-with-putty-and-issues)
-      - [Test of Expansion Board](#test-of-expansion-board)
-
 <!---
 use 
 skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
@@ -72,7 +47,7 @@ More information on the Pololu 3Pi robot
 In roam mode the robot will
 
 1.  do a self calibration of the sensors and then follow a line for
-    approximatly 10 seconds.
+    approximately 10 seconds.
 2.  If the robot detects a line on both the far left and far right at
     the same time it will stop until power is cycled off and on. Picking
     the robot up will have the same effect of stopping the robot motors.
@@ -93,7 +68,7 @@ The menu meantioned in list item 3. looks as follows:
 
 ![](images/menu-basic3.png)
 
-#### Displaying Sensor Readings
+### Displaying Sensor Readings
 
 One can in sequence use
 
@@ -106,6 +81,11 @@ One can in sequence use
 ![images/sensor-readings.png](images/sensor-readings.png)
 
 That is Coolterminal. In PuTTY the reading overwrite a single line.
+
+A video about displaying sensor readings:
+
+[![Calibrate and Read Robot
+Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
