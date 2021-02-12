@@ -3,8 +3,8 @@
       - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
       - [Pololu 3Pi robot](#pololu-3pi-robot)
-          - [3pi-menu-basic3 Branch (as of February,
-            2021)](#pi-menu-basic3-branch-as-of-february-2021)
+          - [3pi-menu-basic3 Branch - as of February
+            2021](#pi-menu-basic3-branch---as-of-february-2021)
           - [Displaying Sensor Readings](#displaying-sensor-readings)
       - [Mounting PIC XPRESS board on 3Pi Expansion
         board](#mounting-pic-xpress-board-on-3pi-expansion-board)
@@ -66,7 +66,7 @@ More information on the Pololu 3Pi robot
 
   - <https://www.pololu.com/product/975>
 
-### 3pi-menu-basic3 Branch (as of February, 2021)
+### 3pi-menu-basic3 Branch - as of February 2021
 
 #### Roam Mode
 

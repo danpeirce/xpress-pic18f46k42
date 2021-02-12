@@ -37,7 +37,7 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
-### 3pi-menu-basic3 Branch (as of February, 2021)
+### 3pi-menu-basic3 Branch - as of February 2021
 
 #### Roam Mode
 
