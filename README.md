@@ -1,3 +1,29 @@
+  - [Expansion of Pololu 3Pi Robot with Xpress
+    board](#expansion-of-pololu-3pi-robot-with-xpress-board)
+      - [Xpress Board Features](#xpress-board-features)
+          - [Pins Used](#pins-used)
+      - [Pololu 3Pi robot](#pololu-3pi-robot)
+          - [3pi-menu-basic3 Branch (as of February,
+            2021)](#pi-menu-basic3-branch-as-of-february-2021)
+          - [Displaying Sensor Readings](#displaying-sensor-readings)
+      - [Mounting PIC XPRESS board on 3Pi Expansion
+        board](#mounting-pic-xpress-board-on-3pi-expansion-board)
+          - [Mount 1 (historical)](#mount-1-historical)
+          - [Mount 2](#mount-2)
+      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
+      - [Autocalibrates when in Roam
+        mode](#autocalibrates-when-in-roam-mode)
+      - [Read Sensors](#read-sensors)
+      - [Proportional Derivative Control in Roam
+        mode](#proportional-derivative-control-in-roam-mode)
+      - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
+      - [Charging Circuit](#charging-circuit)
+      - [Added Print Sensor Values to
+        menu](#added-print-sensor-values-to-menu)
+      - [Code Configurator settings](#code-configurator-settings)
+      - [Working with PuTTY and issues](#working-with-putty-and-issues)
+      - [Test of Expansion Board](#test-of-expansion-board)
+
 <!---
 use 
 skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
