@@ -44,6 +44,8 @@ void main(void)
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
+        static unsigned char sensor1[1000];
+        unsigned int sensorReadIndex=0;
         unsigned int time1, tmr3read;
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
@@ -58,6 +60,16 @@ void main(void)
                 while(roam_PORT);
             }
             sensorvalues = readsensors();
+            if ( sensorReadIndex || (*(sensorvalues+4)>25))
+            {
+                sensor1[sensorReadIndex] = *(sensorvalues+1) >> 2;
+                sensorReadIndex++;
+                if(sensorReadIndex>999) 
+                {
+                    stop_pd();
+                    while(roam_PORT);
+                }
+            }            
             if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
             {
                 stop_pd(); // tell slave to stop PID mode
