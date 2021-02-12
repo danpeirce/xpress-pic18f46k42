@@ -17,3 +17,4 @@ void calibrate(void);
 void go_pd(unsigned char speed);
 void stop_pd(void);
 void print_sensors(void);
+void dumpS1values(unsigned char *);

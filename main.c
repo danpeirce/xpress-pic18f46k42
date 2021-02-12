@@ -17,7 +17,7 @@
 #include "pololu3pi.h"
 #include <stdio.h>
 
-
+unsigned char sensor1[1000];
 
 
 /*
@@ -44,7 +44,7 @@ void main(void)
     if (roam_PORT) 
     {
         unsigned int * sensorvalues;
-        static unsigned char sensor1[1000];
+        
         unsigned int sensorReadIndex=0;
         unsigned int time1, tmr3read;
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
@@ -99,7 +99,8 @@ void main(void)
             else if (rxData == '2') sendbatteryvoltage();   // send battery voltage to LCD
                                                        //  and send to PuTTY
             else if (rxData == '@') display_signature();
-            else if (rxData == 'c') UART1_Write(0xB7);      // clear LCD on 3Pi
+            else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
+			else if (rxData == 0x04) dumpS1values(sensor1);      // ctrl+d clear LCD on 3Pi
             else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2

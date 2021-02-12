@@ -14,7 +14,8 @@ void menu(void)
     printf("\t\t@. Pololu Signature?\r\n"); 
     printf("\t\t1. Display mV reading\r\n"); // sent to PuTTY only
     printf("\t\t2. Display mV reading in LCD\r\n");  // also send to LCD
-    printf("\t\tc. Clear LCD\r\n");
+    printf("\t   ctrl+c. Clear LCD\r\n");
+	printf("\t   ctrl+d. Dump sensor 1 values\r\n");
     printf("\t   ctrl+s. Print Sensor Values\r\n");
     printf("\t\t~. LCD message APSC1299\r\n");
     printf("\t\treturn. LCD go to start of line two\r\n");
@@ -41,6 +42,15 @@ void print_sensors(void)
         //printf(" | Timer Value = %5u",TMR3_ReadTimer());
     }
     
+}
+
+void dumpS1values(unsigned char *values)
+{
+	unsigned int i;
+	for (i=0;i<1000;i++)
+	{
+		printf("%4u\r\n", ((unsigned int)values[i])<<2);
+	}
 }
 
 void forward(unsigned char speed)
