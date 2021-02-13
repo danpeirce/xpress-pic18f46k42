@@ -44,14 +44,7 @@ void print_sensors(void)
     
 }
 
-void dumpS1values(unsigned char *values)
-{
-	unsigned int i;
-	for (i=0;i<1000;i++)
-	{
-		printf("%4u\r\n", ((unsigned int)values[i])<<2);
-	}
-}
+
 
 void forward(unsigned char speed)
 {

@@ -17,7 +17,11 @@
 #include "pololu3pi.h"
 #include <stdio.h>
 
+void dumpSvalues(void);
+
 unsigned char sensor1[1000];
+unsigned char sensor3[1000];
+unsigned char sensor4[1000];
 
 
 /*
@@ -60,9 +64,11 @@ void main(void)
                 while(roam_PORT);
             }
             sensorvalues = readsensors();
-            if ( sensorReadIndex || (*(sensorvalues+4)>25))
+            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
             {
-                sensor1[sensorReadIndex] = *(sensorvalues+1) >> 2;
+                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
+                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
                 sensorReadIndex++;
                 if(sensorReadIndex>999) 
                 {
@@ -100,7 +106,7 @@ void main(void)
                                                        //  and send to PuTTY
             else if (rxData == '@') display_signature();
             else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
-			else if (rxData == 0x04) dumpS1values(sensor1);      // ctrl+d clear LCD on 3Pi
+			else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
             else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
@@ -116,6 +122,17 @@ void main(void)
     }
 }
 
+
+void dumpSvalues(void)
+{
+	unsigned int i;
+	for (i=0;i<1000;i++)
+	{
+		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
+        printf("%4u, ", ((unsigned int)sensor3[i])<<2);
+        printf("%4u\r\n", ((unsigned int)sensor4[i])<<2);
+	}
+}
 
 /**
  End of File
