@@ -37,6 +37,38 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
+### 3pi-menu-data-dump Branch
+
+3pi-menu-data-dump branch was derived from the 3pi-menu-basic3 branch. The most significant difference is that sensor 
+readings are stored for future dump while running in the **Roam mode**.
+
+* uses three arrays to store sensor data
+    * stores data from sensor 1, sensor 3 and sensor 4.
+    * each array can store 1000 values
+    * storage starts after calibration is completed.
+	* the robot stops once 1000 samples are taken.
+        * one must switch to No Roam mode to dump the data	
+
+#### Plot of sample data
+
+![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings.png)
+
+The sensors on the robot are numbered zero to four from left to right. In this plot series 1 is sensor1, series 2 is sensor 3 
+and series 3 is sensor 4.
+
+Data collection started as the robot was returning to centre from doing initial calibration (sensor normalization). 
+
+* With normalization the sensor readings go to 1000 when a given sensor is centred over a line. 
+* The robot is centred over the line when sensor 1 and sensor 3 give the same reading.
+* One can see a little overshoot and hunting for centring the robot up to around sample 540. I had the differential term 
+  set to near zero (constant d was arbitrarily large) so it is reasonable to assume the hunting could be easily reduced.
+* Sensor 4 jumps up to 1000 as it is crossing the line at the sharp right turn. Sensor 3 reaches the line a few samples 
+  sooner because on the 3Pi the sensors are mounted on the curve of the front edge of the robot.
+* One can see all the sensors are past the line and reading zero around sample 609.
+* The robot spins to the right so now sensor 4 sees the line first. Sensor 3 sees the line second and the robot reverses 
+  direction when sensor 1 is over the line.
+* There is again some hunting for the line.
+
 ### 3pi-menu-basic3 Branch
 
 #### Roam Mode
