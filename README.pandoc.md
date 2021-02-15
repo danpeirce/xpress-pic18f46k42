@@ -37,7 +37,7 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
-### 3pi-menu-data-dump Branch
+### 3pi Menu Data Dump Branch
 
 3pi-menu-data-dump branch was derived from the 3pi-menu-basic3 branch. The most significant difference is that sensor 
 readings are stored for future dump while running in the **Roam mode**.
@@ -69,7 +69,7 @@ Data collection started as the robot was returning to centre from doing initial 
   direction when sensor 1 is over the line.
 * There is again some hunting for the line.
 
-### 3pi-menu-basic3 Branch
+### 3pi Menu Basic3 Branch
 
 #### Roam Mode
 

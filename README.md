@@ -3,8 +3,8 @@
     -   [Xpress Board Features](#xpress-board-features)
         -   [Pins Used](#pins-used)
     -   [Pololu 3Pi robot](#pololu-3pi-robot)
-        -   [3pi-menu-data-dump Branch](#pi-menu-data-dump-branch)
-        -   [3pi-menu-basic3 Branch](#pi-menu-basic3-branch)
+        -   [3pi Menu Data Dump Branch](#pi-menu-data-dump-branch)
+        -   [3pi Menu Basic3 Branch](#pi-menu-basic3-branch)
         -   [Displaying Sensor Readings](#displaying-sensor-readings)
     -   [Mounting PIC XPRESS board on 3Pi Expansion
         board](#mounting-pic-xpress-board-on-3pi-expansion-board)
@@ -69,7 +69,7 @@ More information on the Pololu 3Pi robot
 
 -   <https://www.pololu.com/product/975>
 
-### 3pi-menu-data-dump Branch
+### 3pi Menu Data Dump Branch
 
 3pi-menu-data-dump branch was derived from the 3pi-menu-basic3 branch.
 The most significant difference is that sensor readings are stored for
@@ -112,7 +112,7 @@ initial calibration (sensor normalization).
     sensor 1 is over the line.
 -   There is again some hunting for the line.
 
-### 3pi-menu-basic3 Branch
+### 3pi Menu Basic3 Branch
 
 #### Roam Mode
 
