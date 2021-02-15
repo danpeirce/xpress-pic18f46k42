@@ -37,7 +37,7 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
-### 3pi Menu Data Dump Branch
+### The 3pi Menu Data Dump Branch
 
 3pi-menu-data-dump branch was derived from the 3pi-menu-basic3 branch. The most significant difference is that sensor 
 readings are stored for future dump while running in the **Roam mode**.
@@ -69,7 +69,7 @@ Data collection started as the robot was returning to centre from doing initial 
   direction when sensor 1 is over the line.
 * There is again some hunting for the line.
 
-### 3pi Menu Basic3 Branch
+### The 3pi Menu Basic3 Branch
 
 #### Roam Mode
 
@@ -88,7 +88,7 @@ The purpose of no Roam Mode is to
 2. Allow the robot batteries to be charged
 3. Allow the robot to be in an interactive mode in which a USB cable and PuTTY can be used to control the robot and check sensor readings.
 
-The menu meantioned in list item 3. looks as follows:
+The menu mentioned in list item 3. looks as follows:
 
 ![](images/menu-basic3.png)
 
