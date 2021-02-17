@@ -69,6 +69,15 @@ Data collection started as the robot was returning to centre from doing initial 
   direction when sensor 1 is over the line.
 * There is again some hunting for the line.
 
+#### Plot of sample data with Differential Term
+
+A new run was made but this time the differential term was changed to 3/2 (rather than being small with d term arbitrarily large).
+There was significant improvment in that robot stayed centred on the line much better (much less hunting.
+
+![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings3.png)
+
+The improvement is far more evident in the plot than when simply watching the robot as things happen fast when the robot is moving.
+
 ### The 3pi Menu Basic3 Branch
 
 #### Roam Mode

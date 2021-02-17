@@ -255,7 +255,7 @@ void go_pd(unsigned char speed)
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(3);   // set c = 3
     while(!UART1_is_tx_ready()) continue;
-    UART1_Write(0xBA);   // set d = 2
+    UART1_Write(0x02);   // set d = 2
 }
 
 
