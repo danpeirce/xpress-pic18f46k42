@@ -2,6 +2,7 @@
 void menu(void);
 unsigned int readbatteryvoltage(void);
 unsigned int* readsensors(void);
+unsigned int readposition(void);
 void sendbatteryvoltage(void);
 void send_APSC1299(void);
 void display_signature(void);

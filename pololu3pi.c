@@ -116,8 +116,6 @@ unsigned int* readsensors(void)
     unsigned char lbyte[5], ubyte[5], i;
     static unsigned int values[5];
     
-    // printf("\r\n\tSensor Readings =  ");
-    
     while(!UART1_is_tx_ready()) continue;
     test2_PORT = 1;
     UART1_Write(0x87);
@@ -132,6 +130,26 @@ unsigned int* readsensors(void)
     test2_PORT = 0;
 
     return values;
+}
+
+unsigned int readposition(void)
+{
+    unsigned char lbyte, ubyte;
+    unsigned int value;
+    
+    while(!UART1_is_tx_ready()) continue;
+    test2_PORT = 1;
+    UART1_Write(0xB6);
+
+    while (!UART1_is_rx_ready()) continue;
+    lbyte = UART1_Read();
+    while (!UART1_is_rx_ready()) continue;
+    ubyte = UART1_Read();
+    value = ubyte*256 + lbyte;
+
+    test2_PORT = 0;
+
+    return value;
 }
 
 // sends battery voltage to LCD
