@@ -20,8 +20,8 @@
 void dumpSvalues(void);
 
 unsigned char sensor1[1000];
+unsigned char sensor2[1000];
 unsigned char sensor3[1000];
-unsigned char sensor4[1000];
 
 
 /*
@@ -67,8 +67,8 @@ void main(void)
             // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
             {
                 sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                 sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
                 sensorReadIndex++;
                 if(sensorReadIndex>999) 
                 {
@@ -129,8 +129,8 @@ void dumpSvalues(void)
 	for (i=0;i<1000;i++)
 	{
 		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
-        printf("%4u, ", ((unsigned int)sensor3[i])<<2);
-        printf("%4u\r\n", ((unsigned int)sensor4[i])<<2);
+        printf("%4u, ", ((unsigned int)sensor2[i])<<2);
+        printf("%4u\r\n", ((unsigned int)sensor3[i])<<2);
 	}
 }
 
