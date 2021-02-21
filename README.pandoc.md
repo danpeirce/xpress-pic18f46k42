@@ -26,6 +26,22 @@ is also less expensive than the USB to serial board we have used in the past wit
 	2. Roam (perhaps following a line)
 * PWM output at about 1 KHz on pad RC4 (set to 10% duty cycle)
 
+### Memory Needed to Store Data and Resolution
+
+The PIC18F46K42 has 4 KB of on chip RAM which is more than enough until we want to use it to store data. The data from 
+the sensors can be useful when analyzing what the robot can see as it moves. To obtain the data it first 
+needs to be stored because it is not really practical to have the robot dragging a USB cable along when it is moving and
+we don't have a wireless communication channel.
+
+I chose to save **1000 samples** for **each of three sensors**. There are actually five sensors on the robot but 
+I will only save data from three on a given run to keep the memory requirements within what is needed. 
+
+The normalized sensor values range from 0 to 1000. It would take 10 bits at least to store each sample at full resolution. It
+was decided to reduce the resolution of the samples so that the values could be stored in 8 bytes as the physical memory is organized into
+8 bit bytes. **A right shift of two places is used to reduce the resolution before storing the sensor values in arrays.** Later 
+when the robot is connected to a computer each sample read from the array will be sifted two places to the left so the magnitude 
+will be restored to the original value (less the lost resolution).
+
 ## Pololu 3Pi robot
 
 The robot is running the serial slave program from Pololu. This will allow the 3Pi robot to be 
