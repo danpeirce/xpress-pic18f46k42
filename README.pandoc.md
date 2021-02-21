@@ -53,9 +53,20 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
-### The 3pi Menu Data Dump Branch
+### The 3Pi Menu Dump 123 Branch 
 
-3pi-menu-data-dump branch was derived from the 3pi-menu-basic3 branch. The most significant difference is that sensor 
+The 3pi-menu-dump-123 branch was derived from the 3pi-menu-dump-data branch. The most significant difference is that
+sensor 2 was included and sensor 4 was dropped.
+
+![](images/sharp-right-sensor-readings123.png)
+
+A second dataset was taken but the robot started closer to the sharp right turn. Near the end of the data set a gradual right turn was encountered.
+
+![](images/sharp-right-r-sensor-readings123.png)
+
+### The 3pi Menu Dump Data Branch
+
+3pi-menu-dump-data branch was derived from the 3pi-menu-basic3 branch. The most significant difference is that sensor 
 readings are stored for future dump while running in the **Roam mode**.
 
 * uses three arrays to store sensor data
@@ -88,7 +99,7 @@ Data collection started as the robot was returning to centre from doing initial 
 #### Plot of sample data with Differential Term
 
 A new run was made but this time the differential term was changed to 3/2 (rather than being small with d term arbitrarily large).
-There was significant improvment in that robot stayed centred on the line much better (much less hunting.
+There was significant improvement in that robot stayed centred on the line much better (much less hunting.
 
 ![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings3.png)
 
