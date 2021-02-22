@@ -42,6 +42,9 @@ was decided to reduce the resolution of the samples so that the values could be 
 when the robot is connected to a computer each sample read from the array will be sifted two places to the left so the magnitude 
 will be restored to the original value (less the lost resolution).
 
+The **position** variable has a maximum value of 4000. **When stored the resolution is reduced using a right shift of 4 places so the 
+value can be stored in a 8 bit variable**. 
+
 ## Pololu 3Pi robot
 
 The robot is running the serial slave program from Pololu. This will allow the 3Pi robot to be 
@@ -52,6 +55,19 @@ controlled from a XPRESS board.
 More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
+
+### The 3Pi Menu Dump 13p Branch
+
+The 3pi-menu-dump-13p branch was derived from the 3pi-menu-dump-123 branch. The most significant difference is that sensor 2 was
+dropped and the position value was stored.
+
+* If the line is at the far right the position takes a value of 4000
+* If the line is on the far left the position takes a value of 0
+* If the line is in the centre the position takes the value of 2000
+* The calculation for the position assumes only one line. It appears the robot veers to the right when the robot encounters a sharp right turn.
+  This is likely the cause of the robot veering during a close approach. Something to be considered.
+
+![](images/sharp-right-sensor13p.png)
 
 ### The 3Pi Menu Dump 123 Branch 
 
