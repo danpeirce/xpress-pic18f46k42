@@ -138,6 +138,13 @@ encountered.
 
 ![](images/sharp-right-r-sensor-readings123.png)
 
+If the sensor readings are added together one can see when the robot
+encounters more than a single line. This might be used to determine when
+to stop the proportional differential algorithm and employ a different
+strategy.
+
+![](images/sharp-right-r-sensor-readings123sum.png)
+
 ### The 3pi Menu Dump Data Branch
 
 3pi-menu-dump-data branch was derived from the 3pi-menu-basic3 branch.
