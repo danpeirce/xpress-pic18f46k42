@@ -117,6 +117,10 @@ the position value was stored.
     the robot veers to the right when the robot encounters a sharp right
     turn. This is likely the cause of the robot veering during a close
     approach. Something to be considered.
+-   The command used to obtain position values slows the code down so
+    that each sample is a longer period of time than in earlier
+    branches. This means the plot below involves more of the track than
+    the previous ones.
 
 ![](images/sharp-right-sensor13p.png)
 
