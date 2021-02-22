@@ -11,7 +11,7 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 ## Xpress Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board configured to act as an interface and it enumerates as 
-a multifunction device. This allows one to both download programs to it and use the interface as a virtual com port. The board
+a multi-function device. This allows one to both download programs to it and use the interface as a virtual com port. The board
 is also less expensive than the USB to serial board we have used in the past with the Microstick II or PIC18F4525.
 
 ### Pins Used

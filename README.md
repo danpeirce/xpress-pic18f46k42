@@ -44,7 +44,7 @@ Xpress Board Features
 ---------------------
 
 This board has a USB microB connector. It has a PIC MCU on board
-configured to act as an interface and it enumerates as a multifunction
+configured to act as an interface and it enumerates as a multi-function
 device. This allows one to both download programs to it and use the
 interface as a virtual com port. The board is also less expensive than
 the USB to serial board we have used in the past with the Microstick II
