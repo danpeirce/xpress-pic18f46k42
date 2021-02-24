@@ -58,6 +58,38 @@ void forward(unsigned char speed)
     UART1_Write(speed);
 }
 
+void forwardD(int speedL, int speedR)
+{
+    if (speedL >= 0)
+    {
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write(LEFTMOTOR_FORWARD);
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write((char)speedL);
+    }
+    else
+    {
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write(LEFTMOTOR_BACKWARD);
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write((char)-speedL);
+    }
+    if (speedR >= 0)
+    {
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write(RIGHTMOTOR_FORWARD);
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write((char)speedR);
+    }
+    else
+    {
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write(RIGHTMOTOR_BACKWARD);
+        while(!UART1_is_tx_ready()) continue;
+        UART1_Write((char)-speedR);
+    }        
+}
+
 void backward(unsigned char speed)
 {
     while(!UART1_is_tx_ready()) continue;

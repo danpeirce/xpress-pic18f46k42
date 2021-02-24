@@ -1,3 +1,8 @@
+#define LEFTMOTOR_FORWARD 0xC1
+#define LEFTMOTOR_BACKWARD 0XC2
+#define RIGHTMOTOR_FORWARD 0xC5
+#define RIGHTMOTOR_BACKWARD 0xC6
+
 
 void menu(void);
 unsigned int readbatteryvoltage(void);
@@ -7,6 +12,7 @@ void send_APSC1299(void);
 void display_signature(void);
 void LCD_print(char *str, char length);
 void forward(unsigned char speed);
+void forwardD(int speedL, int speedR);
 void backward(unsigned char speed);
 void spinleft(unsigned char speed);
 void spinright(unsigned char speed);

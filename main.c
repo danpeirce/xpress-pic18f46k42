@@ -51,35 +51,74 @@ void main(void)
         
         unsigned int sensorReadIndex=0;
         unsigned int time1, tmr3read;
+        unsigned char pd_mode=1;
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
         time1 = TMR3_ReadTimer()+time1_inc;
         go_pd(50);    // tell slave to start PID mode
         while(roam_PORT)
         {
-            tmr3read = TMR3_ReadTimer();
-            if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
+            if (pd_mode)
             {
-                stop_pd(); // tell slave to stop PID mode
-                while(roam_PORT);
-            }
-            sensorvalues = readsensors();
-            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
-            {
-                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
-                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
-                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                sensorReadIndex++;
-                if(sensorReadIndex>999) 
+                tmr3read = TMR3_ReadTimer();
+                if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
                 {
-                    stop_pd();
+                    stop_pd(); // tell slave to stop PID mode
                     while(roam_PORT);
                 }
-            }            
-            if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
+                sensorvalues = readsensors();
+            
+                if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
+                {
+                    stop_pd(); // tell slave to stop PID mode
+                    while(roam_PORT);
+                }
+                if ((*(sensorvalues+1) > 200) && (*(sensorvalues+3)>200))
+                {
+                    int diff;
+                    pd_mode = 0;
+                    stop_pd();
+                    diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/40;
+                    forwardD(50+diff, 50-diff);
+                }
+                // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+                {
+                    sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                    sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
+                    sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
+                    sensorReadIndex++;
+                    if(sensorReadIndex>999) 
+                    {
+                        stop_pd();
+                        while(roam_PORT);
+                    }
+                }
+            }
+            else
             {
-                stop_pd(); // tell slave to stop PID mode
-                while(roam_PORT);
+                int diff;
+                sensorvalues = readsensors();
+
+                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/40;
+                forwardD(50+diff, 50-diff);
+                if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
+                {
+                    pd_mode = 1;
+                    forward(0);
+                    go_pd(50);
+                }
+                // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+                {
+                    sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                    sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
+                    sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
+                    sensorReadIndex++;
+                    if(sensorReadIndex>999) 
+                    {
+                        forward(0);
+                        while(roam_PORT);
+                    }
+                }                
             }
         }
     }
