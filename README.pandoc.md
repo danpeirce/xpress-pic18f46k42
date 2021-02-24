@@ -77,6 +77,13 @@ A video about displaying sensor readings:
 
 [![Calibrate and Read Robot Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
 
+### Plot of Centre Sensor
+
+In order to show how sensor values vary with distance when the centre sensor is over a line (or near it). Note that the line
+is 18 mm wide. Distances were measured relative to a robot wheel and so the zero in the x direction is arbitrary.
+
+![plot-sensor-values.png](images/plot-sensor-values.png)
+
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
 ### Mount 1 (historical)

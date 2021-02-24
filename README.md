@@ -1,3 +1,30 @@
+  - [Expansion of Pololu 3Pi Robot with Xpress
+    board](#expansion-of-pololu-3pi-robot-with-xpress-board)
+      - [Xpress Board Features](#xpress-board-features)
+          - [Pins Used](#pins-used)
+      - [Pololu 3Pi robot](#pololu-3pi-robot)
+          - [3pi-menu-basic3 Branch (as of February,
+            2021)](#pi-menu-basic3-branch-as-of-february-2021)
+          - [Displaying Sensor Readings](#displaying-sensor-readings)
+          - [Plot of Centre Sensor](#plot-of-centre-sensor)
+      - [Mounting PIC XPRESS board on 3Pi Expansion
+        board](#mounting-pic-xpress-board-on-3pi-expansion-board)
+          - [Mount 1 (historical)](#mount-1-historical)
+          - [Mount 2](#mount-2)
+      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
+      - [Autocalibrates when in Roam
+        mode](#autocalibrates-when-in-roam-mode)
+      - [Read Sensors](#read-sensors)
+      - [Proportional Derivative Control in Roam
+        mode](#proportional-derivative-control-in-roam-mode)
+      - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
+      - [Charging Circuit](#charging-circuit)
+      - [Added Print Sensor Values to
+        menu](#added-print-sensor-values-to-menu)
+      - [Code Configurator settings](#code-configurator-settings)
+      - [Working with PuTTY and issues](#working-with-putty-and-issues)
+      - [Test of Expansion Board](#test-of-expansion-board)
+
 <!---
 use 
 skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
@@ -86,6 +113,15 @@ A video about displaying sensor readings:
 
 [![Calibrate and Read Robot
 Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
+
+### Plot of Centre Sensor
+
+In order to show how sensor values vary with distance when the centre
+sensor is over a line (or near it). Note that the line is 18 mm wide.
+Distances were measured relative to a robot wheel and so the zero in the
+x direction is arbitrary.
+
+![plot-sensor-values.png](images/plot-sensor-values.png)
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
