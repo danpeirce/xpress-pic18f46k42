@@ -78,7 +78,7 @@ void main(void)
                     int diff;
                     pd_mode = 0;
                     stop_pd();
-                    diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/40;
+                    diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
                     forwardD(50+diff, 50-diff);
                 }
                 // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
@@ -99,7 +99,7 @@ void main(void)
                 int diff;
                 sensorvalues = readsensors();
 
-                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/40;
+                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
                 forwardD(50+diff, 50-diff);
                 if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
                 {
