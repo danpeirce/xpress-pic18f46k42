@@ -101,9 +101,11 @@ void main(void)
             else
             {
                 int diff;
+                static int error=0, lasterror=0;
                 sensorvalues = readsensors();
-
-                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
+                error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
+                diff = error/64 + (error - lasterror)/4;
+                lasterror = error;
                 forwardD(50+diff, 50-diff);
                 if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
                 {
