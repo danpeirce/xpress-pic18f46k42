@@ -52,11 +52,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <conio.h>
-#include "tmr3.h"
-#include "tmr1.h"
-#include "tmr2.h"
-#include "pwm5.h"
-#include "ccp1.h"
+#include "smt1.h"
 #include "uart2.h"
 #include "uart1.h"
 

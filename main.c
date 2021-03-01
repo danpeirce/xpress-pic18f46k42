@@ -43,9 +43,7 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
-    TMR1_StartTimer();  // short times and clock source for timer 3
-    TMR2_StartTimer();  // PWM clock source (not used yet)
-    TMR3_StartTimer();  // long times
+
 
     if (roam_PORT) 
     {
@@ -56,18 +54,11 @@ void main(void)
         unsigned char pd_mode=1;
         const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
-        time1 = TMR3_ReadTimer()+time1_inc;
         go_pd(50);    // tell slave to start PID mode
         while(roam_PORT)
         {
             if (pd_mode)
             {
-                tmr3read = TMR3_ReadTimer();
-                if ((tmr3read>time1)&&((0xFFFF-tmr3read)>time1_inc))
-                {
-                    stop_pd(); // tell slave to stop PID mode
-                    while(roam_PORT);
-                }
                 sensorvalues = readsensors();
             
                 if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
