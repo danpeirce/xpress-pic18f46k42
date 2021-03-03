@@ -7,7 +7,7 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
-        <itemPath>mcc_generated_files/smt1.h</itemPath>
+        <itemPath>mcc_generated_files/tmr2.h</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.h</itemPath>
       <itemPath>mcc_generated_files/mcc.h</itemPath>
@@ -26,7 +26,7 @@
       <logicalFolder name="MCC Generated Files"
                      displayName="MCC Generated Files"
                      projectFiles="true">
-        <itemPath>mcc_generated_files/smt1.c</itemPath>
+        <itemPath>mcc_generated_files/tmr2.c</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.c</itemPath>
       <itemPath>mcc_generated_files/mcc.c</itemPath>
