@@ -173,26 +173,6 @@
 #define test2_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
 #define test2_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
 
-// get/set Tick aliases
-#define Tick_TRIS                 TRISDbits.TRISD2
-#define Tick_LAT                  LATDbits.LATD2
-#define Tick_PORT                 PORTDbits.RD2
-#define Tick_WPU                  WPUDbits.WPUD2
-#define Tick_OD                   ODCONDbits.ODCD2
-#define Tick_ANS                  ANSELDbits.ANSELD2
-#define Tick_SetHigh()            do { LATDbits.LATD2 = 1; } while(0)
-#define Tick_SetLow()             do { LATDbits.LATD2 = 0; } while(0)
-#define Tick_Toggle()             do { LATDbits.LATD2 = ~LATDbits.LATD2; } while(0)
-#define Tick_GetValue()           PORTDbits.RD2
-#define Tick_SetDigitalInput()    do { TRISDbits.TRISD2 = 1; } while(0)
-#define Tick_SetDigitalOutput()   do { TRISDbits.TRISD2 = 0; } while(0)
-#define Tick_SetPullup()          do { WPUDbits.WPUD2 = 1; } while(0)
-#define Tick_ResetPullup()        do { WPUDbits.WPUD2 = 0; } while(0)
-#define Tick_SetPushPull()        do { ODCONDbits.ODCD2 = 0; } while(0)
-#define Tick_SetOpenDrain()       do { ODCONDbits.ODCD2 = 1; } while(0)
-#define Tick_SetAnalogMode()      do { ANSELDbits.ANSELD2 = 1; } while(0)
-#define Tick_SetDigitalMode()     do { ANSELDbits.ANSELD2 = 0; } while(0)
-
 /**
    @Param
     none

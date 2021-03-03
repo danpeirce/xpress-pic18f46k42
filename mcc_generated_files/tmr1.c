@@ -1,23 +1,23 @@
 /**
-  TMR2 Generated Driver File
+  TMR1 Generated Driver File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    tmr2.c
+    tmr1.c
 
   @Summary
-    This is the generated driver implementation file for the TMR2 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the generated driver implementation file for the TMR1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This source file provides APIs for TMR2.
+    This source file provides APIs for TMR1.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.80.0
         Device            :  PIC18F46K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above 
+        Compiler          :  XC8 2.10 and above
         MPLAB 	          :  MPLAB X 5.30
 */
 
@@ -49,121 +49,115 @@
 */
 
 #include <xc.h>
-#include "tmr2.h"
+#include "tmr1.h"
 
 /**
   Section: Global Variables Definitions
 */
+volatile uint16_t timer1ReloadVal;
 
 /**
-  Section: TMR2 APIs
+  Section: TMR1 APIs
 */
 
-void TMR2_Initialize(void)
+void TMR1_Initialize(void)
 {
-    // Set TMR2 to the options selected in the User Interface
+    //Set the Timer to the options selected in the GUI
 
-    // T2CS FOSC/4; 
-    T2CLKCON = 0x01;
+    //T1GE disabled; T1GTM disabled; T1GPOL low; T1GGO done; T1GSPM disabled; 
+    T1GCON = 0x00;
 
-    // T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Rising Edge; T2CKSYNC Not Synchronized; 
-    T2HLT = 0x00;
+    //GSS T1G_pin; 
+    T1GATE = 0x00;
 
-    // T2RSEL T2CKIPPS pin; 
-    T2RST = 0x00;
+    //CS MFINTOSC_500kHz; 
+    T1CLK = 0x05;
 
-    // PR2 187; 
-    T2PR = 0xBB;
+    //TMR1H 0; 
+    TMR1H = 0x00;
 
-    // TMR2 0; 
-    T2TMR = 0x00;
+    //TMR1L 0; 
+    TMR1L = 0x00;
 
     // Clearing IF flag.
-    PIR4bits.TMR2IF = 0;
+    PIR4bits.TMR1IF = 0;
+	
+    // Load the TMR value to reload variable
+    timer1ReloadVal=(uint16_t)((TMR1H << 8) | TMR1L);
 
-    // T2CKPS 1:64; T2OUTPS 1:10; TMR2ON on; 
-    T2CON = 0xE9;
+    // CKPS 1:1; NOT_SYNC synchronize; TMR1ON enabled; T1RD16 enabled; 
+    T1CON = 0x03;
 }
 
-void TMR2_ModeSet(TMR2_HLT_MODE mode)
-{
-   // Configure different types HLT mode
-    T2HLTbits.MODE = mode;
-}
-
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset)
-{
-    //Configure different types of HLT external reset source
-    T2RSTbits.RSEL = reset;
-}
-
-void TMR2_Start(void)
+void TMR1_StartTimer(void)
 {
     // Start the Timer by writing to TMRxON bit
-    T2CONbits.TMR2ON = 1;
+    T1CONbits.TMR1ON = 1;
 }
 
-void TMR2_StartTimer(void)
-{
-    TMR2_Start();
-}
-
-void TMR2_Stop(void)
+void TMR1_StopTimer(void)
 {
     // Stop the Timer by writing to TMRxON bit
-    T2CONbits.TMR2ON = 0;
+    T1CONbits.TMR1ON = 0;
 }
 
-void TMR2_StopTimer(void)
+uint16_t TMR1_ReadTimer(void)
 {
-    TMR2_Stop();
-}
-
-uint8_t TMR2_Counter8BitGet(void)
-{
-    uint8_t readVal;
-
-    readVal = TMR2;
+    uint16_t readVal;
+    uint8_t readValHigh;
+    uint8_t readValLow;
+    
+    T1CONbits.T1RD16 = 1;
+	
+    readValLow = TMR1L;
+    readValHigh = TMR1H;
+    
+    readVal = ((uint16_t)readValHigh << 8) | readValLow;
 
     return readVal;
 }
 
-uint8_t TMR2_ReadTimer(void)
+void TMR1_WriteTimer(uint16_t timerVal)
 {
-    return TMR2_Counter8BitGet();
+    if (T1CONbits.NOT_SYNC == 1)
+    {
+        // Stop the Timer by writing to TMRxON bit
+        T1CONbits.TMR1ON = 0;
+
+        // Write to the Timer1 register
+        TMR1H = (timerVal >> 8);
+        TMR1L = timerVal;
+
+        // Start the Timer after writing to the register
+        T1CONbits.TMR1ON =1;
+    }
+    else
+    {
+        // Write to the Timer1 register
+        TMR1H = (timerVal >> 8);
+        TMR1L = timerVal;
+    }
 }
 
-void TMR2_Counter8BitSet(uint8_t timerVal)
+void TMR1_Reload(void)
 {
-    // Write to the Timer2 register
-    TMR2 = timerVal;
+    TMR1_WriteTimer(timer1ReloadVal);
 }
 
-void TMR2_WriteTimer(uint8_t timerVal)
+void TMR1_StartSinglePulseAcquisition(void)
 {
-    TMR2_Counter8BitSet(timerVal);
+    T1GCONbits.T1GGO = 1;
 }
 
-void TMR2_Period8BitSet(uint8_t periodVal)
+uint8_t TMR1_CheckGateValueStatus(void)
 {
-   PR2 = periodVal;
+    return (T1GCONbits.T1GVAL);
 }
 
-void TMR2_LoadPeriodRegister(uint8_t periodVal)
-{
-   TMR2_Period8BitSet(periodVal);
-}
-
-bool TMR2_HasOverflowOccured(void)
+bool TMR1_HasOverflowOccured(void)
 {
     // check if  overflow has occurred by checking the TMRIF bit
-    bool status = PIR4bits.TMR2IF;
-    if(status)
-    {
-        // Clearing IF flag.
-        PIR4bits.TMR2IF = 0;
-    }
-    return status;
+    return(PIR4bits.TMR1IF);
 }
 /**
   End of File

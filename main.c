@@ -80,7 +80,8 @@ void main(void)
                     sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
                     sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                     sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                    sensor4[sensorReadIndex] = (TMR1_ReadTimer() >> 8 );
                     sensorReadIndex++;
                     if(sensorReadIndex>999) 
                     {
@@ -110,7 +111,8 @@ void main(void)
                     sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
                     sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                     sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                    sensor4[sensorReadIndex] = (TMR1_ReadTimer() >> 8 );
                     sensorReadIndex++;
                     if(sensorReadIndex>599) 
                     {
@@ -124,15 +126,10 @@ void main(void)
     
     while (1)
     {
-        static long ticks2 = 1 ;
         char rxData;
             // Logic to echo received data
         test1_PORT = 1;       
-        if (PIR4bits.TMR2IF)
-        {
-            PIR4bits.TMR2IF = 0;
-            ticks2++;
-        }
+
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
@@ -151,7 +148,7 @@ void main(void)
             else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
 			else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
             else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
-            else if (rxData == 0x14) printf("\r\nticks2 %ld\r\n", ticks2);
+            else if (rxData == 0x14) printf("\r\nticks3 %u\r\n", TMR3_ReadTimer());
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
             else if (rxData == '<') spinleft(50);
