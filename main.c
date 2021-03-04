@@ -173,7 +173,7 @@ void dumpSvalues(void)
 		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
         printf("%4u, ", ((unsigned int)sensor2[i])<<2);
         printf("%4u, ", ((unsigned int)sensor3[i])<<2);
-        printf("%4u\r\n", ((unsigned int)sensor4[i])<<2);
+        printf("%4u\r\n", ((unsigned int)sensor4[i]) ); // used for tmr in this branch
 	}
 }
 
