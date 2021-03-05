@@ -77,17 +77,17 @@
 #define RA0_SetAnalogMode()         do { ANSELAbits.ANSELA0 = 1; } while(0)
 #define RA0_SetDigitalMode()        do { ANSELAbits.ANSELA0 = 0; } while(0)
 
-// get/set RA1 procedures
-#define RA1_SetHigh()            do { LATAbits.LATA1 = 1; } while(0)
-#define RA1_SetLow()             do { LATAbits.LATA1 = 0; } while(0)
-#define RA1_Toggle()             do { LATAbits.LATA1 = ~LATAbits.LATA1; } while(0)
-#define RA1_GetValue()              PORTAbits.RA1
-#define RA1_SetDigitalInput()    do { TRISAbits.TRISA1 = 1; } while(0)
-#define RA1_SetDigitalOutput()   do { TRISAbits.TRISA1 = 0; } while(0)
-#define RA1_SetPullup()             do { WPUAbits.WPUA1 = 1; } while(0)
-#define RA1_ResetPullup()           do { WPUAbits.WPUA1 = 0; } while(0)
-#define RA1_SetAnalogMode()         do { ANSELAbits.ANSELA1 = 1; } while(0)
-#define RA1_SetDigitalMode()        do { ANSELAbits.ANSELA1 = 0; } while(0)
+// get/set RA4 procedures
+#define RA4_SetHigh()            do { LATAbits.LATA4 = 1; } while(0)
+#define RA4_SetLow()             do { LATAbits.LATA4 = 0; } while(0)
+#define RA4_Toggle()             do { LATAbits.LATA4 = ~LATAbits.LATA4; } while(0)
+#define RA4_GetValue()              PORTAbits.RA4
+#define RA4_SetDigitalInput()    do { TRISAbits.TRISA4 = 1; } while(0)
+#define RA4_SetDigitalOutput()   do { TRISAbits.TRISA4 = 0; } while(0)
+#define RA4_SetPullup()             do { WPUAbits.WPUA4 = 1; } while(0)
+#define RA4_ResetPullup()           do { WPUAbits.WPUA4 = 0; } while(0)
+#define RA4_SetAnalogMode()         do { ANSELAbits.ANSELA4 = 1; } while(0)
+#define RA4_SetDigitalMode()        do { ANSELAbits.ANSELA4 = 0; } while(0)
 
 // get/set roam aliases
 #define roam_TRIS                 TRISBbits.TRISB5
