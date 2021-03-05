@@ -52,10 +52,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <conio.h>
-#include "tmr5.h"
-#include "tmr3.h"
 #include "tmr1.h"
 #include "clc1.h"
+#include "tmr0.h"
 #include "uart2.h"
 #include "uart1.h"
 

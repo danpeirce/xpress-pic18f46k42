@@ -70,8 +70,8 @@ void TMR1_Initialize(void)
     //GSS T1G_pin; 
     T1GATE = 0x00;
 
-    //CS MFINTOSC_500kHz; 
-    T1CLK = 0x05;
+    //CS TMR0_Overflow; 
+    T1CLK = 0x09;
 
     //TMR1H 0; 
     TMR1H = 0x00;
@@ -85,8 +85,8 @@ void TMR1_Initialize(void)
     // Load the TMR value to reload variable
     timer1ReloadVal=(uint16_t)((TMR1H << 8) | TMR1L);
 
-    // CKPS 1:1; NOT_SYNC synchronize; TMR1ON enabled; T1RD16 enabled; 
-    T1CON = 0x03;
+    // CKPS 1:1; NOT_SYNC do_not_synchronize; TMR1ON enabled; T1RD16 enabled; 
+    T1CON = 0x07;
 }
 
 void TMR1_StartTimer(void)

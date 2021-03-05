@@ -61,24 +61,24 @@ void CLC1_Initialize(void)
 
     // LC1G1POL not_inverted; LC1G2POL not_inverted; LC1G3POL not_inverted; LC1G4POL not_inverted; LC1POL not_inverted; 
     CLC1POL = 0x00;
-    // LC1D1S MFINTOSC_500khz; 
-    CLC1SEL0 = 0x07;
-    // LC1D2S T1_overflow; 
-    CLC1SEL1 = 0x0D;
+    // LC1D1S T0_overflow; 
+    CLC1SEL0 = 0x0C;
+    // LC1D2S CLC1_OUT; 
+    CLC1SEL1 = 0x24;
     // LC1D3S CLCIN0 (CLCIN0PPS); 
     CLC1SEL2 = 0x00;
-    // LC1D4S T1_overflow; 
-    CLC1SEL3 = 0x0D;
+    // LC1D4S CLCIN0 (CLCIN0PPS); 
+    CLC1SEL3 = 0x00;
     // LC1G1D3N disabled; LC1G1D2N disabled; LC1G1D4N disabled; LC1G1D1T enabled; LC1G1D3T disabled; LC1G1D2T disabled; LC1G1D4T disabled; LC1G1D1N disabled; 
     CLC1GLS0 = 0x02;
-    // LC1G2D2N disabled; LC1G2D1N disabled; LC1G2D4N disabled; LC1G2D3N disabled; LC1G2D2T enabled; LC1G2D1T disabled; LC1G2D4T disabled; LC1G2D3T disabled; 
-    CLC1GLS1 = 0x08;
+    // LC1G2D2N enabled; LC1G2D1N disabled; LC1G2D4N disabled; LC1G2D3N disabled; LC1G2D2T disabled; LC1G2D1T disabled; LC1G2D4T disabled; LC1G2D3T disabled; 
+    CLC1GLS1 = 0x04;
     // LC1G3D1N disabled; LC1G3D2N disabled; LC1G3D3N disabled; LC1G3D4N disabled; LC1G3D1T disabled; LC1G3D2T disabled; LC1G3D3T disabled; LC1G3D4T disabled; 
     CLC1GLS2 = 0x00;
-    // LC1G4D1N disabled; LC1G4D2N disabled; LC1G4D3N disabled; LC1G4D4N disabled; LC1G4D1T disabled; LC1G4D2T disabled; LC1G4D3T disabled; LC1G4D4T enabled; 
-    CLC1GLS3 = 0x80;
-    // LC1EN enabled; INTN disabled; INTP disabled; MODE JK flip-flop with R; 
-    CLC1CON = 0x86;
+    // LC1G4D1N disabled; LC1G4D2N disabled; LC1G4D3N disabled; LC1G4D4N disabled; LC1G4D1T disabled; LC1G4D2T disabled; LC1G4D3T disabled; LC1G4D4T disabled; 
+    CLC1GLS3 = 0x00;
+    // LC1EN enabled; INTN disabled; INTP disabled; MODE 1-input D flip-flop with S and R; 
+    CLC1CON = 0x84;
 
 }
 

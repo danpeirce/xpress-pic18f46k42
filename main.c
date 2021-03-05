@@ -1,17 +1,3 @@
-/**
-  File Name:
-    main.c
-**/
-//	File has been modified from Code Configurator generated file by Dan Peirce B.Sc. Sept 4, 2019
-//     File has undergone more revision to the point that the code here was
-//     written by Dan Peirce B.Sc. (comment added June10, 2020)
-/**
-  Description:
-    Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
-        Device            :  PIC18F46K42
-        Driver Version    :  2.00
-*/
 
 #include "mcc_generated_files/mcc.h"
 #include "pololu3pi.h"
@@ -25,6 +11,13 @@ unsigned char sensor2[600];
 unsigned char sensor3[600];
 unsigned char sensor4[600];
 
+union {
+    unsigned int word;
+    struct {
+        unsigned char lower;
+        unsigned char upper;
+    } ;
+} tmrvalue;
 
 /*
                          Main application
@@ -81,7 +74,8 @@ void main(void)
                     sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                     sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
                 //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                    sensor4[sensorReadIndex] = (TMR1_ReadTimer() >> 8 );
+                    tmrvalue.word = TMR1_ReadTimer();
+                    sensor4[sensorReadIndex] = tmrvalue.lower;
                     sensorReadIndex++;
                     if(sensorReadIndex>999) 
                     {
@@ -112,7 +106,8 @@ void main(void)
                     sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                     sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
                 //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                    sensor4[sensorReadIndex] = (TMR1_ReadTimer() >> 8 );
+                    tmrvalue.word = TMR1_ReadTimer();
+                    sensor4[sensorReadIndex] = tmrvalue.lower;
                     sensorReadIndex++;
                     if(sensorReadIndex>599) 
                     {
@@ -148,7 +143,7 @@ void main(void)
             else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
 			else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
             else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
-            else if (rxData == 0x14) printf("\r\nticks3 %u\r\n", TMR3_ReadTimer());
+            else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
             else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
             else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
             else if (rxData == '<') spinleft(50);
