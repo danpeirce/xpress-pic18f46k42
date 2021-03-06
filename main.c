@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 void dumpSvalues(void);
+void followline(void);
 
 unsigned char sensor0[600];
 unsigned char sensor1[600];
@@ -36,90 +37,12 @@ void main(void)
     LCD_line2();
     if (roam_PORT) LCD_print("Roam", 4);
     else LCD_print("No Roam", 7);
-
-
-    if (roam_PORT) 
-    {
-        unsigned int * sensorvalues;
-        
-        unsigned int sensorReadIndex=0;
-        unsigned char pd_mode=1;
-        calibrate();
-        go_pd(50);    // tell slave to start PID mode
-        while(roam_PORT)
-        {
-            if (pd_mode)
-            {
-                sensorvalues = readsensors();
-            
-                if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
-                {
-                    stop_pd(); // tell slave to stop PID mode
-                    while(roam_PORT);
-                }
-                if ((*(sensorvalues+1) > 200) && (*(sensorvalues+3)>200))
-                {
-                    int diff;
-                    pd_mode = 0;
-                    stop_pd();
-                    diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
-                    forwardD(50+diff, 50-diff);
-                }
-                // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
-                {
-                    sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
-                    sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
-                    sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
-                    sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                    tmrvalue.word = TMR1_ReadTimer();
-                    sensor4[sensorReadIndex] = tmrvalue.lower;
-                    sensorReadIndex++;
-                    if(sensorReadIndex>599) 
-                    {
-                        stop_pd();
-                        while(roam_PORT);
-                    }
-                }
-            }
-            else
-            {
-                int diff;
-                static int error=0, lasterror=0;
-                sensorvalues = readsensors();
-                error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
-                diff = error/64 + (error - lasterror)/4;
-                lasterror = error;
-                forwardD(50+diff, 50-diff);
-                if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
-                {
-                    pd_mode = 1;
-                    forward(0);
-                    go_pd(50);
-                }
-                // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
-                {
-                    sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
-                    sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
-                    sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
-                    sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                    tmrvalue.word = TMR1_ReadTimer();
-                    sensor4[sensorReadIndex] = tmrvalue.lower;
-                    sensorReadIndex++;
-                    if(sensorReadIndex>599) 
-                    {
-                        forward(0);
-                        while(roam_PORT);
-                    }
-                }                
-            }
-        }
-    }
     
     while (1)
     {
         char rxData;
+        
+        if (roam_PORT) followline(); // only returns if switch changes to no roam
             // Logic to echo received data
         test1_PORT = 1;       
 
@@ -156,6 +79,84 @@ void main(void)
     }
 }
 
+void followline(void)
+{
+    unsigned int * sensorvalues;
+
+    unsigned int sensorReadIndex=0;
+    unsigned char pd_mode=1;
+    calibrate();
+    go_pd(50);    // tell slave to start PID mode
+    while(roam_PORT)
+    {
+        if (pd_mode)
+        {
+            sensorvalues = readsensors();
+
+            if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
+            {
+                stop_pd(); // tell slave to stop PID mode
+                while(roam_PORT);
+            }
+            if ((*(sensorvalues+1) > 200) && (*(sensorvalues+3)>200))
+            {
+                int diff;
+                pd_mode = 0;
+                stop_pd();
+                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
+                forwardD(50+diff, 50-diff);
+            }
+            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+            {
+                sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
+                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
+                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
+            //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                tmrvalue.word = TMR1_ReadTimer();
+                sensor4[sensorReadIndex] = tmrvalue.lower;
+                sensorReadIndex++;
+                if(sensorReadIndex>599) 
+                {
+                    stop_pd();
+                    while(roam_PORT);
+                }
+            }
+        }
+        else
+        {
+            int diff;
+            static int error=0, lasterror=0;
+            sensorvalues = readsensors();
+            error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
+            diff = error/64 + (error - lasterror)/4;
+            lasterror = error;
+            forwardD(50+diff, 50-diff);
+            if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
+            {
+                pd_mode = 1;
+                forward(0);
+                go_pd(50);
+            }
+            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+            {
+                sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
+                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
+                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
+                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
+            //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                tmrvalue.word = TMR1_ReadTimer();
+                sensor4[sensorReadIndex] = tmrvalue.lower;
+                sensorReadIndex++;
+                if(sensorReadIndex>599) 
+                {
+                    forward(0);
+                    while(roam_PORT);
+                }
+            }                
+        }
+    }
+}
 
 void dumpSvalues(void)
 {

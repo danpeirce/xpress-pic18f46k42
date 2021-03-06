@@ -8,7 +8,7 @@ void menu(void)
     printf("\r\n\n\n\n\n\n\n\n");   
                // this should clear the terminal screen mostly
                        // otherwise may display junk from power cycle
-    printf("\tKPU APSC1299 3pi-menu-basic3\n\n\r");
+    printf("\tKPU APSC1299 3pi-state-1\n\n\r");
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
     printf("\t\t@. Pololu Signature?\r\n"); 
@@ -17,6 +17,7 @@ void menu(void)
     printf("\t   ctrl+c. Clear LCD\r\n");
 	printf("\t   ctrl+d. Dump sensor 1 values\r\n");
     printf("\t   ctrl+s. Print Sensor Values\r\n");
+    printf("\t   ctrl+t. Print TMR1 Value\r\n");
     printf("\t\t~. LCD message APSC1299\r\n");
     printf("\t\treturn. LCD go to start of line two\r\n");
     printf("\t\t<, robot spin left\r\n");
