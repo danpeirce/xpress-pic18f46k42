@@ -5,6 +5,7 @@
 
 void dumpSvalues(void);
 void followline(void);
+void process_command(char rxData);
 
 unsigned char sensor0[600];
 unsigned char sensor1[600];
@@ -56,22 +57,7 @@ void main(void)
                 if(rxData == '\r') UART2_Write('\n'); // add newline to return
             }
             // if(UART1_is_tx_ready()) // out RC6
-            if (rxData == '1') readbatteryvoltage();   // read battery voltage 
-                                                       //  and send to PuTTY
-            else if (rxData == '2') sendbatteryvoltage();   // send battery voltage to LCD
-                                                       //  and send to PuTTY
-            else if (rxData == '@') display_signature();
-            else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
-			else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
-            else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
-            else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
-            else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
-            else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
-            else if (rxData == '<') spinleft(50);
-            else if (rxData == '>') spinright(50);
-            else if (rxData == '|') forward(0);
-            else if (rxData == 0x1B) menu();
-            else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
+            process_command(rxData);
 
             test2_PORT = 0;
         }
@@ -171,6 +157,25 @@ void dumpSvalues(void)
 	}
 }
 
+void process_command(char rxData)
+{
+    if (rxData == '1') readbatteryvoltage();   // read battery voltage 
+                                               //  and send to PuTTY
+    else if (rxData == '2') sendbatteryvoltage();   // send battery voltage to LCD
+                                               //  and send to PuTTY
+    else if (rxData == '@') display_signature();
+    else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
+    else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
+    else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
+    else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
+    else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
+    else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
+    else if (rxData == '<') spinleft(50);
+    else if (rxData == '>') spinright(50);
+    else if (rxData == '|') forward(0);
+    else if (rxData == 0x1B) menu();
+    else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
+}
 /**
  End of File
 */
