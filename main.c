@@ -43,9 +43,7 @@ void main(void)
         unsigned int * sensorvalues;
         
         unsigned int sensorReadIndex=0;
-        unsigned int time1, tmr3read;
         unsigned char pd_mode=1;
-        const unsigned int time1_inc = 57; // 57 for about 10 seconds
         calibrate();
         go_pd(50);    // tell slave to start PID mode
         while(roam_PORT)
@@ -77,7 +75,7 @@ void main(void)
                     tmrvalue.word = TMR1_ReadTimer();
                     sensor4[sensorReadIndex] = tmrvalue.lower;
                     sensorReadIndex++;
-                    if(sensorReadIndex>999) 
+                    if(sensorReadIndex>599) 
                     {
                         stop_pd();
                         while(roam_PORT);
