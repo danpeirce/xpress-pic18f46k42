@@ -6,6 +6,7 @@
 void dumpSvalues(void);
 void followline(void);
 void process_command(char rxData);
+void steer_diff(unsigned int * sensorvalues);
 
 unsigned char sensor0[600];
 unsigned char sensor1[600];
@@ -86,13 +87,11 @@ void followline(void)
             }
             if ((*(sensorvalues+1) > 200) && (*(sensorvalues+3)>200))
             {
-                int diff;
                 pd_mode = 0;
                 stop_pd();
-                diff = ((int)(*(sensorvalues+3))-(int)(*(sensorvalues+1)))/64;
-                forwardD(50+diff, 50-diff);
+                steer_diff(sensorvalues);
             }
-            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+
             {
                 sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
                 sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
@@ -111,20 +110,15 @@ void followline(void)
         }
         else
         {
-            int diff;
-            static int error=0, lasterror=0;
             sensorvalues = readsensors();
-            error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
-            diff = error/64 + (error - lasterror)/4;
-            lasterror = error;
-            forwardD(50+diff, 50-diff);
+            steer_diff(sensorvalues);
             if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
             {
                 pd_mode = 1;
                 forward(0);
                 go_pd(50);
             }
-            // if ( (sensorReadIndex>0)  || (*(sensorvalues+4)>25))
+
             {
                 sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
                 sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
@@ -155,6 +149,17 @@ void dumpSvalues(void)
         printf("%4u, ", ((unsigned int)sensor3[i])<<2);
         printf("%4u\r\n", ((unsigned int)sensor4[i]) ); // used for tmr in this branch
 	}
+}
+
+void steer_diff(unsigned int * sensorvalues)
+{
+    int diff;
+    static int error=0, lasterror=0;
+
+    error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
+    diff = error/64 + (error - lasterror)/4;
+    lasterror = error;
+    forwardD(50+diff, 50-diff);
 }
 
 void process_command(char rxData)
