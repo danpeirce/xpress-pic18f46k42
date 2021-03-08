@@ -8,7 +8,7 @@ void menu(void)
     printf("\r\n\n\n\n\n\n\n\n");   
                // this should clear the terminal screen mostly
                        // otherwise may display junk from power cycle
-    printf("\tKPU APSC1299 3pi-state-1\n\n\r");
+    printf("\tKPU APSC1299 3pi-state-1-struct\n\n\r");
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
     printf("\t\t@. Pololu Signature?\r\n"); 
@@ -29,17 +29,17 @@ void menu(void)
 
 void print_sensors(void)
 {
-    unsigned int * sensorvalues;
+    struct sensorval_s  sensorvalues;
     // calibrate();
     while(1)
     {
         sensorvalues = readsensors();
         // __delay_ms(80);
-        printf("\rsensor values = %4u, ", *sensorvalues);
-        printf("%4u, ", *(sensorvalues+1));
-        printf("%4u, ", *(sensorvalues+2));
-        printf("%4u, ", *(sensorvalues+3));
-        printf("%4u", *(sensorvalues+4));
+        printf("\rsensor values = %4u, ", sensorvalues.s0.word);
+        printf("%4u, ", sensorvalues.s1.word);
+        printf("%4u, ", sensorvalues.s2.word);
+        printf("%4u, ", sensorvalues.s3.word);
+        printf("%4u", sensorvalues.s4.word);
         //printf(" | Timer Value = %5u",TMR3_ReadTimer());
     }
     
@@ -144,27 +144,40 @@ unsigned int readbatteryvoltage(void)
     return (unsigned int)(ubyte*256 + lbyte);
 }
 
-unsigned int* readsensors(void)
+struct sensorval_s readsensors(void)
 {
-    unsigned char lbyte[5], ubyte[5], i;
-    static unsigned int values[5];
-    
-    // printf("\r\n\tSensor Readings =  ");
+    //unsigned char lbyte[5], ubyte[5], i;
+    //static unsigned int values[5];
+    static struct sensorval_s  value ;
     
     while(!UART1_is_tx_ready()) continue;
     test2_PORT = 1;
     UART1_Write(0x87);
-    for (i=0;i<5;i++)
     {
         while (!UART1_is_rx_ready()) continue;
-        lbyte[i] = UART1_Read();
+        value.s0.lower = UART1_Read();
         while (!UART1_is_rx_ready()) continue;
-        ubyte[i] = UART1_Read();
-        values[i] = ubyte[i]*256 + lbyte[i];
+        value.s0.upper = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s1.lower = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s1.upper = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s2.lower = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s2.upper = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s3.lower = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s3.upper = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s4.lower = UART1_Read();
+        while (!UART1_is_rx_ready()) continue;
+        value.s4.upper = UART1_Read();
     }
     test2_PORT = 0;
 
-    return values;
+    return value;
 }
 
 // sends battery voltage to LCD

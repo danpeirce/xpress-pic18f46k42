@@ -11,9 +11,17 @@ union word16_u {
     } ;
 };
 
+struct sensorval_s {
+        union word16_u s0;
+        union word16_u s1;
+        union word16_u s2;
+        union word16_u s3;
+        union word16_u s4;
+};
+
 void menu(void);
 unsigned int readbatteryvoltage(void);
-unsigned int* readsensors(void);
+struct sensorval_s readsensors(void);
 void sendbatteryvoltage(void);
 void send_APSC1299(void);
 void display_signature(void);

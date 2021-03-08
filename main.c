@@ -6,7 +6,7 @@
 void dumpSvalues(void);
 void followline(void);
 void process_command(char rxData);
-void steer_diff(unsigned int * sensorvalues);
+void steer_diff(struct sensorval_s sensorvalues);
 
 unsigned char sensor0[600];
 unsigned char sensor1[600];
@@ -62,7 +62,7 @@ void main(void)
 
 void followline(void)
 {
-    unsigned int * sensorvalues;
+    struct sensorval_s sensorvalues;
 
     unsigned int sensorReadIndex=0;
     unsigned char pd_mode=1;
@@ -74,12 +74,12 @@ void followline(void)
         {
             sensorvalues = readsensors();
 
-            if ((*sensorvalues > 250) && (*(sensorvalues+4)>250))
+            if ((sensorvalues.s0.word > 250) && (sensorvalues.s4.word>250))
             {
                 stop_pd(); // tell slave to stop PID mode
                 while(roam_PORT);
             }
-            if ((*(sensorvalues+1) > 200) && (*(sensorvalues+3)>200))
+            if ((sensorvalues.s1.word > 200) && (sensorvalues.s3.word>200))
             {
                 pd_mode = 0;
                 stop_pd();
@@ -87,11 +87,11 @@ void followline(void)
             }
 
             {
-                sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
-                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
-                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
-                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                sensor0[sensorReadIndex] = (((sensorvalues.s0.word)) >> 2);
+                sensor1[sensorReadIndex] = (((sensorvalues.s1.word)) >> 2);
+                sensor2[sensorReadIndex] = (((sensorvalues.s2.word)) >> 2);
+                sensor3[sensorReadIndex] = (((sensorvalues.s3.word)) >> 2);
+                sensor4[sensorReadIndex] = (((sensorvalues.s4.word)) >> 2);
             //    tmrvalue.word = TMR1_ReadTimer();
             //    sensor4[sensorReadIndex] = tmrvalue.lower;
                 sensorReadIndex++;
@@ -105,8 +105,8 @@ void followline(void)
         else
         {
             sensorvalues = readsensors();
-            steer_diff(sensorvalues);
-            if ((*(sensorvalues+1) < 50) && (*(sensorvalues+3) < 50))
+            steer_diff(sensorvalues);  
+            if (((sensorvalues.s1.word) < 50) && ((sensorvalues.s3.word) < 50))
             {
                 pd_mode = 1;
                 forward(0);
@@ -114,11 +114,11 @@ void followline(void)
             }
 
             {
-                sensor0[sensorReadIndex] = ((*(sensorvalues+0)) >> 2);
-                sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
-                sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
-                sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+                sensor0[sensorReadIndex] = (((sensorvalues.s0.word)) >> 2);
+                sensor1[sensorReadIndex] = (((sensorvalues.s1.word)) >> 2);
+                sensor2[sensorReadIndex] = (((sensorvalues.s2.word)) >> 2);
+                sensor3[sensorReadIndex] = (((sensorvalues.s3.word)) >> 2);
+                sensor4[sensorReadIndex] = (((sensorvalues.s4.word)) >> 2);
             //    tmrvalue.word = TMR1_ReadTimer();
             //    sensor4[sensorReadIndex] = tmrvalue.lower;
                 sensorReadIndex++;
@@ -145,12 +145,12 @@ void dumpSvalues(void)
 	}
 }
 
-void steer_diff(unsigned int * sensorvalues)
+void steer_diff(struct sensorval_s sensorvalues)
 {
     int diff;
     static int error=0, lasterror=0;
 
-    error = (int)(*(sensorvalues+3))-(int)(*(sensorvalues+1));
+    error = (int)((sensorvalues.s3.word))-(int)((sensorvalues.s1.word));
     diff = error/64 + (error - lasterror)/4;
     lasterror = error;
     forwardD(50+diff, 50-diff);
