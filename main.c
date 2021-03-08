@@ -14,13 +14,7 @@ unsigned char sensor2[600];
 unsigned char sensor3[600];
 unsigned char sensor4[600];
 
-union {
-    unsigned int word;
-    struct {
-        unsigned char lower;
-        unsigned char upper;
-    } ;
-} tmrvalue;
+union word16_u tmrvalue;
 
 /*
                          Main application

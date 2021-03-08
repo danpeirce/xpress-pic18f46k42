@@ -3,6 +3,14 @@
 #define RIGHTMOTOR_FORWARD 0xC5
 #define RIGHTMOTOR_BACKWARD 0xC6
 
+union word16_u {
+    unsigned int word;
+    struct {
+        unsigned char lower;
+        unsigned char upper;
+    } ;
+};
+
 void menu(void);
 unsigned int readbatteryvoltage(void);
 unsigned int* readsensors(void);
