@@ -97,9 +97,9 @@ void followline(void)
                 sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
                 sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                 sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-            //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                tmrvalue.word = TMR1_ReadTimer();
-                sensor4[sensorReadIndex] = tmrvalue.lower;
+                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+            //    tmrvalue.word = TMR1_ReadTimer();
+            //    sensor4[sensorReadIndex] = tmrvalue.lower;
                 sensorReadIndex++;
                 if(sensorReadIndex>599) 
                 {
@@ -124,9 +124,9 @@ void followline(void)
                 sensor1[sensorReadIndex] = ((*(sensorvalues+1)) >> 2);
                 sensor2[sensorReadIndex] = ((*(sensorvalues+2)) >> 2);
                 sensor3[sensorReadIndex] = ((*(sensorvalues+3)) >> 2);
-            //    sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
-                tmrvalue.word = TMR1_ReadTimer();
-                sensor4[sensorReadIndex] = tmrvalue.lower;
+                sensor4[sensorReadIndex] = ((*(sensorvalues+4)) >> 2);
+            //    tmrvalue.word = TMR1_ReadTimer();
+            //    sensor4[sensorReadIndex] = tmrvalue.lower;
                 sensorReadIndex++;
                 if(sensorReadIndex>599) 
                 {
@@ -147,7 +147,7 @@ void dumpSvalues(void)
 		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
         printf("%4u, ", ((unsigned int)sensor2[i])<<2);
         printf("%4u, ", ((unsigned int)sensor3[i])<<2);
-        printf("%4u\r\n", ((unsigned int)sensor4[i]) ); // used for tmr in this branch
+        printf("%4u\r\n", ((unsigned int)sensor4[i]) <<2 ); // used for tmr in this branch
 	}
 }
 
