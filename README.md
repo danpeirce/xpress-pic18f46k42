@@ -1,33 +1,35 @@
--   [Expansion of Pololu 3Pi Robot with Xpress
+  - [Expansion of Pololu 3Pi Robot with Xpress
     board](#expansion-of-pololu-3pi-robot-with-xpress-board)
-    -   [Xpress Board Features](#xpress-board-features)
-        -   [Pins Used](#pins-used)
-        -   [Memory Needed to Store Data and
+      - [Xpress Board Features](#xpress-board-features)
+          - [Pins Used](#pins-used)
+          - [Memory Needed to Store Data and
             Resolution](#memory-needed-to-store-data-and-resolution)
-    -   [Pololu 3Pi robot](#pololu-3pi-robot)
-        -   [The 3Pi Menu Dump 123
+      - [Pololu 3Pi robot](#pololu-3pi-robot)
+          - [The 3Pi state 1 struct
+            Branch](#the-3pi-state-1-struct-branch)
+          - [The 3Pi Menu Dump 123
             Branch](#the-3pi-menu-dump-123-branch)
-        -   [The 3pi Menu Dump Data
+          - [The 3pi Menu Dump Data
             Branch](#the-3pi-menu-dump-data-branch)
-        -   [The 3pi Menu Basic3 Branch](#the-3pi-menu-basic3-branch)
-        -   [Displaying Sensor Readings](#displaying-sensor-readings)
-    -   [Mounting PIC XPRESS board on 3Pi Expansion
+          - [The 3pi Menu Basic3 Branch](#the-3pi-menu-basic3-branch)
+          - [Displaying Sensor Readings](#displaying-sensor-readings)
+      - [Mounting PIC XPRESS board on 3Pi Expansion
         board](#mounting-pic-xpress-board-on-3pi-expansion-board)
-        -   [Mount 1 (historical)](#mount-1-historical)
-        -   [Mount 2](#mount-2)
-    -   [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
-    -   [Autocalibrates when in Roam
+          - [Mount 1 (historical)](#mount-1-historical)
+          - [Mount 2](#mount-2)
+      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
+      - [Autocalibrates when in Roam
         mode](#autocalibrates-when-in-roam-mode)
-    -   [Read Sensors](#read-sensors)
-    -   [Proportional Derivative Control in Roam
+      - [Read Sensors](#read-sensors)
+      - [Proportional Derivative Control in Roam
         mode](#proportional-derivative-control-in-roam-mode)
-    -   [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
-    -   [Charging Circuit](#charging-circuit)
-    -   [Added Print Sensor Values to
+      - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
+      - [Charging Circuit](#charging-circuit)
+      - [Added Print Sensor Values to
         menu](#added-print-sensor-values-to-menu)
-    -   [Code Configurator settings](#code-configurator-settings)
-    -   [Working with PuTTY and issues](#working-with-putty-and-issues)
-    -   [Test of Expansion Board](#test-of-expansion-board)
+      - [Code Configurator settings](#code-configurator-settings)
+      - [Working with PuTTY and issues](#working-with-putty-and-issues)
+      - [Test of Expansion Board](#test-of-expansion-board)
 
 <!---
 use 
@@ -35,11 +37,9 @@ skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-Expansion of Pololu 3Pi Robot with Xpress board
-===============================================
+# Expansion of Pololu 3Pi Robot with Xpress board
 
-Xpress Board Features
----------------------
+## Xpress Board Features
 
 This board has a USB microB connector. It has a PIC MCU on board
 configured to act as an interface and it enumerates as a multifunction
@@ -52,14 +52,14 @@ or PIC18F4525.
 
 ![](images/pins.png)
 
--   UART1 is at 115200 baud. Tx1 is on RC6.
--   UART2 is connected to the XPRESS boards USB interface PIC.
-    -   Communication between UART2 and the interface IC is at 9600
+  - UART1 is at 115200 baud. Tx1 is on RC6.
+  - UART2 is connected to the XPRESS boards USB interface PIC.
+      - Communication between UART2 and the interface IC is at 9600
         baud.
--   roam input used to determine if robot should
+  - roam input used to determine if robot should
     1.  Stay in place (perhaps for programming)
     2.  Roam (perhaps following a line)
--   PWM output at about 1 KHz on pad RC4 (set to 10% duty cycle)
+  - PWM output at about 1 KHz on pad RC4 (set to 10% duty cycle)
 
 ### Memory Needed to Store Data and Resolution
 
@@ -85,18 +85,30 @@ to a computer each sample read from the array will be sifted two places
 to the left so the magnitude will be restored to the original value
 (less the lost resolution).
 
-Pololu 3Pi robot
-----------------
+## Pololu 3Pi robot
 
 The robot is running the serial slave program from Pololu. This will
 allow the 3Pi robot to be controlled from a XPRESS board.
 
--   [10.a. Serial slave
+  - [10.a. Serial slave
     program](https://www.pololu.com/docs/0J21/all#10.a)
 
 More information on the Pololu 3Pi robot
 
--   <https://www.pololu.com/product/975>
+  - <https://www.pololu.com/product/975>
+
+### The 3Pi state 1 struct Branch
+
+The 3Pi state 1 struct Branch has been derived from earlier branches.
+Some of the most recent branches it built on are in a private
+repository.
+
+  - Uses TMR0 and TMR1 and CLC1 – *{more on that later}*
+  - the variable sensorvalues was changed from a **pointer** to a
+    **struct**. I think the code reads better this way.
+  - in the process of restructoring the code for better readability
+
+![](images/menu-state1-struct.png)
 
 ### The 3Pi Menu Dump 123 Branch
 
@@ -125,12 +137,12 @@ strategy.
 The most significant difference is that sensor readings are stored for
 future dump while running in the **Roam mode**.
 
--   uses three arrays to store sensor data
-    -   stores data from sensor 1, sensor 3 and sensor 4.
-    -   each array can store 1000 values
-    -   storage starts after calibration is completed.
-    -   the robot stops once 1000 samples are taken.
-        -   one must switch to No Roam mode to dump the data
+  - uses three arrays to store sensor data
+      - stores data from sensor 1, sensor 3 and sensor 4.
+      - each array can store 1000 values
+      - storage starts after calibration is completed.
+      - the robot stops once 1000 samples are taken.
+          - one must switch to No Roam mode to dump the data
 
 #### Plot of sample data
 
@@ -143,24 +155,24 @@ sensor 4.
 Data collection started as the robot was returning to centre from doing
 initial calibration (sensor normalization).
 
--   With normalization the sensor readings go to 1000 when a given
+  - With normalization the sensor readings go to 1000 when a given
     sensor is centred over a line.
--   The robot is centred over the line when sensor 1 and sensor 3 give
+  - The robot is centred over the line when sensor 1 and sensor 3 give
     the same reading.
--   One can see a little overshoot and hunting for centring the robot up
+  - One can see a little overshoot and hunting for centring the robot up
     to around sample 540. I had the differential term set to near zero
     (constant d was arbitrarily large) so it is reasonable to assume the
     hunting could be easily reduced.
--   Sensor 4 jumps up to 1000 as it is crossing the line at the sharp
+  - Sensor 4 jumps up to 1000 as it is crossing the line at the sharp
     right turn. Sensor 3 reaches the line a few samples sooner because
     on the 3Pi the sensors are mounted on the curve of the front edge of
     the robot.
--   One can see all the sensors are past the line and reading zero
+  - One can see all the sensors are past the line and reading zero
     around sample 609.
--   The robot spins to the right so now sensor 4 sees the line first.
+  - The robot spins to the right so now sensor 4 sees the line first.
     Sensor 3 sees the line second and the robot reverses direction when
     sensor 1 is over the line.
--   There is again some hunting for the line.
+  - There is again some hunting for the line.
 
 #### Plot of sample data with Differential Term
 
@@ -212,7 +224,7 @@ One can in sequence use
 3.  Plug in the USB cable
 4.  Use Ctrl+s to continously read sensor values
 
-![](images/sensor-readings.png)
+![images/sensor-readings.png](images/sensor-readings.png)
 
 That is Coolterminal. In PuTTY the reading overwrite a single line.
 
@@ -221,8 +233,7 @@ A video about displaying sensor readings:
 [![Calibrate and Read Robot
 Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
 
-Mounting PIC XPRESS board on 3Pi Expansion board
-------------------------------------------------
+## Mounting PIC XPRESS board on 3Pi Expansion board
 
 ### Mount 1 (historical)
 
@@ -242,28 +253,25 @@ Wiring under the XPRESS board.
 
 ![](images/expansion-wire-s.jpg)
 
-Roam and No Roam Slide Switch
------------------------------
+## Roam and No Roam Slide Switch
 
 The image below shows the slide switch in the no roam possition.
 
 ![](images/no_roam_s.jpg)
 
-Autocalibrates when in Roam mode
---------------------------------
+## Autocalibrates when in Roam mode
 
 Will autocalibrate the sensors if in Roam mode. For meaningful results
 the robot should be sitting over a black tape line. The robot will spin
 to the left and right sweeping the sensors over the line so that
 normalized readings can be calculated.
 
-Read Sensors
-------------
+## Read Sensors
 
 Code was added to read the sensors while the **slave** is executing
 proportional derivative control.
 
--   see **Proportional Derivative Control in Roam mode** section down
+  - see **Proportional Derivative Control in Roam mode** section down
     below.
 
 Unlike the **test-read-sensors** branch the sensor values are not sent
@@ -279,7 +287,7 @@ Note that this is simply a test to ensure that the slave can
 successfully both run proportional derivative control and report sensor
 readings back to the PIC on the Xpress board.
 
-In this branch the test2\_PORT signals are ignored! The following was
+In this branch the test2\_PORT signals are ignored\! The following was
 used only in the **test-read-sensors** branch:
 
 **test2\_PORT** was used to provide timing to a DSO so that the time
@@ -294,8 +302,7 @@ The timing signal from test2\_PORT on the Digital Storage Oscilloscope:
 
 ![](images/time-read-sensors.jpg)
 
-Proportional Derivative Control in Roam mode
---------------------------------------------
+## Proportional Derivative Control in Roam mode
 
 Another function has been added to allow the MCU on the main board of
 the 3Pi robot to run proportional derivative code when the robot is in
@@ -303,14 +310,12 @@ Roam mode. The robot follows sharp turns and curves but knows nothing of
 gaps and other APSC1299 special obstacles. This could possibly work fine
 for demos.
 
-Pull up on RX2/RB7
-------------------
+## Pull up on RX2/RB7
 
 A 10 Kohm pull up resistor was added to RX2 for better reliability when
 USB cable is not attached.
 
-Charging Circuit
-----------------
+## Charging Circuit
 
 A charging circuit has been added to the expantion board. The charging
 circuit is just a 75 ohm resistor in series with the four AAA NiMH cells
@@ -327,38 +332,34 @@ Showing the 75 ohm 2 watt resistor (located under the expansion board.
 caused rubbing on right wheel. Also bend tab on barrel connector so it
 is flush on board before soldering.**
 
-Added Print Sensor Values to menu
----------------------------------
+## Added Print Sensor Values to menu
 
 Can now print sensor values in PuTTY when in No Roam mode. Can move
 robot over track by hand.
 
-Code Configurator settings
---------------------------
+## Code Configurator settings
 
 The code in this project was primarily generated by the Code
 Configurator. The settings used may not be optimal at all. The initial
 goal was just to get the UART of the target PIC to talk to the UART of
 the interface PIC.
 
-Working with PuTTY and issues
------------------------------
+## Working with PuTTY and issues
 
 One can use a PuTTY terminal with the virtual serial port of the Xpress
 board. This works fine when one is typing into the terminal. There is an
 issue though if one attempts pasting into the PuTTY terminal (using a
 right mouse click). In that case only the first character is sent. This
 is an issue of the USB to serial bridge on the Xpress board and not the
-PIC code!
+PIC code\!
 
 Others have commented on the limitation of the USART to USB bridge on
 the Xpress board:
 
--   [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
+  - [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
     limitations](https://www.microchip.com/forums/m1097510.aspx)
 
-Test of Expansion Board
------------------------
+## Test of Expansion Board
 
 Initial testing of expansion board for 3PI.
 

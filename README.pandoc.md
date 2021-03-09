@@ -53,6 +53,17 @@ More information on the Pololu 3Pi robot
 
 * [https://www.pololu.com/product/975](https://www.pololu.com/product/975)
 
+### The 3Pi state 1 struct Branch
+
+The 3Pi state 1 struct Branch has been derived from earlier branches. Some of the most recent branches it built on are in a private repository.
+
+* Uses TMR0 and TMR1 and CLC1 -- *{more on that later}*
+* the variable sensorvalues was changed from a **pointer** to a **struct**. I think the code reads better this way.
+* in the process of restructoring the code for better readability
+
+![](images/menu-state1-struct.png)
+
+
 ### The 3Pi Menu Dump 123 Branch 
 
 The 3pi-menu-dump-123 branch was derived from the 3pi-menu-dump-data branch. The most significant difference is that
