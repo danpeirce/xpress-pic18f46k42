@@ -78,7 +78,7 @@ The TMR0\_Overflow Rate varies a bit from robot to robot but is about
 
 #### TMR1
 
-![](images/TMR1.png)
+![](images/tmr1.png)
 
 ### Memory Needed to Store Data and Resolution
 
