@@ -2,6 +2,7 @@
     board](#expansion-of-pololu-3pi-robot-with-xpress-board)
       - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
+          - [Timer Setup](#timer-setup)
           - [Memory Needed to Store Data and
             Resolution](#memory-needed-to-store-data-and-resolution)
       - [Pololu 3Pi robot](#pololu-3pi-robot)
@@ -59,7 +60,25 @@ or PIC18F4525.
   - roam input used to determine if robot should
     1.  Stay in place (perhaps for programming)
     2.  Roam (perhaps following a line)
-  - PWM output at about 1 KHz on pad RC4 (set to 10% duty cycle)
+  - CLC1 output is the same as the T0\_overflow. The signal was made an
+    output so that it can be mesured on a scope or with a DMM. In this
+    case the CLC does not change the signal but simply makes it
+    available on a PIN.
+
+![](images/CLC1-TMR0out.png)
+
+### Timer Setup
+
+#### TMR0
+
+![](images/TMR0.png)
+
+The TMR0\_Overflow Rate varies a bit from robot to robot but is about
+2.0 KHz
+
+#### TMR1
+
+![](images/TMR1.png)
 
 ### Memory Needed to Store Data and Resolution
 
