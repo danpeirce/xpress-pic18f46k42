@@ -7,6 +7,7 @@ void dumpSvalues(void);
 void followline(void);
 void process_command(char rxData);
 void steer_diff(struct sensorval_s sensorvalues);
+void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex);
 
 unsigned char sensor0[600];
 unsigned char sensor1[600];
@@ -87,13 +88,7 @@ void followline(void)
             }
 
             {
-                sensor0[sensorReadIndex] = (((sensorvalues.s0.word)) >> 2);
-                sensor1[sensorReadIndex] = (((sensorvalues.s1.word)) >> 2);
-                sensor2[sensorReadIndex] = (((sensorvalues.s2.word)) >> 2);
-                sensor3[sensorReadIndex] = (((sensorvalues.s3.word)) >> 2);
-                sensor4[sensorReadIndex] = (((sensorvalues.s4.word)) >> 2);
-            //    tmrvalue.word = TMR1_ReadTimer();
-            //    sensor4[sensorReadIndex] = tmrvalue.lower;
+                save_data(sensorvalues, sensorReadIndex);
                 sensorReadIndex++;
                 if(sensorReadIndex>599) 
                 {
@@ -114,13 +109,7 @@ void followline(void)
             }
 
             {
-                sensor0[sensorReadIndex] = (((sensorvalues.s0.word)) >> 2);
-                sensor1[sensorReadIndex] = (((sensorvalues.s1.word)) >> 2);
-                sensor2[sensorReadIndex] = (((sensorvalues.s2.word)) >> 2);
-                sensor3[sensorReadIndex] = (((sensorvalues.s3.word)) >> 2);
-                sensor4[sensorReadIndex] = (((sensorvalues.s4.word)) >> 2);
-            //    tmrvalue.word = TMR1_ReadTimer();
-            //    sensor4[sensorReadIndex] = tmrvalue.lower;
+                save_data(sensorvalues, sensorReadIndex);
                 sensorReadIndex++;
                 if(sensorReadIndex>599) 
                 {
@@ -141,7 +130,7 @@ void dumpSvalues(void)
 		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
         printf("%4u, ", ((unsigned int)sensor2[i])<<2);
         printf("%4u, ", ((unsigned int)sensor3[i])<<2);
-        printf("%4u\r\n", ((unsigned int)sensor4[i]) <<2 ); // used for tmr in this branch
+        printf("%4u\r\n", ((unsigned int)sensor4[i]) <<2 ); 
 	}
 }
 
@@ -156,6 +145,17 @@ void steer_diff(struct sensorval_s sensorvalues)
     forwardD(50+diff, 50-diff);
 }
 
+void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex)
+{
+    sensor0[sensorReadIndex] = ((sensorvalues.s0.word) >> 2);
+    sensor1[sensorReadIndex] = ((sensorvalues.s1.word) >> 2);
+    sensor2[sensorReadIndex] = ((sensorvalues.s2.word) >> 2);
+    sensor3[sensorReadIndex] = ((sensorvalues.s3.word) >> 2);
+    sensor4[sensorReadIndex] = ((sensorvalues.s4.word) >> 2);
+//    tmrvalue.word = TMR1_ReadTimer();
+//    sensor4[sensorReadIndex] = tmrvalue.lower;
+}
+
 void process_command(char rxData)
 {
     if (rxData == '1') readbatteryvoltage();   // read battery voltage 
@@ -166,7 +166,7 @@ void process_command(char rxData)
     else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
     else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
     else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
-    else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
+    else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) ); // ctrl+t
     else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
     else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
     else if (rxData == '<') spinleft(50);
