@@ -2,6 +2,14 @@
 #include "pololu3pi.h"
 #include <stdio.h>
 
+unsigned char sensor0[600];
+unsigned char sensor1[600];
+unsigned char sensor2[600];
+unsigned char sensor3[600];
+unsigned char sensor4[600];
+
+union word16_u tmrvalue;
+
 void menu(void)
 {
     printf(" \r\n");
@@ -45,7 +53,65 @@ void print_sensors(void)
     
 }
 
+void followline(void)
+{
+    struct sensorval_s sensorvalues;
 
+    unsigned int sensorReadIndex=0;
+    unsigned char pd_mode=1;
+    calibrate();
+    go_pd(50);    // tell slave to start PID mode
+    while(roam_PORT) 
+    {
+        if (pd_mode)
+        {
+            sensorvalues = readsensors();
+
+            if ((sensorvalues.s0.word > 250) && (sensorvalues.s4.word>250))
+            {
+                stop_pd(); // tell slave to stop PID mode
+                while(roam_PORT);
+            }
+            if ((sensorvalues.s1.word > 200) && (sensorvalues.s3.word>200))
+            {
+                pd_mode = 0;
+                stop_pd();
+                steer_diff(sensorvalues);
+            }
+
+            {
+                save_data(sensorvalues, sensorReadIndex);
+                sensorReadIndex++;
+                if(sensorReadIndex>599) 
+                {
+                    stop_pd();
+                    while(roam_PORT);
+                }
+            }
+        }
+        else
+        {
+            sensorvalues = readsensors();
+            steer_diff(sensorvalues);  
+            if (((sensorvalues.s1.word) < 50) && ((sensorvalues.s3.word) < 50))
+            {
+                pd_mode = 1;
+                forward(0);
+                go_pd(50);
+            }
+
+            {
+                save_data(sensorvalues, sensorReadIndex);
+                sensorReadIndex++;
+                if(sensorReadIndex>599) 
+                {
+                    forward(0);
+                    while(roam_PORT);
+                }
+            }                
+        }
+    }
+}
 
 void forward(unsigned char speed)
 {
@@ -309,4 +375,59 @@ void stop_pd(void)
 {
     while(!UART1_is_tx_ready()) continue;
     UART1_Write(0xBC);   // stop PD control
+}
+
+void dumpSvalues(void)
+{
+	unsigned int i;
+	for (i=0;i<600;i++)
+	{
+        printf("%4u, ", ((unsigned int)sensor0[i])<<2);
+		printf("%4u, ", ((unsigned int)sensor1[i])<<2);
+        printf("%4u, ", ((unsigned int)sensor2[i])<<2);
+        printf("%4u, ", ((unsigned int)sensor3[i])<<2);
+        printf("%4u\r\n", ((unsigned int)sensor4[i]) <<2 ); 
+	}
+}
+
+void steer_diff(struct sensorval_s sensorvalues)
+{
+    int diff;
+    static int error=0, lasterror=0;
+
+    error = (int)((sensorvalues.s3.word))-(int)((sensorvalues.s1.word));
+    diff = error/64 + (error - lasterror)/4;
+    lasterror = error;
+    forwardD(50+diff, 50-diff);
+}
+
+void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex)
+{
+    sensor0[sensorReadIndex] = ((sensorvalues.s0.word) >> 2);
+    sensor1[sensorReadIndex] = ((sensorvalues.s1.word) >> 2);
+    sensor2[sensorReadIndex] = ((sensorvalues.s2.word) >> 2);
+    sensor3[sensorReadIndex] = ((sensorvalues.s3.word) >> 2);
+    sensor4[sensorReadIndex] = ((sensorvalues.s4.word) >> 2);
+//    tmrvalue.word = TMR1_ReadTimer();
+//    sensor4[sensorReadIndex] = tmrvalue.lower;
+}
+
+void process_command(char rxData)
+{
+    if (rxData == '1') readbatteryvoltage();   // read battery voltage 
+                                               //  and send to PuTTY
+    else if (rxData == '2') sendbatteryvoltage();   // send battery voltage to LCD
+                                               //  and send to PuTTY
+    else if (rxData == '@') display_signature();
+    else if (rxData == 0x03) UART1_Write(0xB7);      // ctrl+c clear LCD on 3Pi
+    else if (rxData == 0x04) dumpSvalues();      // ctrl+d clear LCD on 3Pi
+    else if (rxData == 0x13) print_sensors();   // ctrl+s print values loop
+    else if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) ); // ctrl+t
+    else if (rxData == '~') send_APSC1299();  // send APSC1299  msg to LCD
+    else if (rxData == '\r') LCD_line2();     // move courser to start of line 2
+    else if (rxData == '<') spinleft(50);
+    else if (rxData == '>') spinright(50);
+    else if (rxData == '|') forward(0);
+    else if (rxData == 0x1B) menu();
+    else if (rxData >= ' ') sendchar(rxData);       // send the character to the display
 }

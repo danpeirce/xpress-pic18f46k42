@@ -19,6 +19,12 @@ struct sensorval_s {
         union word16_u s4;
 };
 
+void dumpSvalues(void);
+void followline(void);
+void process_command(char rxData);
+void steer_diff(struct sensorval_s sensorvalues);
+void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex);
+
 void menu(void);
 unsigned int readbatteryvoltage(void);
 struct sensorval_s readsensors(void);
