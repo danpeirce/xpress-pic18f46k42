@@ -16,7 +16,7 @@ void menu(void)
     printf("\r\n\n\n\n\n\n\n\n");   
                // this should clear the terminal screen mostly
                        // otherwise may display junk from power cycle
-    printf("\tKPU APSC1299 3pi-state-1-struct\n\n\r");
+    printf("\tKPU APSC1299 3pi-state-2-1\n\n\r");
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
     printf("\t\t@. Pololu Signature?\r\n"); 
