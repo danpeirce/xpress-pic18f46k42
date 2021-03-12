@@ -1,5 +1,6 @@
 #include "mcc_generated_files/mcc.h"
 #include "pololu3pi.h"
+#include "automonous.h"
 #include <stdio.h>
 
 unsigned char sensor0[600];
@@ -16,7 +17,7 @@ void menu(void)
     printf("\r\n\n\n\n\n\n\n\n");   
                // this should clear the terminal screen mostly
                        // otherwise may display junk from power cycle
-    printf("\tKPU APSC1299 3pi-state-2-1\n\n\r");
+    printf("\tKPU APSC1299 3pi-state-2-3\n\n\r");
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
     printf("\t\t@. Pololu Signature?\r\n"); 
@@ -53,65 +54,7 @@ void print_sensors(void)
     
 }
 
-void followline(void)
-{
-    struct sensorval_s sensorvalues;
 
-    unsigned int sensorReadIndex=0;
-    unsigned char pd_mode=1;
-    calibrate();
-    go_pd(50);    // tell slave to start PID mode
-    while(roam_PORT) 
-    {
-        if (pd_mode)
-        {
-            sensorvalues = readsensors();
-
-            if ((sensorvalues.s0.word > 250) && (sensorvalues.s4.word>250))
-            {
-                stop_pd(); // tell slave to stop PID mode
-                while(roam_PORT);
-            }
-            if ((sensorvalues.s1.word > 200) && (sensorvalues.s3.word>200))
-            {
-                pd_mode = 0;
-                stop_pd();
-                steer_diff(sensorvalues);
-            }
-
-            {
-                save_data(sensorvalues, sensorReadIndex);
-                sensorReadIndex++;
-                if(sensorReadIndex>599) 
-                {
-                    stop_pd();
-                    while(roam_PORT);
-                }
-            }
-        }
-        else
-        {
-            sensorvalues = readsensors();
-            steer_diff(sensorvalues);  
-            if (((sensorvalues.s1.word) < 50) && ((sensorvalues.s3.word) < 50))
-            {
-                pd_mode = 1;
-                forward(0);
-                go_pd(50);
-            }
-
-            {
-                save_data(sensorvalues, sensorReadIndex);
-                sensorReadIndex++;
-                if(sensorReadIndex>599) 
-                {
-                    forward(0);
-                    while(roam_PORT);
-                }
-            }                
-        }
-    }
-}
 
 void forward(unsigned char speed)
 {

@@ -1,6 +1,7 @@
 
 #include "mcc_generated_files/mcc.h"
 #include "pololu3pi.h"
+#include "automonous.h"
 #include <stdio.h>
 
 /*

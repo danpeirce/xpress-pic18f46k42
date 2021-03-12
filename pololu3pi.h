@@ -20,7 +20,7 @@ struct sensorval_s {
 };
 
 void dumpSvalues(void);
-void followline(void);
+
 void process_command(char rxData);
 void steer_diff(struct sensorval_s sensorvalues);
 void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex);
