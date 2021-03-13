@@ -344,6 +344,17 @@ void steer_diff(struct sensorval_s sensorvalues)
     forwardD(50+diff, 50-diff);
 }
 
+void centre_diff(struct sensorval_s sensorvalues)
+{
+    int diff;
+    static int error=0, lasterror=0;
+
+    error = (int)((sensorvalues.s3.word))-(int)((sensorvalues.s1.word));
+    diff = error/64 + (error - lasterror)/4;
+    lasterror = error;
+    forwardD(diff, diff);
+}
+
 void save_data(struct sensorval_s sensorvalues, unsigned int sensorReadIndex)
 {
     sensor0[sensorReadIndex] = ((sensorvalues.s0.word) >> 2);

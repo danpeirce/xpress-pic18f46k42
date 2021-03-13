@@ -3,21 +3,62 @@
 #include "automonous.h"
 
 void pid_state(void);
+void find_centre(void);
+void centre_state(void);
 void differential_state(void);
 
 static  struct sensorval_s sensorvalues;
 static  unsigned int sensorReadIndex=0;
 
-void (*autostate)(void) = pid_state;
+void (*autostate)(void) = find_centre;
 
 void followline(void)
 {
     sensorReadIndex=0;
     unsigned char pd_mode=1;
     calibrate();
-    go_pd(50);    // tell slave to start PID mode
+    spinright(20);    // tell slave to start PID mode
     while(roam_PORT) autostate();
 
+}
+
+void find_centre(void)
+{
+    sensorvalues = readsensors();
+
+    if(sensorvalues.s2.word > 600)
+    {
+        spinleft(0);
+        autostate = centre_state;
+    }
+    {
+        save_data(sensorvalues, sensorReadIndex);
+        sensorReadIndex++;
+        if(sensorReadIndex>599) 
+        {
+            forward(0);
+            while(roam_PORT);
+        }
+    }
+}
+
+void centre_state(void)
+{
+
+    sensorvalues = readsensors();
+    centre_diff(sensorvalues);
+
+    if (sensorvalues.s2.word == 1000) autostate = differential_state;
+    
+    {
+        save_data(sensorvalues, sensorReadIndex);
+        sensorReadIndex++;
+        if(sensorReadIndex>599) 
+        {
+            forward(0);
+            while(roam_PORT);
+        }
+    }
 }
 
 void pid_state(void)
