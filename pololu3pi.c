@@ -336,10 +336,10 @@ void dumpSvalues(void)
 void steer_diff(struct sensorval_s sensorvalues)
 {
     int diff;
-    static int error=0, lasterror=0;
+    static int error=0, lasterror=100;
 
     error = (int)((sensorvalues.s3.word))-(int)((sensorvalues.s1.word));
-    diff = error/64 + (error - lasterror)/4;
+    diff = error/16 + (error - lasterror)/4;
     lasterror = error;
     forwardD(50+diff, 50-diff);
 }
@@ -347,10 +347,10 @@ void steer_diff(struct sensorval_s sensorvalues)
 void centre_diff(struct sensorval_s sensorvalues)
 {
     int diff;
-    static int error=0, lasterror=0;
+    static int error=0, lasterror=800;
 
     error = (int)((sensorvalues.s3.word))-(int)((sensorvalues.s1.word));
-    diff = error/64 + (error - lasterror)/4;
+    diff = error/16 + (error - lasterror)/4;
     lasterror = error;
     forwardD(diff, diff);
 }

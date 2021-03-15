@@ -48,7 +48,7 @@ void centre_state(void)
     sensorvalues = readsensors();
     centre_diff(sensorvalues);
 
-    if (sensorvalues.s2.word == 1000) autostate = differential_state;
+    if (sensorvalues.s1.word > 200) autostate = differential_state;
     
     {
         save_data(sensorvalues, sensorReadIndex);
