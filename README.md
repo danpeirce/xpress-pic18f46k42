@@ -2,7 +2,6 @@
     board](#expansion-of-pololu-3pi-robot-with-xpress-board)
       - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
-          - [Sensor Timing Measurements](#sensor-timing-measurements)
           - [Timer Setup](#timer-setup)
           - [Memory Needed to Store Data and
             Resolution](#memory-needed-to-store-data-and-resolution)
@@ -15,8 +14,7 @@
       - [Autocalibrates when in Roam
         mode](#autocalibrates-when-in-roam-mode)
       - [Read Sensors](#read-sensors)
-      - [Proportional Derivative Control in Roam
-        mode](#proportional-derivative-control-in-roam-mode)
+          - [Sensor Timing Measurements](#sensor-timing-measurements)
       - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
       - [Charging Circuit](#charging-circuit)
       - [Added Print Sensor Values to
@@ -59,42 +57,6 @@ or PIC18F4525.
     available on a PIN.
 
 ![](images/CLC1-TMR0out.png)
-
-### Sensor Timing Measurements
-
-  - On initiating a command to read sensors it consistently takes about
-    100 µs for the sensors emitting diode to be turned on. Note that at
-    115200 pbs one byte takes 10/115200 = 86.8 µs.
-  - The phototransister signal does not start to change until after the
-    first 320 µs. I am guessing they are giving the emitter diode time
-    to stabilize. 320 - 100 = 220 µs to stabilize.
-  - The total time the emitter diode is on appears to be 1 ms.
-  - The time between when the emitter turns off until all the data is
-    received is 1.26 ms. Note that sending 10 bytes of data takes 868
-    µs. I’m guessing the 3Pi MCU needs to spend some time calculating
-    the normalized values.
-  - It takes about 2.42 ms per sample of five sensor values.
-  - All five sensors are used in phase. The values are obtained from the
-    same start point (not sequentially).
-
-I am including two images of the DSO.
-
-  - The first image is triggered from CH2 (white).
-      - The positive going edge of CH2 indicates the PIC is about to
-        start the write operation to UART1.
-      - The signal on CH1 (yellow) is the signal from the sensor. There
-        is a white reflective surface in this case.
-  - The second image is also triggered from CH2 (white).
-      - CH2 is the same and remains the phase reference.
-      - CH1 (yellow) now shows the signal on the emitting IR diode. All
-        the emitting IR diodes are in series. When the signal is high
-        the IR is off. When the signal is low the IR is on. The IR is
-        only on during the time used to acquire the sensor readings. It
-        is off when the 3Pi MCU is processing and sending data.
-
-![](images/phototransistor.jpg)
-
-![](images/emitting_diode.jpg)
 
 ### Timer Setup
 
@@ -180,47 +142,41 @@ normalized readings can be calculated.
 
 ## Read Sensors
 
-Code was added to read the sensors while the **slave** is executing
-proportional derivative control.
+### Sensor Timing Measurements
 
-  - see **Proportional Derivative Control in Roam mode** section down
-    below.
+  - On initiating a command to read sensors it consistently takes about
+    100 µs for the sensors emitting diode to be turned on. Note that at
+    115200 pbs one byte takes 10/115200 = 86.8 µs.
+  - The phototransister signal does not start to change until after the
+    first 320 µs. I am guessing they are giving the emitter diode time
+    to stabilize. 320 - 100 = 220 µs to stabilize.
+  - The total time the emitter diode is on appears to be 1 ms.
+  - The time between when the emitter turns off until all the data is
+    received is 1.26 ms. Note that sending 10 bytes of data takes 868
+    µs. I’m guessing the 3Pi MCU needs to spend some time calculating
+    the normalized values.
+  - It takes about 2.42 ms per sample of five sensor values.
+  - All five sensors are used in phase. The values are obtained from the
+    same start point (not sequentially).
 
-Unlike the **test-read-sensors** branch the sensor values are not sent
-to PuTTY.
+I am including two images of the DSO.
 
-Currently in the main branch far left and far right sensor are checked
-to see if they are greater than 500. If either are greater than 500 it
-is assumed a line was seen on the far left or far right and this causes
-the robot to exit proportional derivative control. It just stops and
-does nothing in that case.
+  - The first image is triggered from CH2 (white).
+      - The positive going edge of CH2 indicates the PIC is about to
+        start the write operation to UART1.
+      - The signal on CH1 (yellow) is the signal from the sensor. There
+        is a white reflective surface in this case.
+  - The second image is also triggered from CH2 (white).
+      - CH2 is the same and remains the phase reference.
+      - CH1 (yellow) now shows the signal on the emitting IR diode. All
+        the emitting IR diodes are in series. When the signal is high
+        the IR is off. When the signal is low the IR is on. The IR is
+        only on during the time used to acquire the sensor readings. It
+        is off when the 3Pi MCU is processing and sending data.
 
-Note that this is simply a test to ensure that the slave can
-successfully both run proportional derivative control and report sensor
-readings back to the PIC on the Xpress board.
+![](images/phototransistor.jpg)
 
-In this branch the test2\_PORT signals are ignored\! The following was
-used only in the **test-read-sensors** branch:
-
-**test2\_PORT** was used to provide timing to a DSO so that the time
-required to read all 5 sensors and load that data into the PIC18F46K42
-could be measured. The time was **2.46 mS**.
-
-The test points are shown in this image:
-
-![](images/time-test-point.jpg)
-
-The timing signal from test2\_PORT on the Digital Storage Oscilloscope:
-
-![](images/time-read-sensors.jpg)
-
-## Proportional Derivative Control in Roam mode
-
-Another function has been added to allow the MCU on the main board of
-the 3Pi robot to run proportional derivative code when the robot is in
-Roam mode. The robot follows sharp turns and curves but knows nothing of
-gaps and other APSC1299 special obstacles. This could possibly work fine
-for demos.
+![](images/emitting_diode.jpg)
 
 ## Pull up on RX2/RB7
 
