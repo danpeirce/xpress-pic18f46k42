@@ -6,6 +6,7 @@ void pid_state(void);
 void find_centre(void);
 void centre_state(void);
 void differential_state(void);
+void stop_read_state(void);
 
 static  struct sensorval_s sensorvalues;
 static  unsigned int sensorReadIndex=0;
@@ -48,7 +49,11 @@ void centre_state(void)
     sensorvalues = readsensors();
     centre_diff(sensorvalues);
 
-    if (sensorvalues.s1.word > 200) autostate = differential_state;
+    if ( (sensorvalues.s2.word == 1000) || (sensorReadIndex > 200) )
+    {
+        autostate = stop_read_state;
+        forward(0);
+    }
     
     {
         save_data(sensorvalues, sensorReadIndex);
@@ -59,6 +64,13 @@ void centre_state(void)
             while(roam_PORT);
         }
     }
+}
+
+void stop_read_state(void)
+{
+    test2_PORT = 1;
+    sensorvalues = readsensors();
+    test2_PORT = 0;
 }
 
 void pid_state(void)
