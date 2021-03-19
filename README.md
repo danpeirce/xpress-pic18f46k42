@@ -2,18 +2,11 @@
     board](#expansion-of-pololu-3pi-robot-with-xpress-board)
       - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
+          - [Sensor Timing Measurements](#sensor-timing-measurements)
           - [Timer Setup](#timer-setup)
           - [Memory Needed to Store Data and
             Resolution](#memory-needed-to-store-data-and-resolution)
       - [Pololu 3Pi robot](#pololu-3pi-robot)
-          - [The 3Pi state 1 struct
-            Branch](#the-3pi-state-1-struct-branch)
-          - [The 3Pi Menu Dump 123
-            Branch](#the-3pi-menu-dump-123-branch)
-          - [The 3pi Menu Dump Data
-            Branch](#the-3pi-menu-dump-data-branch)
-          - [The 3pi Menu Basic3 Branch](#the-3pi-menu-basic3-branch)
-          - [Displaying Sensor Readings](#displaying-sensor-readings)
       - [Mounting PIC XPRESS board on 3Pi Expansion
         board](#mounting-pic-xpress-board-on-3pi-expansion-board)
           - [Mount 1 (historical)](#mount-1-historical)
@@ -67,6 +60,42 @@ or PIC18F4525.
 
 ![](images/CLC1-TMR0out.png)
 
+### Sensor Timing Measurements
+
+  - On initiating a command to read sensors it consistently takes about
+    100 µs for the sensors emitting diode to be turned on. Note that at
+    115200 pbs one byte takes 10/115200 = 86.8 µs.
+  - The phototransister signal does not start to change until after the
+    first 320 µs. I am guessing they are giving the emitter diode time
+    to stabilize. 320 - 100 = 220 µs to stabilize.
+  - The total time the emitter diode is on appears to be 1 ms.
+  - The time between when the emitter turns off until all the data is
+    received is 1.26 ms. Note that sending 10 bytes of data takes 868
+    µs. I’m guessing the 3Pi MCU needs to spend some time calculating
+    the normalized values.
+  - It takes about 2.42 ms per sample of five sensor values.
+  - All five sensors are used in phase. The values are obtained from the
+    same start point (not sequentially).
+
+I am including two images of the DSO.
+
+  - The first image is triggered from CH2 (white).
+      - The positive going edge of CH2 indicates the PIC is about to
+        start the write operation to UART1.
+      - The signal on CH1 (yellow) is the signal from the sensor. There
+        is a white reflective surface in this case.
+  - The second image is also triggered from CH2 (white).
+      - CH2 is the same and remains the phase reference.
+      - CH1 (yellow) now shows the signal on the emitting IR diode. All
+        the emitting IR diodes are in series. When the signal is high
+        the IR is off. When the signal is low the IR is on. The IR is
+        only on during the time used to acquire the sensor readings. It
+        is off when the 3Pi MCU is processing and sending data.
+
+![](images/phototransistor.jpg)
+
+![](images/emitting_diode.jpg)
+
 ### Timer Setup
 
 #### TMR0
@@ -115,142 +144,6 @@ allow the 3Pi robot to be controlled from a XPRESS board.
 More information on the Pololu 3Pi robot
 
   - <https://www.pololu.com/product/975>
-
-### The 3Pi state 1 struct Branch
-
-The 3Pi state 1 struct Branch has been derived from earlier branches.
-Some of the most recent branches it built on are in a private
-repository.
-
-  - Uses TMR0 and TMR1 and CLC1 – *{more on that later}*
-  - the variable sensorvalues was changed from a **pointer** to a
-    **struct**. I think the code reads better this way.
-  - in the process of restructoring the code for better readability
-
-![](images/menu-state1-struct.png)
-
-### The 3Pi Menu Dump 123 Branch
-
-The 3pi-menu-dump-123 branch was derived from the 3pi-menu-dump-data
-branch. The most significant difference is that sensor 2 was included
-and sensor 4 was dropped.
-
-![](images/sharp-right-sensor-readings123.png)
-
-A second dataset was taken but the robot started closer to the sharp
-right turn. Near the end of the data set a gradual right turn was
-encountered.
-
-![](images/sharp-right-r-sensor-readings123.png)
-
-If the sensor readings are added together one can see when the robot
-encounters more than a single line. This might be used to determine when
-to stop the proportional differential algorithm and employ a different
-strategy.
-
-![](images/sharp-right-r-sensor-readings123sum.png)
-
-### The 3pi Menu Dump Data Branch
-
-3pi-menu-dump-data branch was derived from the 3pi-menu-basic3 branch.
-The most significant difference is that sensor readings are stored for
-future dump while running in the **Roam mode**.
-
-  - uses three arrays to store sensor data
-      - stores data from sensor 1, sensor 3 and sensor 4.
-      - each array can store 1000 values
-      - storage starts after calibration is completed.
-      - the robot stops once 1000 samples are taken.
-          - one must switch to No Roam mode to dump the data
-
-#### Plot of sample data
-
-![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings.png)
-
-The sensors on the robot are numbered zero to four from left to right.
-In this plot series 1 is sensor1, series 2 is sensor 3 and series 3 is
-sensor 4.
-
-Data collection started as the robot was returning to centre from doing
-initial calibration (sensor normalization).
-
-  - With normalization the sensor readings go to 1000 when a given
-    sensor is centred over a line.
-  - The robot is centred over the line when sensor 1 and sensor 3 give
-    the same reading.
-  - One can see a little overshoot and hunting for centring the robot up
-    to around sample 540. I had the differential term set to near zero
-    (constant d was arbitrarily large) so it is reasonable to assume the
-    hunting could be easily reduced.
-  - Sensor 4 jumps up to 1000 as it is crossing the line at the sharp
-    right turn. Sensor 3 reaches the line a few samples sooner because
-    on the 3Pi the sensors are mounted on the curve of the front edge of
-    the robot.
-  - One can see all the sensors are past the line and reading zero
-    around sample 609.
-  - The robot spins to the right so now sensor 4 sees the line first.
-    Sensor 3 sees the line second and the robot reverses direction when
-    sensor 1 is over the line.
-  - There is again some hunting for the line.
-
-#### Plot of sample data with Differential Term
-
-A new run was made but this time the differential term was changed to
-3/2 (rather than being small with d term arbitrarily large). There was
-significant improvement in that robot stayed centred on the line much
-better (much less hunting.
-
-![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings3.png)
-
-The improvement is far more evident in the plot than when simply
-watching the robot as things happen fast when the robot is moving.
-
-### The 3pi Menu Basic3 Branch
-
-#### Roam Mode
-
-In roam mode the robot will
-
-1.  do a self calibration of the sensors and then follow a line for
-    approximately 10 seconds.
-2.  If the robot detects a line on both the far left and far right at
-    the same time it will stop until power is cycled off and on. Picking
-    the robot up will have the same effect of stopping the robot motors.
-3.  One can switch the robot to No Roam mode after the sensor
-    calibration.
-
-#### No Roam Mode
-
-The purpose of no Roam Mode is to
-
-1.  Allow the robot to be programmed
-2.  Allow the robot batteries to be charged
-3.  Allow the robot to be in an interactive mode in which a USB cable
-    and PuTTY can be used to control the robot and check sensor
-    readings.
-
-The menu mentioned in list item 3. looks as follows:
-
-![](images/menu-basic3.png)
-
-### Displaying Sensor Readings
-
-One can in sequence use
-
-1.  Roam mode to calibrate the sensors
-2.  Pick up the robot and switch to No Roam mode (leaving the robot
-    turned on)
-3.  Plug in the USB cable
-4.  Use Ctrl+s to continously read sensor values
-
-![images/sensor-readings.png](images/sensor-readings.png)
-
-That is Coolterminal. In PuTTY the reading overwrite a single line.
-
-A video about displaying sensor readings:
-
-[![Calibrate and Read Robot
-Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
 
 ## Mounting PIC XPRESS board on 3Pi Expansion board
 
