@@ -1,21 +1,3 @@
-/**
-
-  File Name:
-    main.c
-*/
-//	File has been modified from Code Configurator generated file by Dan Peirce B.Sc. Sept 4, 2019
-/**
-  Description:
-    Generation Information :
-        Product Revision  :  PIC18 MCUs - 1.77
-        Device            :  PIC18F46K42
-        Driver Version    :  2.00
-*/
-
-//  execute this command after build (project properties build)
-//  copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
-//  output path depends on computer
-
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
 
@@ -27,12 +9,12 @@ void main(void)
     // Initialize the device
     SYSTEM_Initialize();
 
-    printf("\t\tTEST CODE\n\r");		//Enable redirect STDIO to USART before using printf statements
-    printf("\t\t---- ----\n\r");        // I see putch() is defined in uart2.c
-    printf("\t\tECHO TEST\n\r");
+    printf("\t\tTEST CODE\n\r");		
+    printf("\t\t---- ----\n\r");      
+    printf("\t\tUART1 Buffer TEST\n\r");
     printf("\t\t---- ----\n\n\r");
     
-    printf("\tKPU APSC1299\n\n\r");
+    // printf("\tKPU APSC1299\n\n\r");
     
     while (1)
     {
@@ -48,7 +30,13 @@ void main(void)
                 UART2_Write(rxData);
                 if(rxData == '\r') UART2_Write('\n'); // add newline to return
             }
-            if(UART1_is_tx_ready()) // out RC6
+            if (rxData == '-')
+            {
+                printf("\r\n ");
+                while (UART1_is_rx_ready()) printf("\r\n>%c, ", UART1_Read());
+                printf(" - done\r\n");
+            }
+            else if(UART1_is_tx_ready()) // out RC6
             {
                 UART1_Write(rxData);
                 if(rxData == '\r') UART1_Write('\n'); // add newline to return
