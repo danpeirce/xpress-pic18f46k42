@@ -18,9 +18,10 @@ void main(void)
     
     while (1)
     {
-        char rxData;
+        volatile char rxData;
             // Logic to echo received data
         test1_PORT = 1;
+        INTERRUPT_GlobalInterruptEnable();
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
@@ -32,9 +33,14 @@ void main(void)
             }
             if (rxData == '-')
             {
-                printf("\r\n ");
-                while (UART1_is_rx_ready()) printf("\r\n>%c, ", UART1_Read());
-                printf(" - done\r\n");
+                volatile char rx1=0;
+                printf("\r\n >");
+                while (UART1_is_rx_ready())
+                {
+                    rx1 =  UART1_Read();
+                    printf("%c, ", rx1 );
+                }
+                printf("- done\r\n");
             }
             else if(UART1_is_tx_ready()) // out RC6
             {
