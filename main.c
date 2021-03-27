@@ -26,9 +26,11 @@
 // #define _XTAL_FREQ 48000000 note already defined in mcc_generated_files/device_config.h
 
 void i2c_lcd_initialize(void);
+void processData(char rxData);
 
 i2c1_address_t lcd_address = LCD_ADDRESS; 
-
+static unsigned char cursor = LINE1_START_ADDRESS; // local cursor counter
+		                                              // static so only initialized once 
 const char apsc_msg[] = "KPU APSC1299"; 
 
 /*
@@ -40,9 +42,9 @@ void main(void)
     // Initialize the device
     SYSTEM_Initialize();
     i2c_lcd_initialize();
-    printf("\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
+    printf("\f\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
-    printf("\t\tI2C LCD TEST\r\n");
+    printf("\t\tI2C LCD miniKB TEST\r\n");
     printf("\t\t---- ----\r\n\n");
     
     printf("\tKPU APSC1299\r\n\n");
@@ -51,14 +53,32 @@ void main(void)
     while (1)
     {
         char rxData;
-        static unsigned char cursor = LINE1_START_ADDRESS; // local cursor counter
-		                                              // static so only initialized once 
+        unsigned char *miniData;
+
             // Logic to echo received data
         test1_PORT = 1;
         if(UART2_is_rx_ready())
         {
             test2_PORT = 1;
             rxData = UART2_Read();
+            processData(rxData);
+            
+            test2_PORT = 0;
+        }
+        // void I2C1_ReadNBytes(i2c1_address_t address, uint8_t *data, size_t len)
+        miniData = &rxData;
+        I2C1_ReadNBytes(0x5F, miniData, 1);
+        if(rxData!=0x00) 
+        {
+            // printf("%c", rxData);
+            processData(rxData);
+        }
+        test1_PORT = 0; 
+    }
+}
+
+void processData(char rxData)
+{
             if(rxData != '\r') 
             {
                 I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
@@ -81,10 +101,6 @@ void main(void)
                     I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
                 }
             }
-            test2_PORT = 0;
-        }
-        test1_PORT = 0; 
-    }
 }
 
 /*
