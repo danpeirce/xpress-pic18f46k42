@@ -10,6 +10,17 @@ pandoc -s --toc -t gfm README.pandoc.md -o README.md
 
 # Testing PIC18F46K42 XPRESS Board
 
+## Branch i2c lcd type mini kb
+
+The **i2c-lcd-type-mini-kb** branch was derived from the **i2c-lcd-type** branch. This new branch allows the addition of a credit card sized keyboard.
+
+* [https://media.digikey.com/pdf/Data%20Sheets/M5Stack%20PDFs/U035_Web.pdf](https://media.digikey.com/pdf/Data%20Sheets/M5Stack%20PDFs/U035_Web.pdf)
+* [https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/U035/11200930?s=N4IgjCBcoLQBxVAYygMwIYBsDOBTANCAPZQDaIATFRALoC%2BdhFZIAqgAwDMArCPUA](https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/U035/11200930?s=N4IgjCBcoLQBxVAYygMwIYBsDOBTANCAPZQDaIATFRALoC%2BdhFZIAqgAwDMArCPUA)
+
+* I2C address is 0x5F
+
+## Branch i2c lcd type
+
 This branch of the project was set up to test the Grove 16x2 LCD display.
 **Branch i2c-lcd-type** differs from **branch i2c-lcd** in this branch displays characters typed in the PuTTY terminal in the LCD in addition
 to Echoing them back to the terminal.
