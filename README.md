@@ -1,6 +1,8 @@
 -   [Testing PIC18F46K42 XPRESS
     Board](#testing-pic18f46k42-xpress-board)
     -   [Branch i2c lcd type mini kb](#branch-i2c-lcd-type-mini-kb)
+        -   [Card Keyboard Designed for M5stack
+            System](#card-keyboard-designed-for-m5stack-system)
     -   [Branch i2c lcd type](#branch-i2c-lcd-type)
     -   [LCD notes](#lcd-notes)
         -   [Initialization Sequence](#initialization-sequence)
@@ -35,6 +37,15 @@ card sized keyboard.
 -   <https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/U035/11200930?s=N4IgjCBcoLQBxVAYygMwIYBsDOBTANCAPZQDaIATFRALoC%2BdhFZIAqgAwDMArCPUA>
 
 -   I2C address is 0x5F
+
+### Card Keyboard Designed for M5stack System
+
+The keyboard featured in this branch is designed for use in M5 IoT
+system but we can also used with the Xpress board.
+
+-   More on M5stack IoT System
+    -   <https://docs.m5stack.com/#/>
+    -   <https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/K010/13151126>
 
 Branch i2c lcd type
 -------------------

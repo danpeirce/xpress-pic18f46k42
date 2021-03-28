@@ -19,6 +19,14 @@ The **i2c-lcd-type-mini-kb** branch was derived from the **i2c-lcd-type** branch
 
 * I2C address is 0x5F
 
+### Card Keyboard Designed for M5stack System
+
+The keyboard featured in this branch is designed for use in M5 IoT system but we can also used with the Xpress board. 
+
+* More on M5stack IoT System
+    * [https://docs.m5stack.com/#/](https://docs.m5stack.com/#/)
+	* [https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/K010/13151126](https://www.digikey.ca/en/products/detail/m5stack-technology-co-ltd/K010/13151126)
+
 ## Branch i2c lcd type
 
 This branch of the project was set up to test the Grove 16x2 LCD display.
