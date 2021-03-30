@@ -89,10 +89,13 @@ void processData(char rxData)
             }
         }
     }
-    else if(rxData != '\r') 
+    else if(rxData != '\r') // most characters
     {
-        I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
-        cursor++;
+        if ((cursor != LINE1_START_ADDRESS+16) && (cursor != LINE2_START_ADDRESS+16 )  )
+        {  // only if not just past end of row on LCD
+            I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
+            cursor++;
+        }
     }
     if (rxData == '\t')  // use tab to clear LCD screen
     {
