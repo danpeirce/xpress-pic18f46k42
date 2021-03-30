@@ -88,6 +88,12 @@ void processData(char rxData)
                 I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
             }
         }
+        if( (rxData == 0xB5) || (rxData == 0xB6) ) //cursor up
+        {
+            if ( (cursor >= LINE2_START_ADDRESS )  ) cursor = cursor-0x40;
+            else cursor = cursor+0x40;
+            I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
+        }
     }
     else if(rxData != '\r') // most characters
     {
