@@ -58,7 +58,6 @@ void main(void)
             test2_PORT = 0;
         }
         // void I2C1_ReadNBytes(i2c1_address_t address, uint8_t *data, size_t len)
-        //miniData = &rxData;
         I2C1_ReadNBytes(0x5F, &rxData, 1);
         if(rxData!=0x00) 
         {
@@ -71,28 +70,47 @@ void main(void)
 
 void processData(char rxData)
 {
-            if(rxData != '\r') 
+    if((rxData >= 0xB4)&&(rxData <= 0xB7))
+    {
+        if( (rxData == 0xB4)  ) // cursor left
+        {
+            if ((cursor != LINE1_START_ADDRESS) && (cursor != LINE2_START_ADDRESS )  ) 
             {
-                I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
+                cursor--;
+                I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
+            }
+        }
+        if( (rxData == 0xB7)  ) //cursor right
+        {
+            if ((cursor != LINE1_START_ADDRESS+15) && (cursor != LINE2_START_ADDRESS+15 )  ) 
+            {
                 cursor++;
+                I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
             }
-            if (rxData == '\t')  // use tab to clear LCD screen
-            {
-                I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR); // clear display
-                cursor = LINE1_START_ADDRESS; // reset cursor counter variable 
-            }
-            if(UART2_is_tx_ready()) // for USB echo
-            {
-                if (rxData == '\t') printf("\r\n\n\n");
-                else UART2_Write(rxData);
-                if(rxData == '\r') 
-                {
-                    UART2_Write('\n'); // add newline to return
-                    if (cursor >= LINE2_START_ADDRESS) cursor = LINE1_START_ADDRESS; // move to other line
-                    else cursor = LINE2_START_ADDRESS;
-                    I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
-                }
-            }
+        }
+    }
+    else if(rxData != '\r') 
+    {
+        I2C1_Write1ByteRegister(lcd_address, LCD_DATA, rxData);
+        cursor++;
+    }
+    if (rxData == '\t')  // use tab to clear LCD screen
+    {
+        I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, LCD_CLEAR); // clear display
+        cursor = LINE1_START_ADDRESS; // reset cursor counter variable 
+    }
+    if(UART2_is_tx_ready()) // for USB echo
+    {
+        if (rxData == '\t') printf("\r\n\n\n");
+        else UART2_Write(rxData);
+        if(rxData == '\r') 
+        {
+            UART2_Write('\n'); // add newline to return
+            if (cursor >= LINE2_START_ADDRESS) cursor = LINE1_START_ADDRESS; // move to other line
+            else cursor = LINE2_START_ADDRESS;
+            I2C1_Write1ByteRegister(lcd_address, LCD_COMMAND, cursor);
+        }
+    }
 }
 
 /*
