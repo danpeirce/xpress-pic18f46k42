@@ -3,14 +3,6 @@
   File Name:
     main.c
 */
-//   set up for Grove I2C LCD Nov 20, 2020 by Dan Peirce B.Sc.
-/**
-  Description:
-    Generation Information :
-        Product Revision  :  PIC18 MCUs - 1.77
-        Device            :  PIC18F46K42
-        Driver Version    :  2.00
-*/
 
 //  execute this command after build (project properties build)
 //  copy C:\Users\danp\MPLABXProjects\xpress-pic18f46k42\dist\default\production\xpress-pic18f46k42.production.hex E:\output.hex /y
@@ -53,7 +45,7 @@ void main(void)
     while (1)
     {
         char rxData;
-        unsigned char *miniData;
+        //unsigned char *miniData;
 
             // Logic to echo received data
         test1_PORT = 1;
@@ -66,8 +58,8 @@ void main(void)
             test2_PORT = 0;
         }
         // void I2C1_ReadNBytes(i2c1_address_t address, uint8_t *data, size_t len)
-        miniData = &rxData;
-        I2C1_ReadNBytes(0x5F, miniData, 1);
+        //miniData = &rxData;
+        I2C1_ReadNBytes(0x5F, &rxData, 1);
         if(rxData!=0x00) 
         {
             // printf("%c", rxData);
