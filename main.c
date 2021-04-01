@@ -33,7 +33,7 @@ void main(void)
 	// uint8_t setup_buf[] = { ***just starting to work on this****
     // Initialize the device
     SYSTEM_Initialize();
-    i2c_lcd_initialize();
+    
     printf("\f\t\tTEST CODE\r\n");		//Enable redirect STDIO to USART before using printf statements
     printf("\t\t---- ----\r\n");        // I see putch() is defined in uart2.c
     printf("\t\tI2C LCD miniKB TEST\r\n");
@@ -41,7 +41,7 @@ void main(void)
     
     printf("\tKPU APSC1299\r\n\n");
     // address, buffer, number of bytes
-
+    i2c_lcd_initialize();
     while (1)
     {
         char rxData;
