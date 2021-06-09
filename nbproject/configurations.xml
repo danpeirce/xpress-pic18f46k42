@@ -10,6 +10,7 @@
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
         <itemPath>mcc_generated_files/clc1.h</itemPath>
         <itemPath>mcc_generated_files/tmr0.h</itemPath>
+        <itemPath>mcc_generated_files/clc2.h</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.h</itemPath>
       <itemPath>mcc_generated_files/mcc.h</itemPath>
@@ -30,6 +31,7 @@
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
         <itemPath>mcc_generated_files/clc1.c</itemPath>
         <itemPath>mcc_generated_files/tmr0.c</itemPath>
+        <itemPath>mcc_generated_files/clc2.c</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.c</itemPath>
       <itemPath>mcc_generated_files/mcc.c</itemPath>
