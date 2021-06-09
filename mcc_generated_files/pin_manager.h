@@ -101,26 +101,6 @@
 #define RA2_SetAnalogMode()         do { ANSELAbits.ANSELA2 = 1; } while(0)
 #define RA2_SetDigitalMode()        do { ANSELAbits.ANSELA2 = 0; } while(0)
 
-// get/set roam aliases
-#define roam_TRIS                 TRISBbits.TRISB5
-#define roam_LAT                  LATBbits.LATB5
-#define roam_PORT                 PORTBbits.RB5
-#define roam_WPU                  WPUBbits.WPUB5
-#define roam_OD                   ODCONBbits.ODCB5
-#define roam_ANS                  ANSELBbits.ANSELB5
-#define roam_SetHigh()            do { LATBbits.LATB5 = 1; } while(0)
-#define roam_SetLow()             do { LATBbits.LATB5 = 0; } while(0)
-#define roam_Toggle()             do { LATBbits.LATB5 = ~LATBbits.LATB5; } while(0)
-#define roam_GetValue()           PORTBbits.RB5
-#define roam_SetDigitalInput()    do { TRISBbits.TRISB5 = 1; } while(0)
-#define roam_SetDigitalOutput()   do { TRISBbits.TRISB5 = 0; } while(0)
-#define roam_SetPullup()          do { WPUBbits.WPUB5 = 1; } while(0)
-#define roam_ResetPullup()        do { WPUBbits.WPUB5 = 0; } while(0)
-#define roam_SetPushPull()        do { ODCONBbits.ODCB5 = 0; } while(0)
-#define roam_SetOpenDrain()       do { ODCONBbits.ODCB5 = 1; } while(0)
-#define roam_SetAnalogMode()      do { ANSELBbits.ANSELB5 = 1; } while(0)
-#define roam_SetDigitalMode()     do { ANSELBbits.ANSELB5 = 0; } while(0)
-
 // get/set RB6 procedures
 #define RB6_SetHigh()            do { LATBbits.LATB6 = 1; } while(0)
 #define RB6_SetLow()             do { LATBbits.LATB6 = 0; } while(0)

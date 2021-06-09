@@ -1,36 +1,9 @@
-  - [Expansion of Pololu 3Pi Robot with Xpress
-    board](#expansion-of-pololu-3pi-robot-with-xpress-board)
+  - [Using CLC for Clock Outputs](#using-clc-for-clock-outputs)
       - [Xpress Board Features](#xpress-board-features)
           - [Pins Used](#pins-used)
+          - [CLC-2 Divide by Two](#clc-2-divide-by-two)
           - [Timer Setup](#timer-setup)
-          - [Memory Needed to Store Data and
-            Resolution](#memory-needed-to-store-data-and-resolution)
-      - [Pololu 3Pi robot](#pololu-3pi-robot)
-          - [The 3Pi state 1 struct
-            Branch](#the-3pi-state-1-struct-branch)
-          - [The 3Pi Menu Dump 123
-            Branch](#the-3pi-menu-dump-123-branch)
-          - [The 3pi Menu Dump Data
-            Branch](#the-3pi-menu-dump-data-branch)
-          - [The 3pi Menu Basic3 Branch](#the-3pi-menu-basic3-branch)
-          - [Displaying Sensor Readings](#displaying-sensor-readings)
-      - [Mounting PIC XPRESS board on 3Pi Expansion
-        board](#mounting-pic-xpress-board-on-3pi-expansion-board)
-          - [Mount 1 (historical)](#mount-1-historical)
-          - [Mount 2](#mount-2)
-      - [Roam and No Roam Slide Switch](#roam-and-no-roam-slide-switch)
-      - [Autocalibrates when in Roam
-        mode](#autocalibrates-when-in-roam-mode)
-      - [Read Sensors](#read-sensors)
-      - [Proportional Derivative Control in Roam
-        mode](#proportional-derivative-control-in-roam-mode)
-      - [Pull up on RX2/RB7](#pull-up-on-rx2rb7)
-      - [Charging Circuit](#charging-circuit)
-      - [Added Print Sensor Values to
-        menu](#added-print-sensor-values-to-menu)
-      - [Code Configurator settings](#code-configurator-settings)
       - [Working with PuTTY and issues](#working-with-putty-and-issues)
-      - [Test of Expansion Board](#test-of-expansion-board)
 
 <!---
 use 
@@ -38,7 +11,7 @@ skip  pandoc -s --toc -t html5 -c pandocbd.css README.pandoc.md -o index.html
 pandoc -s --toc -t gfm README.pandoc.md -o README.md
 -->
 
-# Expansion of Pololu 3Pi Robot with Xpress board
+# Using CLC for Clock Outputs
 
 ## Xpress Board Features
 
@@ -57,9 +30,6 @@ or PIC18F4525.
   - UART2 is connected to the XPRESS boards USB interface PIC.
       - Communication between UART2 and the interface IC is at 9600
         baud.
-  - roam input used to determine if robot should
-    1.  Stay in place (perhaps for programming)
-    2.  Roam (perhaps following a line)
   - CLC1 output is the same as the T0\_overflow. The signal was made an
     output so that it can be mesured on a scope or with a DMM. In this
     case the CLC does not change the signal but simply makes it
@@ -67,301 +37,27 @@ or PIC18F4525.
 
 ![](images/CLC1-TMR0out.png)
 
+### CLC-2 Divide by Two
+
+The output of CLC-1 is at 2 KHz with a very low duty cycle. Too low to
+read with the MS8217 DMM. CLC-2 divides the frequency by 2 and the
+output is 50.0% duty cycle. No code is used to provide this divide by
+two. CLC-2 configured as a D flip flop with the output inverted and then
+fed back into the D input.
+
+![](images/CLC2.png)
+
 ### Timer Setup
 
 #### TMR0
 
 ![](images/TMR0.png)
 
-The TMR0\_Overflow Rate varies a bit from robot to robot but is about
-2.0 KHz
+The TMR0\_Overflow Rate varies a bit but is about 2.0 KHz
 
 #### TMR1
 
 ![](images/tmr1.png)
-
-### Memory Needed to Store Data and Resolution
-
-The PIC18F46K42 has 4 KB of on chip RAM which is more than enough until
-we want to use it to store data. The data from the sensors can be useful
-when analyzing what the robot can see as it moves. To obtain the data it
-first needs to be stored because it is not really practical to have the
-robot dragging a USB cable along when it is moving and we don’t have a
-wireless communication channel.
-
-I chose to save **1000 samples** for **each of three sensors**. There
-are actually five sensors on the robot but I will only save data from
-three on a given run to keep the memory requirements within what is
-needed.
-
-The normalized sensor values range from 0 to 1000. It would take 10 bits
-at least to store each sample at full resolution. It was decided to
-reduce the resolution of the samples so that the values could be stored
-in 8 bytes as the physical memory is organized into 8 bit bytes. **A
-right shift of two places is used to reduce the resolution before
-storing the sensor values in arrays.** Later when the robot is connected
-to a computer each sample read from the array will be sifted two places
-to the left so the magnitude will be restored to the original value
-(less the lost resolution).
-
-## Pololu 3Pi robot
-
-The robot is running the serial slave program from Pololu. This will
-allow the 3Pi robot to be controlled from a XPRESS board.
-
-  - [10.a. Serial slave
-    program](https://www.pololu.com/docs/0J21/all#10.a)
-
-More information on the Pololu 3Pi robot
-
-  - <https://www.pololu.com/product/975>
-
-### The 3Pi state 1 struct Branch
-
-The 3Pi state 1 struct Branch has been derived from earlier branches.
-Some of the most recent branches it built on are in a private
-repository.
-
-  - Uses TMR0 and TMR1 and CLC1 – *{more on that later}*
-  - the variable sensorvalues was changed from a **pointer** to a
-    **struct**. I think the code reads better this way.
-  - in the process of restructoring the code for better readability
-
-![](images/menu-state1-struct.png)
-
-### The 3Pi Menu Dump 123 Branch
-
-The 3pi-menu-dump-123 branch was derived from the 3pi-menu-dump-data
-branch. The most significant difference is that sensor 2 was included
-and sensor 4 was dropped.
-
-![](images/sharp-right-sensor-readings123.png)
-
-A second dataset was taken but the robot started closer to the sharp
-right turn. Near the end of the data set a gradual right turn was
-encountered.
-
-![](images/sharp-right-r-sensor-readings123.png)
-
-If the sensor readings are added together one can see when the robot
-encounters more than a single line. This might be used to determine when
-to stop the proportional differential algorithm and employ a different
-strategy.
-
-![](images/sharp-right-r-sensor-readings123sum.png)
-
-### The 3pi Menu Dump Data Branch
-
-3pi-menu-dump-data branch was derived from the 3pi-menu-basic3 branch.
-The most significant difference is that sensor readings are stored for
-future dump while running in the **Roam mode**.
-
-  - uses three arrays to store sensor data
-      - stores data from sensor 1, sensor 3 and sensor 4.
-      - each array can store 1000 values
-      - storage starts after calibration is completed.
-      - the robot stops once 1000 samples are taken.
-          - one must switch to No Roam mode to dump the data
-
-#### Plot of sample data
-
-![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings.png)
-
-The sensors on the robot are numbered zero to four from left to right.
-In this plot series 1 is sensor1, series 2 is sensor 3 and series 3 is
-sensor 4.
-
-Data collection started as the robot was returning to centre from doing
-initial calibration (sensor normalization).
-
-  - With normalization the sensor readings go to 1000 when a given
-    sensor is centred over a line.
-  - The robot is centred over the line when sensor 1 and sensor 3 give
-    the same reading.
-  - One can see a little overshoot and hunting for centring the robot up
-    to around sample 540. I had the differential term set to near zero
-    (constant d was arbitrarily large) so it is reasonable to assume the
-    hunting could be easily reduced.
-  - Sensor 4 jumps up to 1000 as it is crossing the line at the sharp
-    right turn. Sensor 3 reaches the line a few samples sooner because
-    on the 3Pi the sensors are mounted on the curve of the front edge of
-    the robot.
-  - One can see all the sensors are past the line and reading zero
-    around sample 609.
-  - The robot spins to the right so now sensor 4 sees the line first.
-    Sensor 3 sees the line second and the robot reverses direction when
-    sensor 1 is over the line.
-  - There is again some hunting for the line.
-
-#### Plot of sample data with Differential Term
-
-A new run was made but this time the differential term was changed to
-3/2 (rather than being small with d term arbitrarily large). There was
-significant improvement in that robot stayed centred on the line much
-better (much less hunting.
-
-![sharp-right-sensor-readings.png](images/sharp-right-sensor-readings3.png)
-
-The improvement is far more evident in the plot than when simply
-watching the robot as things happen fast when the robot is moving.
-
-### The 3pi Menu Basic3 Branch
-
-#### Roam Mode
-
-In roam mode the robot will
-
-1.  do a self calibration of the sensors and then follow a line for
-    approximately 10 seconds.
-2.  If the robot detects a line on both the far left and far right at
-    the same time it will stop until power is cycled off and on. Picking
-    the robot up will have the same effect of stopping the robot motors.
-3.  One can switch the robot to No Roam mode after the sensor
-    calibration.
-
-#### No Roam Mode
-
-The purpose of no Roam Mode is to
-
-1.  Allow the robot to be programmed
-2.  Allow the robot batteries to be charged
-3.  Allow the robot to be in an interactive mode in which a USB cable
-    and PuTTY can be used to control the robot and check sensor
-    readings.
-
-The menu mentioned in list item 3. looks as follows:
-
-![](images/menu-basic3.png)
-
-### Displaying Sensor Readings
-
-One can in sequence use
-
-1.  Roam mode to calibrate the sensors
-2.  Pick up the robot and switch to No Roam mode (leaving the robot
-    turned on)
-3.  Plug in the USB cable
-4.  Use Ctrl+s to continously read sensor values
-
-![images/sensor-readings.png](images/sensor-readings.png)
-
-That is Coolterminal. In PuTTY the reading overwrite a single line.
-
-A video about displaying sensor readings:
-
-[![Calibrate and Read Robot
-Sensors](images/read-sensors-yt.jpg)](https://www.youtube.com/watch?v=912N54Nfha0&feature=youtu.be "Calibrate and Read Robot Sensors")
-
-## Mounting PIC XPRESS board on 3Pi Expansion board
-
-### Mount 1 (historical)
-
-The first XPRESS board mount was forward on the 3Pi expansion board.
-This appeared to have a negative effect on the balance and stability of
-the robot. For a second mount position was tested.
-
-![](images/xpress-mount1.jpg)
-
-### Mount 2
-
-For better stability the XPRESS board was moved over the wheels.
-
-![](images/expansion-mounted-2-s.jpg)
-
-Wiring under the XPRESS board.
-
-![](images/expansion-wire-s.jpg)
-
-## Roam and No Roam Slide Switch
-
-The image below shows the slide switch in the no roam possition.
-
-![](images/no_roam_s.jpg)
-
-## Autocalibrates when in Roam mode
-
-Will autocalibrate the sensors if in Roam mode. For meaningful results
-the robot should be sitting over a black tape line. The robot will spin
-to the left and right sweeping the sensors over the line so that
-normalized readings can be calculated.
-
-## Read Sensors
-
-Code was added to read the sensors while the **slave** is executing
-proportional derivative control.
-
-  - see **Proportional Derivative Control in Roam mode** section down
-    below.
-
-Unlike the **test-read-sensors** branch the sensor values are not sent
-to PuTTY.
-
-Currently in the main branch far left and far right sensor are checked
-to see if they are greater than 500. If either are greater than 500 it
-is assumed a line was seen on the far left or far right and this causes
-the robot to exit proportional derivative control. It just stops and
-does nothing in that case.
-
-Note that this is simply a test to ensure that the slave can
-successfully both run proportional derivative control and report sensor
-readings back to the PIC on the Xpress board.
-
-In this branch the test2\_PORT signals are ignored\! The following was
-used only in the **test-read-sensors** branch:
-
-**test2\_PORT** was used to provide timing to a DSO so that the time
-required to read all 5 sensors and load that data into the PIC18F46K42
-could be measured. The time was **2.46 mS**.
-
-The test points are shown in this image:
-
-![](images/time-test-point.jpg)
-
-The timing signal from test2\_PORT on the Digital Storage Oscilloscope:
-
-![](images/time-read-sensors.jpg)
-
-## Proportional Derivative Control in Roam mode
-
-Another function has been added to allow the MCU on the main board of
-the 3Pi robot to run proportional derivative code when the robot is in
-Roam mode. The robot follows sharp turns and curves but knows nothing of
-gaps and other APSC1299 special obstacles. This could possibly work fine
-for demos.
-
-## Pull up on RX2/RB7
-
-A 10 Kohm pull up resistor was added to RX2 for better reliability when
-USB cable is not attached.
-
-## Charging Circuit
-
-A charging circuit has been added to the expantion board. The charging
-circuit is just a 75 ohm resistor in series with the four AAA NiMH cells
-on the robot. A 9 volt external AC-DC adaptor provides power to the
-board.
-
-![](images/charging-sm.jpg)
-
-Showing the 75 ohm 2 watt resistor (located under the expansion board.
-
-![](images/charging-75ohm-sm.jpg)
-
-**Will update photos. Had to move one jumper to top side of board as it
-caused rubbing on right wheel. Also bend tab on barrel connector so it
-is flush on board before soldering.**
-
-## Added Print Sensor Values to menu
-
-Can now print sensor values in PuTTY when in No Roam mode. Can move
-robot over track by hand.
-
-## Code Configurator settings
-
-The code in this project was primarily generated by the Code
-Configurator. The settings used may not be optimal at all. The initial
-goal was just to get the UART of the target PIC to talk to the UART of
-the interface PIC.
 
 ## Working with PuTTY and issues
 
@@ -377,9 +73,3 @@ the Xpress board:
 
   - [Xpress PIC18F46K42 board virtual COM port bridge to UART receive
     limitations](https://www.microchip.com/forums/m1097510.aspx)
-
-## Test of Expansion Board
-
-Initial testing of expansion board for 3PI.
-
-![](images/test-expansion-b.jpg)
