@@ -24,6 +24,8 @@ or PIC18F4525.
 
 ### Pins Used
 
+![](images/xpress-cct.jpg)
+
 ![](images/pins.png)
 
   - UART1 is at 115200 baud. Tx1 is on RC6.
@@ -33,19 +35,28 @@ or PIC18F4525.
   - CLC1 output is the same as the T0\_overflow. The signal was made an
     output so that it can be mesured on a scope or with a DMM. In this
     case the CLC does not change the signal but simply makes it
-    available on a PIN.
+    available on a PIN. I had this set up for my 3Pi Robot code and have
+    reused that setup here.
+
+![](images/TMR0-2us.png)
 
 ![](images/CLC1-TMR0out.png)
 
 ### CLC-2 Divide by Two
 
-The output of CLC-1 is at 2 KHz with a very low duty cycle. Too low to
-read with the MS8217 DMM. CLC-2 divides the frequency by 2 and the
-output is 50.0% duty cycle. No code is used to provide this divide by
-two. CLC-2 configured as a D flip flop with the output inverted and then
-fed back into the D input.
+The output of CLC-1 (see note in Pinsed Used section) is at 2 KHz with a
+very low duty cycle (2 µs pulse repeating every 500 ms). The 2 µs pulse
+is too short to be picked up by the MS8217 DMM. CLC-2 divides the
+frequency by 2 and the output is 50.0% duty cycle. No code is used to
+provide this divide by two. CLC-2 configured as a D flip flop with the
+output inverted and then fed back into the D input.
 
 ![](images/CLC2.png)
+
+The CLC-2 output is the yellow trace on the following image of the
+scope.
+
+![](images/CLC1-CLC2.png)
 
 ### Timer Setup
 
@@ -53,7 +64,7 @@ fed back into the D input.
 
 ![](images/TMR0.png)
 
-The TMR0\_Overflow Rate varies a bit but is about 2.0 KHz
+The TMR0\_Overflow Rate varies a bit but is about 2.0 KHz.
 
 #### TMR1
 
