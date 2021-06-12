@@ -53,9 +53,11 @@
 #include <stdbool.h>
 #include <conio.h>
 #include "tmr1.h"
+#include "tmr2.h"
+#include "tmr0.h"
+#include "pwm5.h"
 #include "clc2.h"
 #include "clc1.h"
-#include "tmr0.h"
 #include "uart2.h"
 #include "uart1.h"
 
