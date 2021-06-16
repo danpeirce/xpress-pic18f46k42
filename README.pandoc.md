@@ -23,7 +23,16 @@ is also less expensive than the USB to serial board we have used in the past wit
 * UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
-* 
+* PWM5 is the output from the PWM5 module
+    * It is set to have a period of 300 µs and 
+	* a dutycyle of 20%
+	* output as expected on scope
+	* DMM shows correct period
+	* DMM shows 17.5% for duty cycle
+	    * The scope and PIC settings match so it would seem the DMM dutycycle measurment is off in this case.
+	
+![](images/PWM5-20.png)
+	
 * CLC1 output is the same as the T0_overflow. The signal was made an output so that it can be measured on a scope or with a DMM.
   In this case the CLC does not change the signal but simply makes it available on a PIN. I had this set up for my 3Pi Robot code and 
   have reused that setup here.
@@ -56,6 +65,10 @@ The TMR0_Overflow Rate varies a bit but is about 2.0 KHz.
 #### TMR1
 
 ![](images/tmr1.png)
+
+#### TMR2
+
+![](images/TMR2-300.png)
 
 ## Working with PuTTY and issues
 
