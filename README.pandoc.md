@@ -23,8 +23,8 @@ is also less expensive than the USB to serial board we have used in the past wit
 * UART1 is at 115200 baud. Tx1 is on RC6.
 * UART2 is connected to the XPRESS boards USB interface PIC. 
     * Communication between UART2 and the interface IC is at 9600 baud.
-
-* CLC1 output is the same as the T0_overflow. The signal was made an output so that it can be mesured on a scope or with a DMM.
+* 
+* CLC1 output is the same as the T0_overflow. The signal was made an output so that it can be measured on a scope or with a DMM.
   In this case the CLC does not change the signal but simply makes it available on a PIN. I had this set up for my 3Pi Robot code and 
   have reused that setup here.
   
@@ -34,7 +34,7 @@ is also less expensive than the USB to serial board we have used in the past wit
 
 ### CLC-2 Divide by Two
 
-The output of CLC-1 (see note in Pinsed Used section) is at 2 KHz with a very low duty cycle (2 µs pulse repeating every 500 ms). The 2 µs pulse is too 
+The output of CLC-1 (see note in Pins Used section) is at 2 KHz with a very low duty cycle (2 µs pulse repeating every 500 ms). The 2 µs pulse is too 
 short to be picked up by the MS8217 DMM. CLC-2 divides the frequency by 2 and 
 the output is 50.0% duty cycle. No code is used to provide this divide by two. CLC-2 configured as a D flip flop with the output inverted and then fed 
 back into the D input.
