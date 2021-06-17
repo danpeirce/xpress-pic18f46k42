@@ -20,6 +20,8 @@ union word16_u tmrvalue;
  */
 void main(void)
 {
+    static unsigned int ticks, oldticks, nbase=179, ncycles=179;
+
     // Initialize the device
     SYSTEM_Initialize();
    
@@ -28,7 +30,8 @@ void main(void)
     menu();
 
 	printf("> ");        // print prompt
-    
+    oldticks = TMR1_ReadTimer();
+    ticks = oldticks + 10000*2;    // intervale in ms times 2
     while (1)
     {
         char rxData;
@@ -50,6 +53,15 @@ void main(void)
             test2_PORT = 0;
         }
         test1_PORT = 0; 
+        if (TMR1_ReadTimer() == ticks)
+        {
+            oldticks = ticks;
+            ticks = oldticks + 10000 * 2;
+            ncycles = ncycles + nbase;
+            if (ncycles > (5 * nbase) ) ncycles = nbase;
+            //if (ncycles > (4 * nbase) ) ncycles =  ncycles -20;
+            PWM5_LoadDutyValue(ncycles);
+        }
     }
 }
 
