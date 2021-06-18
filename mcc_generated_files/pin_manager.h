@@ -113,6 +113,18 @@
 #define RA3_SetAnalogMode()         do { ANSELAbits.ANSELA3 = 1; } while(0)
 #define RA3_SetDigitalMode()        do { ANSELAbits.ANSELA3 = 0; } while(0)
 
+// get/set RA7 procedures
+#define RA7_SetHigh()            do { LATAbits.LATA7 = 1; } while(0)
+#define RA7_SetLow()             do { LATAbits.LATA7 = 0; } while(0)
+#define RA7_Toggle()             do { LATAbits.LATA7 = ~LATAbits.LATA7; } while(0)
+#define RA7_GetValue()              PORTAbits.RA7
+#define RA7_SetDigitalInput()    do { TRISAbits.TRISA7 = 1; } while(0)
+#define RA7_SetDigitalOutput()   do { TRISAbits.TRISA7 = 0; } while(0)
+#define RA7_SetPullup()             do { WPUAbits.WPUA7 = 1; } while(0)
+#define RA7_ResetPullup()           do { WPUAbits.WPUA7 = 0; } while(0)
+#define RA7_SetAnalogMode()         do { ANSELAbits.ANSELA7 = 1; } while(0)
+#define RA7_SetDigitalMode()        do { ANSELAbits.ANSELA7 = 0; } while(0)
+
 // get/set RB6 procedures
 #define RB6_SetHigh()            do { LATBbits.LATB6 = 1; } while(0)
 #define RB6_SetLow()             do { LATBbits.LATB6 = 0; } while(0)
