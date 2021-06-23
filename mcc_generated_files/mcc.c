@@ -52,15 +52,17 @@ void SYSTEM_Initialize(void)
     PMD_Initialize();
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
-    CLC1_Initialize();
     CLC2_Initialize();
-    DAC1_Initialize();
     TMR2_Initialize();
+    TMR0_Initialize();
+    PWM6_Initialize();
+    CLC1_Initialize();
+    DAC1_Initialize();
     PWM5_Initialize();
     TMR1_Initialize();
-    TMR0_Initialize();
-    UART2_Initialize();
+    PWM7_Initialize();
     UART1_Initialize();
+    UART2_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

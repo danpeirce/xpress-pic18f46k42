@@ -16,7 +16,7 @@ union word16_u {
 
 union word16_u tmrvalue;
 
-const unsigned int FullOn = 0x037F;
+const unsigned int FullOn = 0x037F; //383?
 
 /*
                          Main application
@@ -61,9 +61,19 @@ void main(void)
 void process_command(char rxData)
 {
     if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
-    else if (rxData == '0') PWM5_LoadDutyValue(0);
+    else if (rxData == '0') 
+    {
+        PWM5_LoadDutyValue(0);
+        PWM6_LoadDutyValue(0);
+        PWM7_LoadDutyValue(0);
+    }
     else if (rxData == 'R') PWM5_LoadDutyValue(FullOn);
     else if (rxData == 'r') PWM5_LoadDutyValue(FullOn/2);
+    else if (rxData == 'R') PWM5_LoadDutyValue(FullOn);
+    else if (rxData == 'G') PWM6_LoadDutyValue(FullOn);
+    else if (rxData == 'g') PWM6_LoadDutyValue(FullOn/2);
+    else if (rxData == 'B') PWM7_LoadDutyValue(FullOn);
+    else if (rxData == 'b') PWM7_LoadDutyValue(FullOn/2);
     else if (rxData == 0x1B) menu();
 }
 
@@ -77,7 +87,11 @@ void menu(void)
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
 
-    printf("\t0. Red Off\r\n");
+    printf("\t0. All Off\r\n");
+    printf("\tB. Blue Full On\r\n");
+    printf("\tb. Blue Half On\r\n");
+    printf("\tG. Green Full On\r\n");
+    printf("\tg. Green Half On\r\n");
     printf("\tR. Red Full On\r\n");
     printf("\tr. Red Half On\r\n");
     printf("\t   ctrl+t. Print TMR1 Value\r\n");

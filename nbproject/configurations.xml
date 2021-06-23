@@ -14,6 +14,8 @@
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/pwm5.h</itemPath>
         <itemPath>mcc_generated_files/dac1.h</itemPath>
+        <itemPath>mcc_generated_files/pwm6.h</itemPath>
+        <itemPath>mcc_generated_files/pwm7.h</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.h</itemPath>
       <itemPath>mcc_generated_files/mcc.h</itemPath>
@@ -38,6 +40,8 @@
         <itemPath>mcc_generated_files/pwm5.c</itemPath>
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/dac1.c</itemPath>
+        <itemPath>mcc_generated_files/pwm7.c</itemPath>
+        <itemPath>mcc_generated_files/pwm6.c</itemPath>
       </logicalFolder>
       <itemPath>mcc_generated_files/device_config.c</itemPath>
       <itemPath>mcc_generated_files/mcc.c</itemPath>
