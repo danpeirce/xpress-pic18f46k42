@@ -2,6 +2,7 @@
 #include "mcc_generated_files/mcc.h"
 #include <stdio.h>
 
+
 void process_command(char rxData);
 void menu(void);
 
@@ -15,12 +16,14 @@ union word16_u {
 
 union word16_u tmrvalue;
 
+const unsigned int FullOn = 0x037F;
+
 /*
                          Main application
  */
 void main(void)
 {
-    static unsigned int ticks, oldticks, nbase=179, ncycles=179;
+    
 
     // Initialize the device
     SYSTEM_Initialize();
@@ -30,8 +33,6 @@ void main(void)
     menu();
 
 	printf("> ");        // print prompt
-    oldticks = TMR1_ReadTimer();
-    ticks = oldticks + 10000*2;    // intervale in ms times 2
     while (1)
     {
         char rxData;
@@ -53,15 +54,6 @@ void main(void)
             test2_PORT = 0;
         }
         test1_PORT = 0; 
-        if (TMR1_ReadTimer() == ticks)
-        {
-            oldticks = ticks;
-            ticks = oldticks + 10000 * 2;
-            ncycles = ncycles + nbase;
-            if (ncycles > (5 * nbase) ) ncycles = nbase;
-            //if (ncycles > (4 * nbase) ) ncycles =  ncycles -20;
-            PWM5_LoadDutyValue(ncycles);
-        }
     }
 }
 
@@ -69,6 +61,9 @@ void main(void)
 void process_command(char rxData)
 {
     if (rxData == 0x14) printf("\r\nticks1 %u\r\n", (TMR1_ReadTimer() ) );
+    else if (rxData == '0') PWM5_LoadDutyValue(0);
+    else if (rxData == 'R') PWM5_LoadDutyValue(FullOn);
+    else if (rxData == 'r') PWM5_LoadDutyValue(FullOn/2);
     else if (rxData == 0x1B) menu();
 }
 
@@ -82,6 +77,9 @@ void menu(void)
     printf("\t\t  Menu\n\r");
     printf("\t\t--------\r\n");  
 
+    printf("\t0. Red Off\r\n");
+    printf("\tR. Red Full On\r\n");
+    printf("\tr. Red Half On\r\n");
     printf("\t   ctrl+t. Print TMR1 Value\r\n");
     printf("\t     Esc, Print Menu\r\n");
     printf("\t\t--------\r\n\n");
